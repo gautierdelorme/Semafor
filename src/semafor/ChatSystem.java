@@ -1,10 +1,15 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Semafor - MIT License
+ *
+ * A peer-to-peer chat system
+ *
+ * Copyright 2015 Gautier Delorme and Arthur Papailhau.
+ *
  */
 package semafor;
 
+import controller.*;
+import ni.*;
 /**
  *
  * @author gautier
@@ -15,7 +20,14 @@ public class ChatSystem {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        ChatController controller = new ChatController();
+        ChatNI ntwInterface = ChatNI.buildChatNI();
+        
+        controller.setCtrlToNI(ntwInterface);
+        ntwInterface.setNiToCtrl(controller);
+        
+        controller.performConnect("gautier");
+        controller.performSendMessage("Hello bro", "127.0.0.1");
     }
     
 }
