@@ -39,7 +39,6 @@ public class TCPSender extends Thread {
             outputStream.writeUTF(message);
             outputStream.flush();
             this.socket.close();
-            System.out.println("TCPSender closed");
         } catch (IOException e) {
             System.out.println("Exception when sending the tcp packet : " + e);
         }

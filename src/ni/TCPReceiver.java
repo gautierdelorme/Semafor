@@ -32,7 +32,6 @@ public class TCPReceiver extends Thread {
             String result = inputStream.readUTF();
             this.chatNI.message(this.socket.getInetAddress().toString(), result);
             this.socket.close();
-            System.out.println("TCPReceiver closed");
         } catch (IOException e) {
             System.out.println("Exception when receiving the tcp packet : " + e);
         }
