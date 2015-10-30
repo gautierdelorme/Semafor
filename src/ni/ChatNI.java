@@ -67,4 +67,9 @@ public class ChatNI implements CtrlToNI, FromToRmtApp {
     public void message(String ip, String message) {
         niToCtrl.ReceiveMessage(ip, message);
     }
+    
+    public void close() {
+        this.tcpServer.close();
+        this.udpReceiver.close();
+    }
 }

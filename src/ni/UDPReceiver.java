@@ -19,10 +19,11 @@ public class UDPReceiver extends Thread {
 
     private DatagramSocket socket;
     private final ChatNI chatNI;
-    
+    private boolean canRun;
     public final static int RECEIVING_PORT = 8045;
     
     public UDPReceiver(ChatNI chatNI){
+        this.canRun = true;
         this.chatNI = chatNI;
         socket = null;
         try {
@@ -40,7 +41,7 @@ public class UDPReceiver extends Thread {
     public void run() {
         byte[] receiveData = new byte[1024];
         DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
-        while (true) {
+        while (canRun) {
             try {
                 socket.receive(receivePacket);
                 handlePacket(receivePacket);
@@ -48,6 +49,7 @@ public class UDPReceiver extends Thread {
                 System.out.println("Exception when receive : " + e);
             }
         }
+        this.socket.close();
     }
     
     private void handlePacket(DatagramPacket packet) {
@@ -63,5 +65,10 @@ public class UDPReceiver extends Thread {
             default:
                 System.out.println("Error when handling the received packet.");
         }
+    }
+    
+    public void close() {
+        //this.socket.close();
+        this.canRun = false;
     }
 }

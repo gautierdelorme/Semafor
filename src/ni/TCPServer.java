@@ -16,32 +16,40 @@ import java.net.*;
  * @author gautier
  */
 public class TCPServer extends Thread {
-    
+
     private ServerSocket serverSocket;
     private final ChatNI chatNI;
+    private boolean canRun;
     public final static int LISTEN_PORT = 8046;
 
     public TCPServer(ChatNI chatNI) {
+        this.canRun = true;
         this.chatNI = chatNI;
         try {
             serverSocket = new ServerSocket(LISTEN_PORT);
         } catch (IOException ex) {
-            System.out.println("Exception cannot listen on the port " + LISTEN_PORT + " : " + ex);
-            System.exit(-1);
+            System.out.println("Exception TCP server cannot listen on the port " + LISTEN_PORT + " : " + ex);
         }
     }
 
     @Override
     public void run() {
-        while (true) {
+        while (canRun) {
             try {
                 Socket clientSocket = serverSocket.accept();
                 (new TCPReceiver(clientSocket, chatNI)).start();
-                System.out.println("Server connected with : " + clientSocket.getInetAddress());
-            } catch (Exception e) {
-                System.out.println("Accept fail : " + e);
-                System.exit(-1);
+            } catch (IOException e) {
+                System.out.println("TCP server accept fail : " + e);
             }
         }
+        try {
+            this.serverSocket.close();
+        } catch (IOException e) {
+            System.out.println("Exception when closing tcp server socket : " + e);
+        }
+    }
+
+    public void close() {
+        this.canRun = false;
     }
 }

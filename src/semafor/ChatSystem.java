@@ -28,6 +28,8 @@ public class ChatSystem {
         
         controller.performConnect("gautier");
         controller.performSendMessage("Hello bro", "127.0.0.1");
+        
+        ntwInterface.close();
     }
     
 }
