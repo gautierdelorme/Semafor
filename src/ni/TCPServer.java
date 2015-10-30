@@ -37,19 +37,21 @@ public class TCPServer extends Thread {
         while (canRun) {
             try {
                 Socket clientSocket = serverSocket.accept();
+                System.out.println("Client connected to Server");
                 (new TCPReceiver(clientSocket, chatNI)).start();
             } catch (IOException e) {
                 System.out.println("TCP server accept fail : " + e);
             }
         }
-        try {
-            this.serverSocket.close();
-        } catch (IOException e) {
-            System.out.println("Exception when closing tcp server socket : " + e);
-        }
     }
 
     public void close() {
         this.canRun = false;
+        try {
+            this.serverSocket.close();
+            System.out.println("TCPServer closed");
+        } catch (IOException e) {
+            System.out.println("Exception when closing tcp server socket : " + e);
+        }
     }
 }

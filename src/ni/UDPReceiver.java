@@ -49,7 +49,6 @@ public class UDPReceiver extends Thread {
                 System.out.println("Exception when receive : " + e);
             }
         }
-        this.socket.close();
     }
     
     private void handlePacket(DatagramPacket packet) {
@@ -68,7 +67,7 @@ public class UDPReceiver extends Thread {
     }
     
     public void close() {
-        //this.socket.close();
         this.canRun = false;
+        this.socket.close();
     }
 }
