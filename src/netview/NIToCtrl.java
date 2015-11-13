@@ -9,14 +9,15 @@
 package netview;
 
 import java.io.File;
+import java.net.InetAddress;
 
 /**
  *
  * @author gautier
  */
 public interface NIToCtrl {
-    public void receiveHello(String ip, String nickname, boolean reqReply);
-    public void receiveBye(String ip);
-    public void receiveMessage(String ip, String message);
-    public void receiveFile(String ip, File file);
+    public void receiveHello(InetAddress ip, String nickname, boolean reqReply);
+    public void receiveBye(InetAddress ip);
+    public void receiveMessage(InetAddress ip, String message);
+    public void receiveFile(InetAddress ip, File file);
 }

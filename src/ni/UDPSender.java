@@ -25,21 +25,23 @@ public class UDPSender {
         this.socket = socket;
     }
     
-    public void sendTo(String ip, String message) {
+    public void sendTo(InetAddress ip, String message) {
         sendMessage(ip, message);
     }
     
     public void sendToAll(String message) {
-        sendMessage(BROADCAST_ADDRESS, message);
+        try {
+            sendMessage(InetAddress.getByName(BROADCAST_ADDRESS), message);
+        } catch (UnknownHostException e) {
+            System.out.println("Exception when sendToAll : "+e); 
+        }
     }
     
-    private void sendMessage(String ip, String message) {
+    private void sendMessage(InetAddress ip, String message) {
         try {
             byte[] sendData = message.getBytes(Charset.forName("UTF-8"));
-            DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, InetAddress.getByName(ip), UDPReceiver.RECEIVING_PORT);
+            DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, ip, UDPReceiver.RECEIVING_PORT);
             socket.send(sendPacket);
-        } catch (UnknownHostException e) {
-            System.out.println("Could not find the host : " + e);
         } catch (IOException e) {
             System.out.println("Exception when sending the packet : " + e);
         }

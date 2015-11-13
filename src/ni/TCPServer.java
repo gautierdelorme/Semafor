@@ -20,7 +20,7 @@ public class TCPServer extends Thread {
     private ServerSocket serverSocket;
     private final ChatNI chatNI;
     private boolean canRun;
-    public final static int LISTEN_PORT = 8046;
+    public final static int LISTEN_PORT = 8045;
 
     public TCPServer(ChatNI chatNI) {
         this.canRun = true;

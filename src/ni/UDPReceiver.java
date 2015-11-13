@@ -20,20 +20,24 @@ public class UDPReceiver extends Thread {
 
     private DatagramSocket socket;
     private final ChatNI chatNI;
+    private InetAddress localAddress;
     private boolean canRun;
     public final static int RECEIVING_PORT = 8045;
-    
-    public UDPReceiver(ChatNI chatNI){
+
+    public UDPReceiver(ChatNI chatNI) {
         this.canRun = true;
         this.chatNI = chatNI;
         socket = null;
         try {
+            localAddress = InetAddress.getLocalHost();
             socket = new DatagramSocket(RECEIVING_PORT);
         } catch (SocketException e) {
             System.out.println("Exception when creating the DatagramSocket into the UDPReceiver : " + e);
+        } catch (UnknownHostException e) {
+            System.out.println("Could not find the localAddress : " + e);
         }
     }
-    
+
     public DatagramSocket getSocket() {
         return this.socket;
     }
@@ -51,29 +55,41 @@ public class UDPReceiver extends Thread {
             }
         }
     }
-    
+
+    private boolean filterSucceed(InetAddress adress) {
+        boolean canPassed = false;
+        try {
+            canPassed = !adress.equals(localAddress) && !adress.equals(InetAddress.getByName("127.0.0.1"));
+        } catch (UnknownHostException e) {
+            System.out.println("Could not find the localAddress : " + e);
+        }
+        return canPassed;
+    }
+
     private void handlePacket(DatagramPacket packet) {
-        String stringReceive = new String(packet.getData(), 0, packet.getLength());
-        UDPPacket message = new UDPPacket(new JSONObject(stringReceive));
-        switch (message.getType()) {
-            case HELLO:
-                HelloPacket helloMessage = new HelloPacket(new JSONObject(stringReceive));
-                this.chatNI.hello(packet.getAddress().toString(), helloMessage.getNickname(), helloMessage.isReqReply());
-                break;
-            case BYE:
-                this.chatNI.bye(packet.getAddress().toString());
-                break;
-            case MESSAGE:
-                MessagePacket messageMessage = new MessagePacket(new JSONObject(stringReceive));
-                this.chatNI.message(packet.getAddress().toString(), messageMessage.getMessage());
-                break;
-            case FILE_REQUEST:
+        if (filterSucceed(packet.getAddress())) {
+            String stringReceive = new String(packet.getData(), 0, packet.getLength());
+            UDPPacket message = new UDPPacket(new JSONObject(stringReceive));
+            switch (message.getType()) {
+                case HELLO:
+                    HelloPacket helloMessage = new HelloPacket(new JSONObject(stringReceive));
+                    this.chatNI.hello(packet.getAddress(), helloMessage.getNickname(), helloMessage.isReqReply());
+                    break;
+                case BYE:
+                    this.chatNI.bye(packet.getAddress());
+                    break;
+                case MESSAGE:
+                    MessagePacket messageMessage = new MessagePacket(new JSONObject(stringReceive));
+                    this.chatNI.message(packet.getAddress(), messageMessage.getMessage());
+                    break;
+                case FILE_REQUEST:
                 //processFile();
-            default:
-                System.out.println("Error when handling the received packet.");
+                default:
+                    System.out.println("Error when handling the received packet.");
+            }
         }
     }
-    
+
     public void close() {
         this.canRun = false;
         this.socket.close();

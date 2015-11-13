@@ -9,6 +9,7 @@
 package ni;
 
 import java.io.File;
+import java.net.InetAddress;
 import netview.*;
 
 /**
@@ -42,6 +43,12 @@ public class ChatNI implements CtrlToNI, FromToRmtApp {
         UDPPacket helloMessage = new HelloPacket(reqReply, nickname);
         this.udpSender.sendToAll(helloMessage.toString());
     }
+    
+    @Override
+    public void sendHelloTo(InetAddress ip, String nickname, boolean reqReply) {
+        UDPPacket helloMessage = new HelloPacket(reqReply, nickname);
+        this.udpSender.sendTo(ip, helloMessage.toString());
+    }
 
     @Override
     public void sendBye() {
@@ -50,29 +57,29 @@ public class ChatNI implements CtrlToNI, FromToRmtApp {
     }
 
     @Override
-    public void sendMessage(String message, String ip) {
+    public void sendMessage(String message, InetAddress ip) {
         //(new TCPSender(ip, message)).start();
         MessagePacket messagePacket = new MessagePacket(message);
         this.udpSender.sendTo(ip, messagePacket.toString());
     }
     
     @Override
-    public void hello(String ip, String nickname, boolean reqReply) {
+    public void hello(InetAddress ip, String nickname, boolean reqReply) {
         niToCtrl.receiveHello(ip, nickname, reqReply);
     }
 
     @Override
-    public void bye(String ip) {
+    public void bye(InetAddress ip) {
         niToCtrl.receiveBye(ip);
     }
 
     @Override
-    public void message(String ip, String message) {
+    public void message(InetAddress ip, String message) {
         niToCtrl.receiveMessage(ip, message);
     }
 
     @Override
-    public void file(String ip, File file) {
+    public void file(InetAddress ip, File file) {
         niToCtrl.receiveFile(ip, file);
     }
     

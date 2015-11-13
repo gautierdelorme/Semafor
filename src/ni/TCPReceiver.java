@@ -29,7 +29,7 @@ public class TCPReceiver extends Thread {
     public void run() {
         try {
             DataInputStream inputStream = new DataInputStream(this.socket.getInputStream());
-            FileInputStream fileInputStream = new FileInputStream();
+            //FileInputStream fileInputStream = new FileInputStream();
             
             /*ObjectInputStream inputStream = new ObjectInputStream(this.socket.getInputStream());
             String result = inputStream.readUTF();
