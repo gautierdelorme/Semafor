@@ -47,10 +47,10 @@ public class ChatController implements NIToCtrl, UIToCtrl {
 
     @Override
     public void receiveHello(InetAddress ip, String nickname, boolean reqReply) {
-        if (reqReply) {
-            ctrlToNI.sendHelloTo(ip, nickname, false);
-        }
         System.out.println("Hello received from "+nickname+" and reqReply = "+reqReply);
+        if (reqReply) {
+            ctrlToNI.sendHelloTo(ip, "gautier", false);
+        }
     }
 
     @Override

@@ -26,7 +26,7 @@ public class ChatSystem {
         controller.setCtrlToNI(ntwInterface);
         ntwInterface.setNiToCtrl(controller);
         
-        controller.performConnect("gautier");
+        //controller.performConnect("gautier");
         //controller.performSendMessage("Hello bro", "10.32.0.133");
         
         //ntwInterface.close();
