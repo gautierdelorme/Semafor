@@ -8,6 +8,7 @@
  */
 package controller;
 
+import java.io.File;
 import netview.*;
 import userview.*;
 
@@ -49,7 +50,12 @@ public class ChatController implements NIToCtrl, UIToCtrl {
     }
 
     @Override
-    public void ReceiveMessage(String ip, String message) {
+    public void receiveMessage(String ip, String message) {
         System.out.println("Message received from "+ip+" : "+message);
+    }
+
+    @Override
+    public void receiveFile(String ip, File file) {
+        System.out.println("File received !");
     }
 }

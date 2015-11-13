@@ -28,10 +28,13 @@ public class TCPReceiver extends Thread {
     @Override
     public void run() {
         try {
-            ObjectInputStream inputStream = new ObjectInputStream(this.socket.getInputStream());
+            DataInputStream inputStream = new DataInputStream(this.socket.getInputStream());
+            FileInputStream fileInputStream = new FileInputStream();
+            
+            /*ObjectInputStream inputStream = new ObjectInputStream(this.socket.getInputStream());
             String result = inputStream.readUTF();
             this.chatNI.message(this.socket.getInetAddress().toString(), result);
-            this.socket.close();
+            this.socket.close();*/
         } catch (IOException e) {
             System.out.println("Exception when receiving the tcp packet : " + e);
         }

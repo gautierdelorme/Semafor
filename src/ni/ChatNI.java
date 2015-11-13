@@ -8,6 +8,7 @@
  */
 package ni;
 
+import java.io.File;
 import netview.*;
 
 /**
@@ -38,19 +39,21 @@ public class ChatNI implements CtrlToNI, FromToRmtApp {
     
     @Override
     public void sendHello(String nickname, boolean reqReply) {
-        UPDPacket helloMessage = new UPDPacket(UPDPacket.typeMessage.HELLO, nickname, reqReply);
+        UDPPacket helloMessage = new HelloPacket(reqReply, nickname);
         this.udpSender.sendToAll(helloMessage.toString());
     }
 
     @Override
     public void sendBye() {
-        UPDPacket byeMessage = new UPDPacket(UPDPacket.typeMessage.BYE, false);
+        UDPPacket byeMessage = new ByePacket();
         this.udpSender.sendToAll(byeMessage.toString());
     }
 
     @Override
     public void sendMessage(String message, String ip) {
-        (new TCPSender(ip, message)).start();
+        //(new TCPSender(ip, message)).start();
+        MessagePacket messagePacket = new MessagePacket(message);
+        this.udpSender.sendTo(ip, messagePacket.toString());
     }
     
     @Override
@@ -65,7 +68,12 @@ public class ChatNI implements CtrlToNI, FromToRmtApp {
 
     @Override
     public void message(String ip, String message) {
-        niToCtrl.ReceiveMessage(ip, message);
+        niToCtrl.receiveMessage(ip, message);
+    }
+
+    @Override
+    public void file(String ip, File file) {
+        niToCtrl.receiveFile(ip, file);
     }
     
     public void close() {

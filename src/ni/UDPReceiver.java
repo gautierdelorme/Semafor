@@ -10,6 +10,7 @@ package ni;
 
 import java.io.*;
 import java.net.*;
+import org.json.*;
 
 /**
  *
@@ -53,14 +54,21 @@ public class UDPReceiver extends Thread {
     
     private void handlePacket(DatagramPacket packet) {
         String stringReceive = new String(packet.getData(), 0, packet.getLength());
-        UPDPacket message = new UPDPacket(stringReceive);
+        UDPPacket message = new UDPPacket(new JSONObject(stringReceive));
         switch (message.getType()) {
             case HELLO:
-                this.chatNI.hello(packet.getAddress().toString(), message.getNickname(), message.isReqReply());
+                HelloPacket helloMessage = new HelloPacket(new JSONObject(stringReceive));
+                this.chatNI.hello(packet.getAddress().toString(), helloMessage.getNickname(), helloMessage.isReqReply());
                 break;
             case BYE:
                 this.chatNI.bye(packet.getAddress().toString());
                 break;
+            case MESSAGE:
+                MessagePacket messageMessage = new MessagePacket(new JSONObject(stringReceive));
+                this.chatNI.message(packet.getAddress().toString(), messageMessage.getMessage());
+                break;
+            case FILE_REQUEST:
+                //processFile();
             default:
                 System.out.println("Error when handling the received packet.");
         }

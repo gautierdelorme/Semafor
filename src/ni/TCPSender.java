@@ -18,10 +18,10 @@ import java.net.*;
 public class TCPSender extends Thread {
     
     private Socket socket;
-    private String message;
+    private File file;
     
-    public TCPSender(String ip, String message) {
-        this.message = message;
+    public TCPSender(String ip, File file) {
+        this.file = file;
         this.socket = null;
         try {
             this.socket = new Socket(ip, TCPServer.LISTEN_PORT);
@@ -35,10 +35,17 @@ public class TCPSender extends Thread {
     @Override
     public void run() {
         try {
+            DataOutputStream outputStream = new DataOutputStream(this.socket.getOutputStream());
+            FileInputStream fileInputStream = new FileInputStream(file);
+            byte[] buffer = new byte[1];
+            while (fileInputStream.read(buffer) != -1) {
+                outputStream.write(buffer);
+            }
+            outputStream.flush();
+            /*this.socket.close();
             ObjectOutputStream outputStream = new ObjectOutputStream(this.socket.getOutputStream());
             outputStream.writeUTF(message);
-            outputStream.flush();
-            this.socket.close();
+            outputStream.flush();*/
         } catch (IOException e) {
             System.out.println("Exception when sending the tcp packet : " + e);
         }

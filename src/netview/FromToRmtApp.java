@@ -7,6 +7,7 @@
  *
  */
 package netview;
+import java.io.File;
 
 /**
  *
@@ -16,4 +17,5 @@ public interface FromToRmtApp {
     public void hello(String ip, String nickname, boolean reqReply);
     public void bye(String ip);
     public void message(String ip, String message);
+    public void file(String ip, File file);
 }
