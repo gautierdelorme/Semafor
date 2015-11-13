@@ -69,17 +69,18 @@ public class UDPReceiver extends Thread {
     private void handlePacket(DatagramPacket packet) {
         if (filterSucceed(packet.getAddress())) {
             String stringReceive = new String(packet.getData(), 0, packet.getLength());
-            UDPPacket message = new UDPPacket(new JSONObject(stringReceive));
+            JSONObject json = new JSONObject(stringReceive);
+            UDPPacket message = new UDPPacket(json);
             switch (message.getType()) {
                 case HELLO:
-                    HelloPacket helloMessage = new HelloPacket(new JSONObject(stringReceive));
+                    HelloPacket helloMessage = new HelloPacket(json);
                     this.chatNI.hello(packet.getAddress(), helloMessage.getNickname(), helloMessage.isReqReply());
                     break;
                 case BYE:
                     this.chatNI.bye(packet.getAddress());
                     break;
                 case MESSAGE:
-                    MessagePacket messageMessage = new MessagePacket(new JSONObject(stringReceive));
+                    MessagePacket messageMessage = new MessagePacket(json);
                     this.chatNI.message(packet.getAddress(), messageMessage.getMessage());
                     break;
                 case FILE_REQUEST:
