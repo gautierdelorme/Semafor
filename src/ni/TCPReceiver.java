@@ -29,8 +29,12 @@ public class TCPReceiver extends Thread {
     public void run() {
         try {
             DataInputStream inputStream = new DataInputStream(this.socket.getInputStream());
-            //FileInputStream fileInputStream = new FileInputStream();
-            
+            FileOutputStream fileOutputStream = new FileOutputStream("test.txt");
+            byte[] buffer = new byte[1];
+            while (inputStream.read(buffer) != -1) {
+                fileOutputStream.write(buffer);
+            }
+            fileOutputStream.close();
             /*ObjectInputStream inputStream = new ObjectInputStream(this.socket.getInputStream());
             String result = inputStream.readUTF();
             this.chatNI.message(this.socket.getInetAddress().toString(), result);

@@ -38,9 +38,10 @@ public class TCPSender extends Thread {
             DataOutputStream outputStream = new DataOutputStream(this.socket.getOutputStream());
             FileInputStream fileInputStream = new FileInputStream(file);
             byte[] buffer = new byte[1];
-            while (fileInputStream.read(buffer) != -1) {
+            while (fileInputStream.read(buffer) > 0) {
                 outputStream.write(buffer);
             }
+            fileInputStream.close();
             outputStream.flush();
             /*this.socket.close();
             ObjectOutputStream outputStream = new ObjectOutputStream(this.socket.getOutputStream());

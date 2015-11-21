@@ -8,6 +8,7 @@
  */
 package netview;
 
+import java.io.File;
 import java.net.InetAddress;
 
 /**
@@ -19,4 +20,5 @@ public interface CtrlToNI {
     public void sendHelloTo(InetAddress ip, String nickname, boolean reqReply);
     public void sendBye();
     public void sendMessage(String message, InetAddress ip);
+    public void sendFile(File file, InetAddress ip);
 }
