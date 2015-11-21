@@ -22,4 +22,19 @@ public class User {
         this.nickname = nickname;
         this.ip = ip;
     }
+    
+    public String getNickname() {
+        return this.nickname;
+    }
+
+    public InetAddress getIpAddress() {
+        return this.ip;
+    }
+
+    @Override
+    public String toString() {
+        return "User:\nNickname: "+this.nickname+"\nIp address: "+this.ip;
+    }
+    
+    
 }
