@@ -29,7 +29,7 @@ public class TCPReceiver extends Thread {
     public void run() {
         try {
             DataInputStream inputStream = new DataInputStream(this.socket.getInputStream());
-            FileOutputStream fileOutputStream = new FileOutputStream("test.txt");
+            FileOutputStream fileOutputStream = new FileOutputStream("test.png");
             byte[] buffer = new byte[1];
             while (inputStream.read(buffer) != -1) {
                 fileOutputStream.write(buffer);

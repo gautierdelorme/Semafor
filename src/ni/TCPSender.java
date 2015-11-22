@@ -20,7 +20,7 @@ public class TCPSender extends Thread {
     private Socket socket;
     private File file;
     
-    public TCPSender(String ip, File file) {
+    public TCPSender(InetAddress ip, File file) {
         this.file = file;
         this.socket = null;
         try {
@@ -35,6 +35,7 @@ public class TCPSender extends Thread {
     @Override
     public void run() {
         try {
+            System.out.println("I start sending file");
             DataOutputStream outputStream = new DataOutputStream(this.socket.getOutputStream());
             FileInputStream fileInputStream = new FileInputStream(file);
             byte[] buffer = new byte[1];
@@ -43,6 +44,7 @@ public class TCPSender extends Thread {
             }
             fileInputStream.close();
             outputStream.flush();
+            System.out.println("I stop sending file");
             /*this.socket.close();
             ObjectOutputStream outputStream = new ObjectOutputStream(this.socket.getOutputStream());
             outputStream.writeUTF(message);

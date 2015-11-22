@@ -30,11 +30,11 @@ public class ChatSystem {
         controller.setCtrlToDatabase(database);
         ntwInterface.setNiToCtrl(controller);
         
-        //GUI gui = GUI.buildGUI();
-        //gui.setUiToCtrl(controller);
+        GUI gui = GUI.buildGUI();
+        gui.setUiToCtrl(controller);
         
-        controller.performConnect("Arthur");
-        controller.performSendMessage("Hello bro", "127.0.0.1");
+        //controller.performConnect("Arthur");
+        //controller.performSendMessage("Hello bro", "127.0.0.1");
         
         //ntwInterface.close();
     }
