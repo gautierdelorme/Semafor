@@ -17,6 +17,5 @@ import java.net.InetAddress;
 public interface CtrlToDatabase {
     public void addUser(InetAddress ip, String nickname);
     public void deleteUser(InetAddress ip);
-    public void printUsers();
     public String[] getNicknames();
 }

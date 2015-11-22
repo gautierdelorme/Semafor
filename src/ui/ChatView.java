@@ -20,23 +20,24 @@ import javax.swing.*;
  */
 public class ChatView extends JPanel implements ActionListener {
 
-    private FromUser fromUser;
-    private JList<String> usersList;
-    private JTextArea chatBox;
-    private JTextField inputBox;
-    private CSButton linkButton;
-    private CSButton disconnectButton;
-    private JLabel titleLabel;
+    private final FromUser fromUser;
+    private final JList usersList;
+    private final DefaultListModel usersListModel;
+    private final JTextArea chatBox;
+    private final JTextField inputBox;
+    private final CSButton linkButton;
+    private final CSButton disconnectButton;
+    private final JLabel titleLabel;
     private final JFileChooser fc;
 
     public ChatView(FromUser fromUser) {
         this.fromUser = fromUser;
-
+        
         fc = new JFileChooser();
+        usersListModel = new DefaultListModel();
 
-        String[] data = fromUser.getNicknames();
         String[] dataFake = {"Arthur", "Bastien", "Pierre", "Henri"};
-        usersList = new JList<String>(data);
+        usersList = new JList(usersListModel);
         usersList.setBackground(new Color(0x3498db));
         usersList.setPreferredSize(new Dimension(100, 0));
         DefaultListCellRenderer renderer = (DefaultListCellRenderer) usersList.getCellRenderer();
@@ -117,10 +118,16 @@ public class ChatView extends JPanel implements ActionListener {
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File file = fc.getSelectedFile();
                 fromUser.selectFile(file);
-                //This is where a real application would open the file.
             } else {
                 System.out.println("Open command cancelled by user.");
             }
+        }
+    }
+    
+    public void refreshUsersList(String[] nicknames) {
+        usersListModel.removeAllElements();
+        for(String name : nicknames){
+            usersListModel.addElement(name);
         }
     }
 }

@@ -9,6 +9,8 @@
 package semafor;
 
 import controller.*;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import model.*;
 import ni.*;
 import ui.GUI;
@@ -23,20 +25,30 @@ public class ChatSystem {
      */
     public static void main(String[] args) {
         ChatController controller = new ChatController();
-        ChatNI ntwInterface = ChatNI.buildChatNI();
-        Database database = Database.buildDatabase();
         
-        controller.setCtrlToNI(ntwInterface);
-        controller.setCtrlToDatabase(database);
+        ChatNI ntwInterface = ChatNI.buildChatNI();
         ntwInterface.setNiToCtrl(controller);
         
         GUI gui = GUI.buildGUI();
         gui.setUiToCtrl(controller);
         
-        //controller.performConnect("Arthur");
-        //controller.performSendMessage("Hello bro", "127.0.0.1");
+        Database database = new Database();
         
-        //ntwInterface.close();
+        controller.setCtrlToNI(ntwInterface);
+        controller.setCtrlToDatabase(database);
+        controller.setCtrlToUI(gui);
+        
+        //Followed lines are only here to test the userlist refresh (works fine!)
+        
+        gui.connect("lol");
+        
+        try {
+            controller.receiveHello(InetAddress.getByName("127.0.0.1"), "lol", false);
+            controller.receiveHello(InetAddress.getByName("127.0.0.2"), "lol", false);
+            //controller.receiveBye(InetAddress.getByName("127.0.0.1"));
+        } catch (UnknownHostException ex) {
+            System.out.println("er");
+        }
     }
     
 }

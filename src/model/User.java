@@ -15,8 +15,8 @@ import java.net.InetAddress;
  * @author gautier
  */
 public class User {
-    private String nickname;
-    private InetAddress ip;
+    private final String nickname;
+    private final InetAddress ip;
 
     public User(String nickname, InetAddress ip) {
         this.nickname = nickname;
@@ -30,11 +30,4 @@ public class User {
     public InetAddress getIpAddress() {
         return this.ip;
     }
-
-    @Override
-    public String toString() {
-        return " |     Nickname: "+this.nickname+"\n |     Ip address: "+this.ip;
-    }
-    
-    
 }

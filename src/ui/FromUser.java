@@ -20,5 +20,4 @@ public interface FromUser {
     public void selectUsers();
     public void selectFile(File file);
     public void sendMessage(String message);
-    public String[] getNicknames();
 }

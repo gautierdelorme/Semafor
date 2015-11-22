@@ -77,8 +77,8 @@ public class GUI extends JFrame implements CtrlToUI, FromUser {
     }
     
     @Override
-    public void refreshUsersList() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void refreshUsersList(String[] nicknames) {
+        chatView.refreshUsersList(nicknames);
     }
 
     @Override
@@ -90,10 +90,4 @@ public class GUI extends JFrame implements CtrlToUI, FromUser {
     public void displayFile(File file, String nickname) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
-    @Override
-    public String[] getNicknames() {
-        return uiToCtrl.getNicknames();
-    }
-    
 }

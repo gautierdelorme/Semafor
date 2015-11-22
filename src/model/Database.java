@@ -17,14 +17,10 @@ import java.net.InetAddress;
 public class Database implements CtrlToDatabase{
     
     protected UsersList userList;
-
-    public static Database buildDatabase(){
-        Database database = new Database();
-        database.userList = new UsersList();
-        return database;
-    }
     
-    private Database(){}
+    public Database(){
+        this.userList = new UsersList();
+    }
     
     @Override
     public void addUser(InetAddress ip, String nickname) {
@@ -34,11 +30,6 @@ public class Database implements CtrlToDatabase{
     @Override
     public void deleteUser(InetAddress ip) {
         userList.deleteUser(ip);
-    }
-
-    @Override
-    public void printUsers() {
-        userList.printUsers();
     }
 
     @Override
