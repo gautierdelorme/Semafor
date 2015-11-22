@@ -68,11 +68,14 @@ public class ChatController implements NIToCtrl, UIToCtrl {
         if (reqReply) {
             ctrlToNI.sendHelloTo(ip, "gautier", false);
             ctrlToDatabase.addUser(ip, nickname);
+            ctrlToDatabase.printUsers();
         }
     }
 
     @Override
     public void receiveBye(InetAddress ip) {
+        ctrlToDatabase.deleteUser(ip);
+        ctrlToDatabase.printUsers();
         System.out.println("Bye received from "+ip);
     }
 

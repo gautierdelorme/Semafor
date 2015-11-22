@@ -33,7 +33,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User:\nNickname: "+this.nickname+"\nIp address: "+this.ip;
+        return " |     Nickname: "+this.nickname+"\n |     Ip address: "+this.ip;
     }
     
     
