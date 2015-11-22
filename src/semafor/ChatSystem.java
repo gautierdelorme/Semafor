@@ -27,7 +27,7 @@ public class ChatSystem {
         controller.setCtrlToNI(ntwInterface);
         ntwInterface.setNiToCtrl(controller);
         
-        GUI gui = new GUI();
+        GUI gui = GUI.buildGUI();
         gui.setUiToCtrl(controller);
         
         //controller.performConnect("gautier");
