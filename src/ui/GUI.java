@@ -19,6 +19,8 @@ import userview.*;
 public class GUI extends JFrame implements CtrlToUI, FromUser {
     
     private UIToCtrl uiToCtrl;
+    private LoginView loginView;
+    private ChatView chatView;
     
     public static GUI buildGUI() {
         GUI gui = new GUI();
@@ -30,7 +32,8 @@ public class GUI extends JFrame implements CtrlToUI, FromUser {
     
     private void initComponents() {
         this.setTitle("Semafor");
-        this.getContentPane().add(new LoginView(this));
+        this.loginView = new LoginView(this);
+        this.getContentPane().add(loginView);
         this.pack();
         this.setResizable(false);
         this.setVisible(true);
@@ -44,14 +47,18 @@ public class GUI extends JFrame implements CtrlToUI, FromUser {
     @Override
     public void connect(String nickname) {
         uiToCtrl.performConnect(nickname);
+        this.chatView = new ChatView(this);
         this.getContentPane().removeAll();
-        this.getContentPane().add(new ChatView(this));
+        this.getContentPane().add(chatView);
         this.pack();
     }
 
     @Override
     public void disconnect() {
         uiToCtrl.performDisconnect();
+        this.getContentPane().removeAll();
+        this.getContentPane().add(loginView);
+        this.pack();
     }
 
     @Override

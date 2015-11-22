@@ -19,14 +19,14 @@ import javax.swing.*;
  */
 public class LoginView extends JPanel implements ActionListener {
     
-    private GUI gui;
+    private FromUser fromUser;
     private JLabel iconLabel;
     private JTextField loginInput;
     private CSButton connectButton;
     private JLabel errorLabel;
 
-    public LoginView(GUI gui) {
-        this.gui = gui;
+    public LoginView(FromUser fromUser) {
+        this.fromUser = fromUser;
         
         iconLabel = new JLabel(FontAwesome.Icon.COMMENTS_ALT.s(), SwingConstants.CENTER);
         iconLabel.setFont(FontAwesome.fontAwesome.deriveFont(128.0f));
@@ -73,7 +73,7 @@ public class LoginView extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         errorLabel.setVisible(false);
         if (e.getSource() == connectButton && loginInput.getText().length() > 0 && loginInput.getText().matches("[a-zA-Z0-9]+")) {
-            gui.connect(loginInput.getText());
+            fromUser.connect(loginInput.getText());
         } else {
             errorLabel.setVisible(true);
         }
