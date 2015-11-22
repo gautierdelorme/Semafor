@@ -11,6 +11,8 @@ package controller;
 import java.io.File;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import netview.*;
 import userview.*;
 
@@ -37,8 +39,12 @@ public class ChatController implements NIToCtrl, UIToCtrl {
     }
     
     @Override
-    public void performSendFile(File file) {
-        System.out.println("Opening: " + file.getPath() + ".");
+    public void performSendFile(File file, String ip) {
+        try {
+            ctrlToNI.sendFile(file, InetAddress.getByName(ip));
+        } catch (UnknownHostException e) {
+            System.out.println("Exception when performSendMessage : "+e); 
+        }
     }
 
     @Override

@@ -65,7 +65,7 @@ public class ChatNI implements CtrlToNI, FromToRmtApp {
     
     @Override
     public void sendFile(File file, InetAddress ip) {
-        // NOT YET...
+        System.out.println("I send the file "+file.getPath()+" to "+ip);
     }
     
     @Override
