@@ -112,12 +112,11 @@ public class ChatView extends JPanel implements ActionListener {
         if (e.getSource() == disconnectButton) {
             fromUser.disconnect();
         } else if (e.getSource() == linkButton) {
-            System.out.println("I push openFile button");
             int returnVal = fc.showOpenDialog(this);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File file = fc.getSelectedFile();
+                fromUser.selectFile(file.getName());
                 //This is where a real application would open the file.
-                System.out.println("Opening: " + file.getName() + ".");
             } else {
                 System.out.println("Open command cancelled by user.");
             }
