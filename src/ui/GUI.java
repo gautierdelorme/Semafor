@@ -67,8 +67,8 @@ public class GUI extends JFrame implements CtrlToUI, FromUser {
     }
 
     @Override
-    public void selectFile(String path) {
-        uiToCtrl.performSendFile(path);
+    public void selectFile(File file) {
+        uiToCtrl.performSendFile(file);
     }
 
     @Override

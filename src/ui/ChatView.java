@@ -115,7 +115,7 @@ public class ChatView extends JPanel implements ActionListener {
             int returnVal = fc.showOpenDialog(this);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File file = fc.getSelectedFile();
-                fromUser.selectFile(file.getName());
+                fromUser.selectFile(file);
                 //This is where a real application would open the file.
             } else {
                 System.out.println("Open command cancelled by user.");

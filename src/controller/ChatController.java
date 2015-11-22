@@ -37,8 +37,8 @@ public class ChatController implements NIToCtrl, UIToCtrl {
     }
     
     @Override
-    public void performSendFile(String path) {
-        System.out.println("Opening: " + path + ".");
+    public void performSendFile(File file) {
+        System.out.println("Opening: " + file.getPath() + ".");
     }
 
     @Override

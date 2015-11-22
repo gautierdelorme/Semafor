@@ -8,6 +8,8 @@
  */
 package ui;
 
+import java.io.File;
+
 /**
  *
  * @author gautier
@@ -16,6 +18,6 @@ public interface FromUser {
     public void connect(String nickname);
     public void disconnect();
     public void selectUsers();
-    public void selectFile(String path);
+    public void selectFile(File file);
     public void sendMessage(String message);
 }
