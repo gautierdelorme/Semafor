@@ -16,7 +16,7 @@ import java.util.*;
  *
  * @author arthurpapailhau
  */
-public class UsersList implements CtrlToDatabase{
+public class UsersList {
     
     private HashMap<InetAddress, User> directory;
     
@@ -24,8 +24,7 @@ public class UsersList implements CtrlToDatabase{
         this.directory = new HashMap<InetAddress, User>();
     }
 
-    @Override
-    public void addUser(InetAddress ip, String nickname) {
+    protected void addUser(InetAddress ip, String nickname) {
         User user = createUser(ip, nickname);
         directory.put(ip, user);
         //System.out.println("I add "+nickname+" in the database [ip: "+ip+"]");
@@ -36,14 +35,24 @@ public class UsersList implements CtrlToDatabase{
         return new User(nickname, ip);
     }
 
-    @Override
-    public void deleteUser(InetAddress ip) {
+    protected void deleteUser(InetAddress ip) {
         directory.remove(ip);
         //System.out.println("I delete "+ip+" from the database");
     }
 
-    @Override
-    public void printUsers() {
+    protected String[] getNicknames(){
+        System.out.println("Nickname list asked");
+        int index = 0;
+        String[] nicknamesFake = {"Arthur", "Papay0", "Frate", "Jaquie"};
+        String[] nicknames = new String[directory.size()];
+        for (Map.Entry<InetAddress, User> entrySet : directory.entrySet()) {
+            nicknames[index] = entrySet.getValue().getNickname();
+            index++;
+        }
+        return nicknames;
+    }
+
+    protected void printUsers() {
         System.out.println("Users:");
         System.out.println("-----------------------------------------");
         for (Map.Entry<InetAddress, User> entrySet : directory.entrySet()) {

@@ -89,4 +89,9 @@ public class ChatController implements NIToCtrl, UIToCtrl {
         System.out.println("File received !");
     }
 
+    @Override
+    public String[] getNicknames() {
+        return ctrlToDatabase.getNicknames();
+    }
+
 }

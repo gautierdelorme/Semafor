@@ -40,5 +40,10 @@ public class Database implements CtrlToDatabase{
     public void printUsers() {
         userList.printUsers();
     }
+
+    @Override
+    public String[] getNicknames() {
+        return userList.getNicknames();
+    }
     
 }

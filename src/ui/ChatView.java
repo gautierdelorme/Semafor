@@ -34,7 +34,8 @@ public class ChatView extends JPanel implements ActionListener {
 
         fc = new JFileChooser();
 
-        String[] data = {"Arthur", "Bastien", "Pierre", "Henri"};
+        String[] data = fromUser.getNicknames();
+        String[] dataFake = {"Arthur", "Bastien", "Pierre", "Henri"};
         usersList = new JList<String>(data);
         usersList.setBackground(new Color(0x3498db));
         usersList.setPreferredSize(new Dimension(100, 0));

@@ -20,4 +20,5 @@ public interface UIToCtrl {
     public void performDisconnect();
     public void performSendMessage(String message, String nickname);
     public void performSendFile(File file, String nickname);
+    public String[] getNicknames();
 }
