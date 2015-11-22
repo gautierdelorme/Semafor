@@ -49,7 +49,7 @@ public class UsersList {
             nicknames[index] = entrySet.getValue().getNickname();
             index++;
         }
-        return nicknames;
+        return nicknamesFake;
     }
 
     protected void printUsers() {
