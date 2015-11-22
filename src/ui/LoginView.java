@@ -21,6 +21,7 @@ public class LoginView extends JPanel implements ActionListener {
     
     private FromUser fromUser;
     private JLabel iconLabel;
+    //private CustomTextField loginInput;
     private JTextField loginInput;
     private CSButton connectButton;
     private JLabel errorLabel;
@@ -33,8 +34,12 @@ public class LoginView extends JPanel implements ActionListener {
         iconLabel.setForeground(new Color(0x3498db));
         
         loginInput = new JTextField(10);
+        //loginInput = new CustomTextField(10);
         loginInput.setFont(loginInput.getFont().deriveFont(32.0f));
         loginInput.setHorizontalAlignment(SwingConstants.CENTER);
+        //loginInput.setPlaceholder("Pseudo");
+        
+        
         
         connectButton = new CSButton("Connect");
         connectButton.setFont(loginInput.getFont().deriveFont(32.0f));
