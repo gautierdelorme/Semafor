@@ -35,6 +35,11 @@ public class ChatController implements NIToCtrl, UIToCtrl {
     public void performDisconnect() {
         ctrlToNI.sendBye();
     }
+    
+    @Override
+    public void performSendFile(String path) {
+        System.out.println("Opening: " + path + ".");
+    }
 
     @Override
     public void performSendMessage(String message, String ip) {
@@ -67,4 +72,5 @@ public class ChatController implements NIToCtrl, UIToCtrl {
     public void receiveFile(InetAddress ip, File file) {
         System.out.println("File received !");
     }
+
 }
