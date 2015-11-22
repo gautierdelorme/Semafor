@@ -26,11 +26,6 @@ public class Database implements CtrlToDatabase{
     
     private Database(){}
     
-    public static UsersList buildUsersList(){
-        UsersList usersList = new UsersList();
-        return usersList;
-    }
-    
     @Override
     public void addUser(InetAddress ip, String nickname) {
         userList.addUser(ip, nickname);
