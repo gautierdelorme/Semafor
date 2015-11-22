@@ -20,13 +20,8 @@ public class UsersList implements CtrlToDatabase{
     
     private HashMap<InetAddress, User> directory;
     
-    public static UsersList buildUsersList(){
-        UsersList usersList = new UsersList();
-        usersList.directory = new HashMap<InetAddress, User>();
-        return usersList;
-    }
-    
-    private UsersList(){
+    public UsersList(){
+        this.directory = new HashMap<InetAddress, User>();
     }
 
     @Override
