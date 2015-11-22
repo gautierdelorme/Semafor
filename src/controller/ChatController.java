@@ -13,6 +13,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.*;
 import netview.*;
 import userview.*;
 
@@ -23,9 +24,14 @@ import userview.*;
 public class ChatController implements NIToCtrl, UIToCtrl {
     
     private CtrlToNI ctrlToNI;
+    private CtrlToDatabase ctrlToDatabase;
 
     public void setCtrlToNI(CtrlToNI ctrlToNI) {
         this.ctrlToNI = ctrlToNI;
+    }
+    
+    public void setCtrlToDatabase(CtrlToDatabase ctrlToDatabase){
+        this.ctrlToDatabase = ctrlToDatabase;
     }
 
     @Override
@@ -61,6 +67,7 @@ public class ChatController implements NIToCtrl, UIToCtrl {
         System.out.println("Hello received from "+nickname+" and reqReply = "+reqReply);
         if (reqReply) {
             ctrlToNI.sendHelloTo(ip, "gautier", false);
+            ctrlToDatabase.addUser(ip, nickname);
         }
     }
 

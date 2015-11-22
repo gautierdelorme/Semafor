@@ -63,7 +63,8 @@ public class UDPReceiver extends Thread {
         } catch (UnknownHostException e) {
             System.out.println("Could not find the localAddress : " + e);
         }
-        return canPassed;
+        //return canPassed;
+        return true;
     }
 
     private void handlePacket(DatagramPacket packet) {

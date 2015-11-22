@@ -9,6 +9,7 @@
 package semafor;
 
 import controller.*;
+import model.*;
 import ni.*;
 import ui.GUI;
 /**
@@ -23,15 +24,17 @@ public class ChatSystem {
     public static void main(String[] args) {
         ChatController controller = new ChatController();
         ChatNI ntwInterface = ChatNI.buildChatNI();
+        UsersList usersList = UsersList.buildUsersList();
         
         controller.setCtrlToNI(ntwInterface);
+        controller.setCtrlToDatabase(usersList);
         ntwInterface.setNiToCtrl(controller);
         
-        GUI gui = GUI.buildGUI();
-        gui.setUiToCtrl(controller);
+        //GUI gui = GUI.buildGUI();
+        //gui.setUiToCtrl(controller);
         
-        //controller.performConnect("gautier");
-        //controller.performSendMessage("Hello bro", "10.32.0.133");
+        controller.performConnect("Arthur");
+       controller.performSendMessage("Hello bro", "127.0.0.1");
         
         //ntwInterface.close();
     }
