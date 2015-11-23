@@ -12,7 +12,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.*;
 import java.util.stream.Stream;
 import javax.swing.*;
 
@@ -128,10 +127,6 @@ public class ChatView extends JPanel implements ActionListener {
     
     public void refreshUsersList(String[] nicknames) {
         usersListModel.removeAllElements();
-        Stream<String> stream = Stream.of(nicknames);
-        stream.forEach(nickname -> usersListModel.addElement(nickname));
-        //for(String name : nicknames){
-          //  usersListModel.addElement(name);
-        //}
+        Stream.of(nicknames).forEach(nickname -> usersListModel.addElement(nickname));
     }
 }
