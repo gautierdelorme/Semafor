@@ -161,7 +161,6 @@ public class ChatView extends JPanel implements ActionListener, ListSelectionLis
     public void valueChanged(ListSelectionEvent e) {
         if (!e.getValueIsAdjusting()) {
             selectedUser = usersListModel.get(e.getFirstIndex());
-            System.out.println("u : "+selectedUser.getNickname());
         }
     }
 }

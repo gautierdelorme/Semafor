@@ -10,7 +10,6 @@ package controller;
 
 import java.io.File;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 import model.*;
 import netview.*;
 import userview.*;

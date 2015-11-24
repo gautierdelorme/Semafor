@@ -24,6 +24,15 @@ public class ChatSystem {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        
+        /*
+        * TO DO :
+        * - Handle when JSON dont have good formatting
+        * - Handle file
+        * - Handle multiple users conversations
+        *
+        * /!\ TO TEST IN LOCAL RETURN TRUE IN UDPRECEIVER FILTER
+        */
         ChatController controller = new ChatController();
         
         ChatNI ntwInterface = ChatNI.buildChatNI();
