@@ -49,13 +49,17 @@ public class ChatController implements NIToCtrl, UIToCtrl {
     }
     
     @Override
-    public void performSendFile(File file, User user) {
-        ctrlToNI.sendFile(file, user.getIpAddress());
+    public void performSendFile(File file, User[] users) {
+        for (User user : users) {
+            ctrlToNI.sendFile(file, user.getIpAddress());
+        }
     }
 
     @Override
-    public void performSendMessage(String message, User user) {
-        ctrlToNI.sendMessage(message, user.getIpAddress());
+    public void performSendMessage(String message, User[] users) {
+        for (User user : users) {
+            ctrlToNI.sendMessage(message, user.getIpAddress());
+        }
     }
 
     @Override
@@ -70,9 +74,9 @@ public class ChatController implements NIToCtrl, UIToCtrl {
 
     @Override
     public void receiveBye(InetAddress ip) {
+        System.out.println("Bye received from "+ip);
         ctrlToDatabase.deleteUser(ip);
         ctrlToUI.refreshUsersList(ctrlToDatabase.getUsers());
-        System.out.println("Bye received from "+ip);
     }
 
     @Override

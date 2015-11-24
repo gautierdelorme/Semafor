@@ -18,6 +18,6 @@ import model.User;
 public interface FromUser {
     public void connect(String nickname);
     public void disconnect();
-    public void sendFile(File file, User user);
-    public void sendMessage(String message, User user);
+    public void sendFile(File file, User[] users);
+    public void sendMessage(String message, User[] users);
 }

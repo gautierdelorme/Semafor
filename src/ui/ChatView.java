@@ -34,13 +34,14 @@ public class ChatView extends JPanel implements ActionListener, ListSelectionLis
     private final CSButton disconnectButton;
     private final JLabel titleLabel;
     private final JFileChooser fc;
-    private User selectedUser;
+    private User[] selectedUsers;
     
     protected static ChatView buildChatView(FromUser fromUser) {
         ChatView chatView = new ChatView(fromUser);
         chatView.inputBox.addActionListener(chatView);
         chatView.linkButton.addActionListener(chatView);
         chatView.disconnectButton.addActionListener(chatView);
+        //ListSelectionModel lsm = chatView.usersList.getSelectionModel();
         chatView.usersList.addListSelectionListener(chatView);
         return chatView;
     }
@@ -56,6 +57,7 @@ public class ChatView extends JPanel implements ActionListener, ListSelectionLis
         usersList = new JList(usersListModel);
         usersList.setBackground(new Color(0x3498db));
         usersList.setPreferredSize(new Dimension(100, 0));
+        usersList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         
         DefaultListCellRenderer renderer = (DefaultListCellRenderer) usersList.getCellRenderer();
         renderer.setHorizontalAlignment(SwingConstants.CENTER);
@@ -136,7 +138,7 @@ public class ChatView extends JPanel implements ActionListener, ListSelectionLis
                 System.out.println("Open command cancelled by user.");
             }
         } else if (e.getSource() == inputBox) {
-            if (selectedUser != null) {
+            if (selectedUsers.length > 0) {
                 sendMessage();
             }
         }
@@ -153,14 +155,14 @@ public class ChatView extends JPanel implements ActionListener, ListSelectionLis
     }
     
     protected void sendMessage() {
-        fromUser.sendMessage(inputBox.getText(), selectedUser);
+        fromUser.sendMessage(inputBox.getText(), selectedUsers);
         inputBox.setText("");
     }
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
         if (!e.getValueIsAdjusting()) {
-            selectedUser = usersListModel.get(e.getFirstIndex());
+            selectedUsers = (User[])usersList.getSelectedValuesList().stream().map(x -> (User)x).toArray(User[]::new);
         }
     }
 }
