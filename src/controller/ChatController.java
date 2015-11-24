@@ -39,11 +39,13 @@ public class ChatController implements NIToCtrl, UIToCtrl {
 
     @Override
     public void performConnect(String nickname) {
+        ctrlToDatabase.setCurrentUser(nickname);
         ctrlToNI.sendHello(nickname, true);
     }
 
     @Override
     public void performDisconnect() {
+        ctrlToDatabase.removeCurrentUser();
         ctrlToNI.sendBye();
     }
     
@@ -61,7 +63,7 @@ public class ChatController implements NIToCtrl, UIToCtrl {
     public void receiveHello(InetAddress ip, String nickname, boolean reqReply) {
         System.out.println("Hello received from "+nickname+" and reqReply = "+reqReply);
         if (reqReply) {
-            ctrlToNI.sendHelloTo(ip, "gautier", false);
+            ctrlToNI.sendHelloTo(ip, ctrlToDatabase.getCurrentUser().getNickname(), false);
         }
         ctrlToDatabase.addUser(ip, nickname);
         ctrlToUI.refreshUsersList(ctrlToDatabase.getUsers());

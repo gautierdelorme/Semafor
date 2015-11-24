@@ -148,6 +148,7 @@ public class ChatView extends JPanel implements ActionListener, ListSelectionLis
     
     public void sendMessage() {
         fromUser.sendMessage(inputBox.getText(), selectedUser);
+        inputBox.setText("");
     }
 
     @Override

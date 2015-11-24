@@ -9,6 +9,7 @@
 package model;
 
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 /**
  *
@@ -16,7 +17,8 @@ import java.net.InetAddress;
  */
 public class Database implements CtrlToDatabase{
     
-    protected UsersList userList;
+    private final UsersList userList;
+    private User currentUser;
     
     public Database(){
         this.userList = new UsersList();
@@ -40,5 +42,24 @@ public class Database implements CtrlToDatabase{
     @Override
     public User getUserWithIP(InetAddress ip) {
         return userList.getUserWithIP(ip);
+    }
+
+    @Override
+    public User getCurrentUser() {
+        return this.currentUser;
+    }
+
+    @Override
+    public void setCurrentUser(String nickname) {
+        try {
+            this.currentUser = User.createUser(nickname, InetAddress.getLocalHost());
+        } catch (UnknownHostException e) {
+            System.out.println("Error when creating the currentUser");
+        }
+    }
+    
+    @Override
+    public void removeCurrentUser() {
+        this.currentUser = null;
     }
 }

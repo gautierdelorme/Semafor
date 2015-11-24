@@ -17,8 +17,12 @@ import java.net.InetAddress;
 public class User {
     private final String nickname;
     private final InetAddress ip;
+    
+    protected static User createUser(String nickname, InetAddress ip) {
+        return new User(nickname, ip);
+    }
 
-    protected User(String nickname, InetAddress ip) {
+    private User(String nickname, InetAddress ip) {
         this.nickname = nickname;
         this.ip = ip;
     }

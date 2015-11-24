@@ -15,6 +15,9 @@ import java.net.InetAddress;
  * @author arthurpapailhau
  */
 public interface CtrlToDatabase {
+    public User getCurrentUser();
+    public void setCurrentUser(String nickname);
+    public void removeCurrentUser();
     public User addUser(InetAddress ip, String nickname);
     public void deleteUser(InetAddress ip);
     public User getUserWithIP(InetAddress ip);
