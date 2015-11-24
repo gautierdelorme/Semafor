@@ -33,6 +33,7 @@ public class GUI extends JFrame implements CtrlToUI, FromUser {
     private void initComponents() {
         this.setTitle("Semafor");
         this.loginView = new LoginView(this);
+        this.chatView = new ChatView(this);
         this.getContentPane().add(loginView);
         this.pack();
         this.setResizable(false);
@@ -47,7 +48,6 @@ public class GUI extends JFrame implements CtrlToUI, FromUser {
     @Override
     public void connect(String nickname) {
         uiToCtrl.performConnect(nickname);
-        this.chatView = new ChatView(this);
         this.getContentPane().removeAll();
         this.getContentPane().add(chatView);
         this.pack();
@@ -83,7 +83,7 @@ public class GUI extends JFrame implements CtrlToUI, FromUser {
 
     @Override
     public void displayMessage(String message, String nickname) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        chatView.displayMessage(message, nickname);
     }
 
     @Override

@@ -85,6 +85,7 @@ public class ChatController implements NIToCtrl, UIToCtrl {
     @Override
     public void receiveMessage(InetAddress ip, String message) {
         System.out.println("Message received from "+ip+" : "+message);
+        ctrlToUI.displayMessage(message, "gautch");
     }
 
     @Override
