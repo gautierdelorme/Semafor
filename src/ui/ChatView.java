@@ -133,7 +133,7 @@ public class ChatView extends JPanel implements ActionListener {
     }
     
     public void displayMessage(String message, String nickname) {
-        String[] rowData = {nickname+" : "+message};
+        String[] rowData = {"<html><b>"+nickname+" : </b>"+message+"</html>"};
         chatBoxModel.addRow(rowData);
      }
 }
