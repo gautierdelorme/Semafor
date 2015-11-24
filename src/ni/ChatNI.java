@@ -58,7 +58,6 @@ public class ChatNI implements CtrlToNI, FromToRmtApp {
 
     @Override
     public void sendMessage(String message, InetAddress ip) {
-        //(new TCPSender(ip, message)).start();
         MessagePacket messagePacket = new MessagePacket(message);
         this.udpSender.sendTo(ip, messagePacket.toString());
     }

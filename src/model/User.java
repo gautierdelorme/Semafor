@@ -30,4 +30,9 @@ public class User {
     public InetAddress getIpAddress() {
         return this.ip;
     }
+    
+    @Override
+    public String toString() {
+        return nickname;
+    }
 }

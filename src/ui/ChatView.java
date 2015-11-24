@@ -14,17 +14,19 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.stream.Stream;
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import model.User;
 /**
  *
  * @author gautier
  */
-public class ChatView extends JPanel implements ActionListener {
+public class ChatView extends JPanel implements ActionListener, ListSelectionListener {
 
     private final FromUser fromUser;
     private final JList usersList;
-    private final DefaultListModel usersListModel;
+    private final DefaultListModel<User> usersListModel;
     private final JTable chatBox;
     private final DefaultTableModel chatBoxModel;
     private final JTextField inputBox;
@@ -32,19 +34,21 @@ public class ChatView extends JPanel implements ActionListener {
     private final CSButton disconnectButton;
     private final JLabel titleLabel;
     private final JFileChooser fc;
+    private User selectedUser;
 
     public ChatView(FromUser fromUser) {
         this.fromUser = fromUser;
         
         fc = new JFileChooser();
-        usersListModel = new DefaultListModel();
+        usersListModel = new DefaultListModel<>();
         chatBoxModel = new DefaultTableModel();
         chatBoxModel.addColumn("ChatBox");
 
-        String[] dataFake = {"Arthur", "Bastien", "Pierre", "Henri"};
         usersList = new JList(usersListModel);
+        usersList.addListSelectionListener(this);
         usersList.setBackground(new Color(0x3498db));
         usersList.setPreferredSize(new Dimension(100, 0));
+        
         DefaultListCellRenderer renderer = (DefaultListCellRenderer) usersList.getCellRenderer();
         renderer.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -55,6 +59,7 @@ public class ChatView extends JPanel implements ActionListener {
         inputBox.setFont(inputBox.getFont().deriveFont(16.0f));
         inputBox.setBackground(new Color(0xecf0f1));
         inputBox.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        inputBox.addActionListener(this);
 
         linkButton = new CSButton(FontAwesome.Icon.PAPERCLIP.s());
         linkButton.setFont(FontAwesome.fontAwesome.deriveFont(20.0f));
@@ -124,16 +129,32 @@ public class ChatView extends JPanel implements ActionListener {
             } else {
                 System.out.println("Open command cancelled by user.");
             }
+        } else if (e.getSource() == inputBox) {
+            if (selectedUser != null) {
+                sendMessage();
+            }
         }
     }
     
     public void refreshUsersList(User[] users) {
         usersListModel.removeAllElements();
-        Stream.of(users).forEach(user -> usersListModel.addElement(user.getNickname()));
+        Stream.of(users).forEach(user -> usersListModel.addElement(user));
     }
     
     public void displayMessage(String message, User user) {
         String[] rowData = {"<html><b>"+user.getNickname()+" : </b>"+message+"</html>"};
         chatBoxModel.addRow(rowData);
-     }
+    }
+    
+    public void sendMessage() {
+        fromUser.sendMessage(inputBox.getText(), selectedUser);
+    }
+
+    @Override
+    public void valueChanged(ListSelectionEvent e) {
+        if (!e.getValueIsAdjusting()) {
+            selectedUser = usersListModel.get(e.getFirstIndex());
+            System.out.println("u : "+selectedUser.getNickname());
+        }
+    }
 }
