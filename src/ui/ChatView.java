@@ -12,7 +12,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.Vector;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -23,7 +25,8 @@ public class ChatView extends JPanel implements ActionListener {
     private final FromUser fromUser;
     private final JList usersList;
     private final DefaultListModel usersListModel;
-    private final JTextArea chatBox;
+    private final JTable chatBox;
+    private final DefaultTableModel chatBoxModel;
     private final JTextField inputBox;
     private final CSButton linkButton;
     private final CSButton disconnectButton;
@@ -35,7 +38,9 @@ public class ChatView extends JPanel implements ActionListener {
         
         fc = new JFileChooser();
         usersListModel = new DefaultListModel();
-
+        chatBoxModel = new DefaultTableModel();
+        chatBoxModel.addColumn("ChatBox");
+        
         String[] dataFake = {"Arthur", "Bastien", "Pierre", "Henri"};
         usersList = new JList(usersListModel);
         usersList.setBackground(new Color(0x3498db));
@@ -43,10 +48,8 @@ public class ChatView extends JPanel implements ActionListener {
         DefaultListCellRenderer renderer = (DefaultListCellRenderer) usersList.getCellRenderer();
         renderer.setHorizontalAlignment(SwingConstants.CENTER);
 
-        chatBox = new JTextArea(20, 0);
-        chatBox.setFont(chatBox.getFont().deriveFont(16.0f));
-        chatBox.setEditable(false);
-        chatBox.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        chatBox = new JTable(chatBoxModel);
+        chatBox.setFont(chatBox.getFont().deriveFont(12.0f));
 
         inputBox = new JTextField(30);
         inputBox.setFont(inputBox.getFont().deriveFont(16.0f));
@@ -129,5 +132,11 @@ public class ChatView extends JPanel implements ActionListener {
         for(String name : nicknames){
             usersListModel.addElement(name);
         }
+    }
+    
+    public void displayMessage(String message, String nickname) {
+        System.out.println("yoooo");
+        String[] rowData = {nickname+" : "+message};
+        chatBoxModel.addRow(rowData);
     }
 }
