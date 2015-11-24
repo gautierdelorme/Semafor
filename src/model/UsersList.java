@@ -20,13 +20,14 @@ public class UsersList {
     
     private final HashMap<InetAddress, User> directory;
     
-    public UsersList(){
+    protected UsersList(){
         this.directory = new HashMap<>();
     }
 
-    protected void addUser(InetAddress ip, String nickname) {
+    protected User addUser(InetAddress ip, String nickname) {
         User user = createUser(ip, nickname);
         directory.put(ip, user);
+        return user;
     }
     
     private User createUser(InetAddress ip, String nickname){
@@ -37,7 +38,11 @@ public class UsersList {
         directory.remove(ip);
     }
 
-    protected String[] getNicknames(){
-        return directory.values().stream().map(x -> x.getNickname()).toArray(String[]::new);
+    protected User[] getUsers(){
+        return directory.values().stream().toArray(User[]::new);
+    }
+    
+    public User getUserWithIP(InetAddress ip) {
+        return directory.get(ip);
     }
 }

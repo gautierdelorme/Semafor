@@ -15,7 +15,7 @@ import java.io.File;
 import java.util.stream.Stream;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-
+import model.User;
 /**
  *
  * @author gautier
@@ -120,20 +120,20 @@ public class ChatView extends JPanel implements ActionListener {
             int returnVal = fc.showOpenDialog(this);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File file = fc.getSelectedFile();
-                fromUser.selectFile(file);
+                fromUser.sendFile(file, null);
             } else {
                 System.out.println("Open command cancelled by user.");
             }
         }
     }
     
-    public void refreshUsersList(String[] nicknames) {
+    public void refreshUsersList(User[] users) {
         usersListModel.removeAllElements();
-        Stream.of(nicknames).forEach(nickname -> usersListModel.addElement(nickname));
+        Stream.of(users).forEach(user -> usersListModel.addElement(user.getNickname()));
     }
     
-    public void displayMessage(String message, String nickname) {
-        String[] rowData = {"<html><b>"+nickname+" : </b>"+message+"</html>"};
+    public void displayMessage(String message, User user) {
+        String[] rowData = {"<html><b>"+user.getNickname()+" : </b>"+message+"</html>"};
         chatBoxModel.addRow(rowData);
      }
 }

@@ -18,7 +18,7 @@ public class User {
     private final String nickname;
     private final InetAddress ip;
 
-    public User(String nickname, InetAddress ip) {
+    protected User(String nickname, InetAddress ip) {
         this.nickname = nickname;
         this.ip = ip;
     }

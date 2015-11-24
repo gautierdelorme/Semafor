@@ -40,7 +40,7 @@ public class ChatSystem {
         
         //Followed lines are only here to test the userlist refresh (works fine!)
         
-        gui.connect("lol");
+        gui.connect("Gautier");
         
         try {
             controller.receiveHello(InetAddress.getByName("127.0.0.2"), "Gautch", false);

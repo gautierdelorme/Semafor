@@ -9,6 +9,7 @@
 package ui;
 
 import java.io.File;
+import model.User;
 
 /**
  *
@@ -17,7 +18,6 @@ import java.io.File;
 public interface FromUser {
     public void connect(String nickname);
     public void disconnect();
-    public void selectUsers();
-    public void selectFile(File file);
-    public void sendMessage(String message);
+    public void sendFile(File file, User user);
+    public void sendMessage(String message, User user);
 }

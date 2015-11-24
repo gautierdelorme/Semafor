@@ -23,8 +23,8 @@ public class Database implements CtrlToDatabase{
     }
     
     @Override
-    public void addUser(InetAddress ip, String nickname) {
-        userList.addUser(ip, nickname);
+    public User addUser(InetAddress ip, String nickname) {
+        return userList.addUser(ip, nickname);
     }
 
     @Override
@@ -33,8 +33,12 @@ public class Database implements CtrlToDatabase{
     }
 
     @Override
-    public String[] getNicknames() {
-        return userList.getNicknames();
+    public User[] getUsers() {
+        return userList.getUsers();
     }
-    
+
+    @Override
+    public User getUserWithIP(InetAddress ip) {
+        return userList.getUserWithIP(ip);
+    }
 }

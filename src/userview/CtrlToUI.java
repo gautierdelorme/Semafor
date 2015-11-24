@@ -9,13 +9,14 @@
 package userview;
 
 import java.io.File;
+import model.User;
 
 /**
  *
  * @author arthurpapailhau
  */
 public interface CtrlToUI {
-    public void refreshUsersList(String[] nicknames);
-    public void displayMessage(String message, String nickname);
-    public void displayFile(File file, String nickname);
+    public void refreshUsersList(User[] users);
+    public void displayMessage(String message, User user);
+    public void displayFile(File file, User user);
 }

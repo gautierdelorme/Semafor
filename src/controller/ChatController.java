@@ -48,21 +48,13 @@ public class ChatController implements NIToCtrl, UIToCtrl {
     }
     
     @Override
-    public void performSendFile(File file, String ip) {
-        try {
-            ctrlToNI.sendFile(file, InetAddress.getByName(ip));
-        } catch (UnknownHostException e) {
-            System.out.println("Exception when performSendMessage : "+e); 
-        }
+    public void performSendFile(File file, User user) {
+        ctrlToNI.sendFile(file, user.getIpAddress());
     }
 
     @Override
-    public void performSendMessage(String message, String ip) {
-        try {
-            ctrlToNI.sendMessage(message, InetAddress.getByName(ip));
-        } catch (UnknownHostException e) {
-            System.out.println("Exception when performSendMessage : "+e); 
-        }
+    public void performSendMessage(String message, User user) {
+        ctrlToNI.sendMessage(message, user.getIpAddress());
     }
 
     @Override
@@ -72,20 +64,20 @@ public class ChatController implements NIToCtrl, UIToCtrl {
             ctrlToNI.sendHelloTo(ip, "gautier", false);
         }
         ctrlToDatabase.addUser(ip, nickname);
-        ctrlToUI.refreshUsersList(ctrlToDatabase.getNicknames());
+        ctrlToUI.refreshUsersList(ctrlToDatabase.getUsers());
     }
 
     @Override
     public void receiveBye(InetAddress ip) {
         ctrlToDatabase.deleteUser(ip);
-        ctrlToUI.refreshUsersList(ctrlToDatabase.getNicknames());
+        ctrlToUI.refreshUsersList(ctrlToDatabase.getUsers());
         System.out.println("Bye received from "+ip);
     }
 
     @Override
     public void receiveMessage(InetAddress ip, String message) {
         System.out.println("Message received from "+ip+" : "+message);
-        ctrlToUI.displayMessage(message, "gautch");
+        ctrlToUI.displayMessage(message, ctrlToDatabase.getUserWithIP(ip));
     }
 
     @Override
