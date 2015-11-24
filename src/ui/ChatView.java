@@ -133,7 +133,9 @@ public class ChatView extends JPanel implements ActionListener, ListSelectionLis
             int returnVal = fc.showOpenDialog(this);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File file = fc.getSelectedFile();
-                fromUser.sendFile(file, null);
+                if (selectedUsers.length > 0) {
+                    fromUser.sendFile(file, selectedUsers);
+                }
             } else {
                 System.out.println("Open command cancelled by user.");
             }
@@ -156,6 +158,12 @@ public class ChatView extends JPanel implements ActionListener, ListSelectionLis
     
     protected void sendMessage() {
         fromUser.sendMessage(inputBox.getText(), selectedUsers);
+        String usernames = selectedUsers[0].getNickname();
+        for (User selectedUser : Stream.of(selectedUsers).skip(1).toArray(User[]::new)) {
+            usernames += ", "+selectedUser.getNickname();
+        }
+        String[] rowData = {"<html><b>"+fromUser.getCurrentUser().getNickname()+" -> "+usernames+" : </b>"+inputBox.getText()+"</html>"};
+        chatBoxModel.addRow(rowData);
         inputBox.setText("");
     }
 

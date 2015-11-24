@@ -85,4 +85,9 @@ public class GUI extends JFrame implements CtrlToUI, FromUser {
     public void displayFile(File file, User user) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    @Override
+    public User getCurrentUser() {
+        return uiToCtrl.getCurrentUser();
+    }
 }

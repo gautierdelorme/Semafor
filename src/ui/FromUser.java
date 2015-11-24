@@ -20,4 +20,5 @@ public interface FromUser {
     public void disconnect();
     public void sendFile(File file, User[] users);
     public void sendMessage(String message, User[] users);
+    public User getCurrentUser();
 }

@@ -28,11 +28,11 @@ public class ChatSystem {
         /*
         * TO DO :
         * - Handle when JSON dont have good formatting
-        * - Handle file
-        * - Handle multiple users conversations
+        * - Handle file (cf commun file in POO directory on GDrive)
+        * - Handle when pseudo already exist
         *
         * /!\ TO TEST IN LOCAL RETURN TRUE IN UDPRECEIVER FILTER
-        * ACTUALLY THE LOCAL MODE IS ON !!
+        * /!\ ACTUALLY THE LOCAL MODE IS ON !!
         */
         ChatController controller = new ChatController();
         
