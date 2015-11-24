@@ -19,14 +19,20 @@ import javax.swing.*;
  */
 public class LoginView extends JPanel implements ActionListener {
     
-    private FromUser fromUser;
-    private JLabel iconLabel;
+    private final FromUser fromUser;
+    private final JLabel iconLabel;
     //private CustomTextField loginInput;
-    private JTextField loginInput;
-    private CSButton connectButton;
-    private JLabel errorLabel;
+    private final JTextField loginInput;
+    private final CSButton connectButton;
+    private final JLabel errorLabel;
+    
+    protected static LoginView buildLoginView(FromUser fromUser) {
+        LoginView loginView = new LoginView(fromUser);
+        loginView.connectButton.addActionListener(loginView);
+        return loginView;
+    }
 
-    public LoginView(FromUser fromUser) {
+    private LoginView(FromUser fromUser) {
         this.fromUser = fromUser;
         
         iconLabel = new JLabel(FontAwesome.Icon.COMMENTS_ALT.s(), SwingConstants.CENTER);
@@ -40,11 +46,9 @@ public class LoginView extends JPanel implements ActionListener {
         //loginInput.setPlaceholder("Pseudo");
         
         
-        
         connectButton = new CSButton("Connect");
         connectButton.setFont(loginInput.getFont().deriveFont(32.0f));
         connectButton.setPreferredSize(new Dimension(0, 45));
-        connectButton.addActionListener(this);
         
         errorLabel = new JLabel("Only letters and numbers are allowed !", SwingConstants.CENTER);
         errorLabel.setFont(errorLabel.getFont().deriveFont(12.0f));

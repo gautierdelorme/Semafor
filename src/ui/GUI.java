@@ -32,8 +32,8 @@ public class GUI extends JFrame implements CtrlToUI, FromUser {
     
     private void initComponents() {
         this.setTitle("Semafor");
-        this.loginView = new LoginView(this);
-        this.chatView = new ChatView(this);
+        this.loginView = LoginView.buildLoginView(this);
+        this.chatView = ChatView.buildChatView(this);
         this.getContentPane().add(loginView);
         this.pack();
         this.setResizable(false);

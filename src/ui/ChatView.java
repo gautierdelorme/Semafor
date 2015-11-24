@@ -35,8 +35,17 @@ public class ChatView extends JPanel implements ActionListener, ListSelectionLis
     private final JLabel titleLabel;
     private final JFileChooser fc;
     private User selectedUser;
+    
+    protected static ChatView buildChatView(FromUser fromUser) {
+        ChatView chatView = new ChatView(fromUser);
+        chatView.inputBox.addActionListener(chatView);
+        chatView.linkButton.addActionListener(chatView);
+        chatView.disconnectButton.addActionListener(chatView);
+        chatView.usersList.addListSelectionListener(chatView);
+        return chatView;
+    }
 
-    public ChatView(FromUser fromUser) {
+    private ChatView(FromUser fromUser) {
         this.fromUser = fromUser;
         
         fc = new JFileChooser();
@@ -45,7 +54,6 @@ public class ChatView extends JPanel implements ActionListener, ListSelectionLis
         chatBoxModel.addColumn("ChatBox");
 
         usersList = new JList(usersListModel);
-        usersList.addListSelectionListener(this);
         usersList.setBackground(new Color(0x3498db));
         usersList.setPreferredSize(new Dimension(100, 0));
         
@@ -59,20 +67,18 @@ public class ChatView extends JPanel implements ActionListener, ListSelectionLis
         inputBox.setFont(inputBox.getFont().deriveFont(16.0f));
         inputBox.setBackground(new Color(0xecf0f1));
         inputBox.setBorder(javax.swing.BorderFactory.createEmptyBorder());
-        inputBox.addActionListener(this);
+        
 
         linkButton = new CSButton(FontAwesome.Icon.PAPERCLIP.s());
         linkButton.setFont(FontAwesome.fontAwesome.deriveFont(20.0f));
         linkButton.setBackground(inputBox.getBackground());
         linkButton.setForeground(new Color(0x3498db));
-        linkButton.addActionListener(this);
 
         disconnectButton = new CSButton(FontAwesome.Icon.POWER_OFF.s());
         disconnectButton.setFont(FontAwesome.fontAwesome.deriveFont(20.0f));
         disconnectButton.setBackground(new Color(0x3498db));
         disconnectButton.setForeground(new Color(0xecf0f1));
         disconnectButton.setHorizontalAlignment(SwingConstants.RIGHT);
-        disconnectButton.addActionListener(this);
 
         titleLabel = new JLabel(FontAwesome.Icon.COMMENTS_ALT.s());
         titleLabel.setFont(FontAwesome.fontAwesome.deriveFont(20.0f));
@@ -136,17 +142,17 @@ public class ChatView extends JPanel implements ActionListener, ListSelectionLis
         }
     }
     
-    public void refreshUsersList(User[] users) {
+    protected void refreshUsersList(User[] users) {
         usersListModel.removeAllElements();
         Stream.of(users).forEach(user -> usersListModel.addElement(user));
     }
     
-    public void displayMessage(String message, User user) {
+    protected void displayMessage(String message, User user) {
         String[] rowData = {"<html><b>"+user.getNickname()+" : </b>"+message+"</html>"};
         chatBoxModel.addRow(rowData);
     }
     
-    public void sendMessage() {
+    protected void sendMessage() {
         fromUser.sendMessage(inputBox.getText(), selectedUser);
         inputBox.setText("");
     }
