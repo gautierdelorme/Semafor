@@ -20,15 +20,14 @@ public class TCPServer extends Thread {
     private ServerSocket serverSocket;
     private final ChatNI chatNI;
     private boolean canRun;
-    public final static int LISTEN_PORT = 8045;
 
     public TCPServer(ChatNI chatNI) {
         this.canRun = true;
         this.chatNI = chatNI;
         try {
-            serverSocket = new ServerSocket(LISTEN_PORT);
+            serverSocket = new ServerSocket(UDPReceiver.RECEIVING_PORT);
         } catch (IOException ex) {
-            System.out.println("Exception TCP server cannot listen on the port " + LISTEN_PORT + " : " + ex);
+            System.out.println("Exception TCP server cannot listen on the port " + UDPReceiver.RECEIVING_PORT + " : " + ex);
         }
     }
 

@@ -53,7 +53,6 @@ public class ChatSystem {
         gui.connect("Gautier");
         
         try {
-            controller.receiveHello(InetAddress.getByName("127.0.0.1"), "Gautch", false);
             controller.receiveHello(InetAddress.getByName("127.0.0.2"), "Amandine", false);
             controller.receiveHello(InetAddress.getByName("127.0.0.3"), "Laure", false);
             controller.receiveHello(InetAddress.getByName("127.0.0.4"), "Pierre", false);

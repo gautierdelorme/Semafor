@@ -12,6 +12,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Stream;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -34,7 +36,7 @@ public class ChatView extends JPanel implements ActionListener, ListSelectionLis
     private final CSButton disconnectButton;
     private final JLabel titleLabel;
     private final JFileChooser fc;
-    private User[] selectedUsers;
+    private List<User> selectedUsers;
     
     protected static ChatView buildChatView(FromUser fromUser) {
         ChatView chatView = new ChatView(fromUser);
@@ -48,6 +50,7 @@ public class ChatView extends JPanel implements ActionListener, ListSelectionLis
 
     private ChatView(FromUser fromUser) {
         this.fromUser = fromUser;
+        this.selectedUsers = new ArrayList<User>();
         
         fc = new JFileChooser();
         usersListModel = new DefaultListModel<>();
@@ -133,14 +136,14 @@ public class ChatView extends JPanel implements ActionListener, ListSelectionLis
             int returnVal = fc.showOpenDialog(this);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File file = fc.getSelectedFile();
-                if (selectedUsers.length > 0) {
+                if (selectedUsers.size() > 0) {
                     fromUser.sendFile(file, selectedUsers);
                 }
             } else {
                 System.out.println("Open command cancelled by user.");
             }
         } else if (e.getSource() == inputBox) {
-            if (selectedUsers.length > 0) {
+            if (selectedUsers.size() > 0) {
                 sendMessage();
             }
         }
@@ -158,10 +161,8 @@ public class ChatView extends JPanel implements ActionListener, ListSelectionLis
     
     protected void sendMessage() {
         fromUser.sendMessage(inputBox.getText(), selectedUsers);
-        String usernames = selectedUsers[0].getNickname();
-        for (User selectedUser : Stream.of(selectedUsers).skip(1).toArray(User[]::new)) {
-            usernames += ", "+selectedUser.getNickname();
-        }
+        String usernames = selectedUsers.get(0).getNickname();
+        usernames = selectedUsers.stream().skip(1).map((selectedUser) -> ", "+selectedUser.getNickname()).reduce(usernames, String::concat);
         String[] rowData = {"<html><b>"+fromUser.getCurrentUser().getNickname()+" -> "+usernames+" : </b>"+inputBox.getText()+"</html>"};
         chatBoxModel.addRow(rowData);
         inputBox.setText("");
@@ -170,7 +171,7 @@ public class ChatView extends JPanel implements ActionListener, ListSelectionLis
     @Override
     public void valueChanged(ListSelectionEvent e) {
         if (!e.getValueIsAdjusting()) {
-            selectedUsers = (User[])usersList.getSelectedValuesList().stream().map(x -> (User)x).toArray(User[]::new);
+            selectedUsers = usersList.getSelectedValuesList();
         }
     }
 }

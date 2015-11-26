@@ -10,6 +10,7 @@ package controller;
 
 import java.io.File;
 import java.net.InetAddress;
+import java.util.List;
 import model.*;
 import netview.*;
 import userview.*;
@@ -49,14 +50,14 @@ public class ChatController implements NIToCtrl, UIToCtrl {
     }
     
     @Override
-    public void performSendFile(File file, User[] users) {
+    public void performSendFile(File file, List<User> users) {
         for (User user : users) {
             ctrlToNI.sendFile(file, user.getIpAddress());
         }
     }
 
     @Override
-    public void performSendMessage(String message, User[] users) {
+    public void performSendMessage(String message, List<User> users) {
         for (User user : users) {
             ctrlToNI.sendMessage(message, user.getIpAddress());
         }

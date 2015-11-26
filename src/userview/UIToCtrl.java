@@ -9,6 +9,7 @@
 package userview;
 
 import java.io.File;
+import java.util.List;
 import model.User;
 
 /**
@@ -18,7 +19,7 @@ import model.User;
 public interface UIToCtrl {
     public void performConnect(String nickname);
     public void performDisconnect();
-    public void performSendMessage(String message, User[] users);
-    public void performSendFile(File file, User[] users);
+    public void performSendMessage(String message, List<User> users);
+    public void performSendFile(File file, List<User> users);
     public User getCurrentUser();
 }

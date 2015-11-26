@@ -9,6 +9,7 @@
 package ui;
 
 import java.io.File;
+import java.util.List;
 import javax.swing.JFrame;
 import userview.*;
 import model.User;
@@ -62,12 +63,12 @@ public class GUI extends JFrame implements CtrlToUI, FromUser {
     }
 
     @Override
-    public void sendFile(File file, User[] users) {
+    public void sendFile(File file, List<User> users) {
         uiToCtrl.performSendFile(file, users);
     }
 
     @Override
-    public void sendMessage(String message, User[] users) {
+    public void sendMessage(String message, List<User> users) {
         uiToCtrl.performSendMessage(message, users);
     }
     
