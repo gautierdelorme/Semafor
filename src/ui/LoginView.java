@@ -21,7 +21,6 @@ public class LoginView extends JPanel implements ActionListener {
     
     private final FromUser fromUser;
     private final JLabel iconLabel;
-    //private CustomTextField loginInput;
     private final JTextField loginInput;
     private final CSButton connectButton;
     private final JLabel errorLabel;
@@ -29,6 +28,7 @@ public class LoginView extends JPanel implements ActionListener {
     protected static LoginView buildLoginView(FromUser fromUser) {
         LoginView loginView = new LoginView(fromUser);
         loginView.connectButton.addActionListener(loginView);
+        loginView.loginInput.addActionListener(loginView);
         return loginView;
     }
 
@@ -81,7 +81,10 @@ public class LoginView extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         errorLabel.setVisible(false);
-        if (e.getSource() == connectButton && loginInput.getText().length() > 0 && loginInput.getText().matches("[a-zA-Z0-9]+")) {
+        boolean textOk = loginInput.getText().length() > 0 && loginInput.getText().matches("[a-zA-Z0-9]+");
+        if (e.getSource() == connectButton && textOk) {
+            fromUser.connect(loginInput.getText());
+        } else if (e.getSource() == loginInput && textOk) {
             fromUser.connect(loginInput.getText());
         } else {
             errorLabel.setVisible(true);

@@ -43,7 +43,6 @@ public class ChatView extends JPanel implements ActionListener, ListSelectionLis
         chatView.inputBox.addActionListener(chatView);
         chatView.linkButton.addActionListener(chatView);
         chatView.disconnectButton.addActionListener(chatView);
-        //ListSelectionModel lsm = chatView.usersList.getSelectionModel();
         chatView.usersList.addListSelectionListener(chatView);
         return chatView;
     }
