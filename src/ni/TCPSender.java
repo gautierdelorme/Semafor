@@ -40,11 +40,12 @@ public class TCPSender extends Thread {
             try (FileInputStream fileInputStream = new FileInputStream(file)) {
                 byte[] buffer = new byte[1];
                 while (fileInputStream.read(buffer) > -1) {
-                    outputStream.write(buffer);
+                    this.socket.getOutputStream().write(buffer);
                 }
             }
             outputStream.flush();
             System.out.println("I stop sending file");
+            this.socket.close();
         } catch (IOException e) {
             System.out.println("Exception when sending the tcp packet : " + e);
         }

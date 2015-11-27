@@ -9,8 +9,14 @@
 package semafor;
 
 import controller.*;
+import java.io.File;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 import model.*;
 import ni.*;
 import ui.GUI;
@@ -64,6 +70,9 @@ public class ChatSystem {
         } catch (UnknownHostException ex) {
             System.out.println("er");
         }
+        List<User> tests = new ArrayList<>();
+        tests.add(controller.getCurrentUser());
+        controller.performSendFile(new File("testcopy.txt"), tests);
     }
     
 }
