@@ -10,6 +10,7 @@ package ni;
 
 import java.io.File;
 import java.net.InetAddress;
+import java.util.HashMap;
 import netview.*;
 
 /**
@@ -21,6 +22,8 @@ public class ChatNI implements CtrlToNI, FromToRmtApp {
     private UDPSender udpSender;
     private TCPServer tcpServer;
     private NIToCtrl niToCtrl;
+    
+    private HashMap<Integer, File> bufferFiles;
     
     public static ChatNI buildChatNI() {
         ChatNI chatNI = new ChatNI();
@@ -64,27 +67,32 @@ public class ChatNI implements CtrlToNI, FromToRmtApp {
     
     @Override
     public void sendFile(File file, InetAddress ip) {
-        sendFileRequest(file.getName(), ip);
+        sendFileRequest(file, ip);
         //(new TCPSender(ip, file)).start();
     }
     
-    protected void sendFileRequest(String name, InetAddress ip) {
-        UDPPacket fileRequestPacket = new FileRequestPacket(name);
+    protected void sendFileRequest(File file, InetAddress ip) {
+        FileRequestPacket fileRequestPacket = new FileRequestPacket(file.getName());
+        bufferFiles.put(fileRequestPacket.getTimestamp(), file);
         this.udpSender.sendTo(ip, fileRequestPacket.toString());
     }
     
-    protected void sendFileRequestResponse(boolean ok, InetAddress ip) {
-        UDPPacket fileRequestResponsePacket = new FileRequestResponsePacket(ok);
+    protected void sendFileRequestResponse(boolean ok, int timestamp, InetAddress ip) {
+        UDPPacket fileRequestResponsePacket = new FileRequestResponsePacket(ok, timestamp);
         this.udpSender.sendTo(ip, fileRequestResponsePacket.toString());
     }
     
-    protected void fileRequest(InetAddress ip, String name) {
-        sendFileRequestResponse(true, ip);
+    protected void fileRequest(InetAddress ip, String name, int timestamp) {
+        sendFileRequestResponse(true, timestamp, ip);
     }
     
     protected void fileRequestResponse(InetAddress ip, boolean ok) {
         // (new TCPSender(ip, file)).start();
-        System.out.println("Send file");
+        if (ok){
+            System.out.println("Send file");
+        } else {
+            System.out.println("I don't send your fucking file!");            
+        }
     }
     
     @Override

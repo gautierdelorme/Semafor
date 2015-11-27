@@ -86,7 +86,7 @@ public class UDPReceiver extends Thread {
                     break;
                 case FILE_REQUEST:
                     FileRequestPacket fileRequestPacket = new FileRequestPacket(json);
-                    this.chatNI.fileRequest(packet.getAddress(), fileRequestPacket.getName());
+                    this.chatNI.fileRequest(packet.getAddress(), fileRequestPacket.getName(), fileRequestPacket.getTimestamp());
                     break;
                 case FILE_REQUEST_RESPONSE:
                     FileRequestResponsePacket fileRequestResponsePacket = new FileRequestResponsePacket(json);
