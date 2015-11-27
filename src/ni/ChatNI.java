@@ -27,6 +27,7 @@ public class ChatNI implements CtrlToNI, FromToRmtApp {
     
     public static ChatNI buildChatNI() {
         ChatNI chatNI = new ChatNI();
+        chatNI.bufferFiles = new HashMap<>();
         chatNI.udpReceiver = new UDPReceiver(chatNI);
         chatNI.udpSender = new UDPSender(chatNI.udpReceiver.getSocket());
         chatNI.tcpServer = new TCPServer(chatNI);
