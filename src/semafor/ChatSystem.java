@@ -56,7 +56,7 @@ public class ChatSystem {
         
         //Followed lines are only here to test the userlist refresh (works fine!)
         
-        gui.connect("Gautier");
+        /*gui.connect("Gautier");
         
         try {
             controller.receiveHello(InetAddress.getByName("127.0.0.2"), "Amandine", false);
@@ -73,6 +73,7 @@ public class ChatSystem {
         List<User> tests = new ArrayList<>();
         tests.add(controller.getCurrentUser());
         controller.performSendFile(new File("testcopy.txt"), tests);
+                */
     }
     
 }
