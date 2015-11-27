@@ -33,9 +33,8 @@ public class TCPReceiver extends Thread {
                     fileOutputStream.write(buffer);
                 }
                 this.chatNI.file(this.socket.getInetAddress(), new File("test.png"));
-            }
-            
-         catch (IOException e) {
+                this.socket.close();
+            } catch (IOException e) {
             System.out.println("Exception when receiving the tcp packet : " + e);
         }
     }
