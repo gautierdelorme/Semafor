@@ -27,6 +27,10 @@ public class FileRequestPacket extends UDPPacket {
         this.name = json.getString("name");
     }
     
+    public String getName(){
+        return this.name;
+    }
+    
     @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
