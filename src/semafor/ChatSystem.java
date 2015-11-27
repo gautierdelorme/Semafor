@@ -41,14 +41,13 @@ public class ChatSystem {
         * /!\ ACTUALLY THE LOCAL MODE IS ON !!
         */
         ChatController controller = new ChatController();
+        Database database = new Database();
         
         ChatNI ntwInterface = ChatNI.buildChatNI();
         ntwInterface.setNiToCtrl(controller);
         
         GUI gui = GUI.buildGUI();
         gui.setUiToCtrl(controller);
-        
-        Database database = new Database();
         
         controller.setCtrlToNI(ntwInterface);
         controller.setCtrlToDatabase(database);
