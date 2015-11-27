@@ -20,7 +20,7 @@ import userview.*;
  * @author gautier
  */
 public class ChatController implements NIToCtrl, UIToCtrl {
-    
+
     private CtrlToNI ctrlToNI;
     private CtrlToUI ctrlToUI;
     private CtrlToDatabase ctrlToDatabase;
@@ -28,12 +28,12 @@ public class ChatController implements NIToCtrl, UIToCtrl {
     public void setCtrlToNI(CtrlToNI ctrlToNI) {
         this.ctrlToNI = ctrlToNI;
     }
-    
+
     public void setCtrlToUI(CtrlToUI ctrlToUI) {
         this.ctrlToUI = ctrlToUI;
     }
-    
-    public void setCtrlToDatabase(CtrlToDatabase ctrlToDatabase){
+
+    public void setCtrlToDatabase(CtrlToDatabase ctrlToDatabase) {
         this.ctrlToDatabase = ctrlToDatabase;
     }
 
@@ -48,7 +48,7 @@ public class ChatController implements NIToCtrl, UIToCtrl {
         ctrlToDatabase.removeCurrentUser();
         ctrlToNI.sendBye();
     }
-    
+
     @Override
     public void performSendFile(File file, List<User> users) {
         for (User user : users) {
@@ -65,24 +65,26 @@ public class ChatController implements NIToCtrl, UIToCtrl {
 
     @Override
     public void receiveHello(InetAddress ip, String nickname, boolean reqReply) {
-        System.out.println("Hello received from "+nickname+" and reqReply = "+reqReply);
-        if (reqReply) {
-            ctrlToNI.sendHelloTo(ip, ctrlToDatabase.getCurrentUser().getNickname(), false);
+        if (ctrlToDatabase.getCurrentUser() != null) {
+            System.out.println("Hello received from " + nickname + " and reqReply = " + reqReply);
+            if (reqReply) {
+                ctrlToNI.sendHelloTo(ip, ctrlToDatabase.getCurrentUser().getNickname(), false);
+            }
+            ctrlToDatabase.addUser(ip, nickname);
+            ctrlToUI.refreshUsersList(ctrlToDatabase.getUsers());
         }
-        ctrlToDatabase.addUser(ip, nickname);
-        ctrlToUI.refreshUsersList(ctrlToDatabase.getUsers());
     }
 
     @Override
     public void receiveBye(InetAddress ip) {
-        System.out.println("Bye received from "+ip);
+        System.out.println("Bye received from " + ip);
         ctrlToDatabase.deleteUser(ip);
         ctrlToUI.refreshUsersList(ctrlToDatabase.getUsers());
     }
 
     @Override
     public void receiveMessage(InetAddress ip, String message) {
-        System.out.println("Message received from "+ip+" : "+message);
+        System.out.println("Message received from " + ip + " : " + message);
         ctrlToUI.displayMessage(message, ctrlToDatabase.getUserWithIP(ip));
     }
 

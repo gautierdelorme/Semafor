@@ -38,7 +38,7 @@ public class ChatSystem {
         * - Handle when pseudo already exist
         *
         * /!\ TO TEST IN LOCAL RETURN TRUE IN UDPRECEIVER FILTER
-        * /!\ ACTUALLY THE LOCAL MODE IS ON !!
+        * /!\ ACTUALLY THE LOCAL MODE IS OFF !!
         */
         ChatController controller = new ChatController();
         Database database = new Database();
