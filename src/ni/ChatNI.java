@@ -58,13 +58,33 @@ public class ChatNI implements CtrlToNI, FromToRmtApp {
 
     @Override
     public void sendMessage(String message, InetAddress ip) {
-        MessagePacket messagePacket = new MessagePacket(message);
+        UDPPacket messagePacket = new MessagePacket(message);
         this.udpSender.sendTo(ip, messagePacket.toString());
     }
     
     @Override
     public void sendFile(File file, InetAddress ip) {
-        (new TCPSender(ip, file)).start();
+        sendFileRequest(file.getName(), ip);
+        //(new TCPSender(ip, file)).start();
+    }
+    
+    protected void sendFileRequest(String name, InetAddress ip) {
+        UDPPacket fileRequestPacket = new FileRequestPacket(name);
+        this.udpSender.sendTo(ip, fileRequestPacket.toString());
+    }
+    
+    protected void sendFileRequestResponse(boolean ok, InetAddress ip) {
+        UDPPacket fileRequestResponsePacket = new FileRequestResponsePacket(ok);
+        this.udpSender.sendTo(ip, fileRequestResponsePacket.toString());
+    }
+    
+    protected void fileRequest(InetAddress ip, String name) {
+        sendFileRequestResponse(true, ip);
+    }
+    
+    protected void fileRequestResponse(InetAddress ip, boolean ok) {
+        // (new TCPSender(ip, file)).start();
+        System.out.println("Send file");
     }
     
     @Override
@@ -86,6 +106,7 @@ public class ChatNI implements CtrlToNI, FromToRmtApp {
     public void file(InetAddress ip, File file) {
         niToCtrl.receiveFile(ip, file);
     }
+    
     
     public void close() {
         this.tcpServer.close();

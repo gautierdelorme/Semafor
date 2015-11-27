@@ -22,6 +22,16 @@ public class FileRequestResponsePacket extends UDPPacket {
         this.ok = ok;
     }
     
+    public FileRequestResponsePacket(JSONObject json) {
+        super(json);
+        this.ok = json.getBoolean("ok");
+    }
+    
+    public boolean getOk() {
+        return this.ok;
+    }
+    
+    
     @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();

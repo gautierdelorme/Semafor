@@ -85,7 +85,13 @@ public class UDPReceiver extends Thread {
                     this.chatNI.message(packet.getAddress(), messageMessage.getMessage());
                     break;
                 case FILE_REQUEST:
-                //processFile();
+                    FileRequestPacket fileRequestPacket = new FileRequestPacket(json);
+                    this.chatNI.fileRequest(packet.getAddress(), fileRequestPacket.getName());
+                    break;
+                case FILE_REQUEST_RESPONSE:
+                    FileRequestResponsePacket fileRequestResponsePacket = new FileRequestResponsePacket(json);
+                    this.chatNI.fileRequestResponse(packet.getAddress(), fileRequestResponsePacket.getOk());
+                    break;
                 default:
                     System.out.println("Error when handling the received packet.");
             }
