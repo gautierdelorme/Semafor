@@ -24,17 +24,11 @@ public class ChatController implements NIToCtrl, UIToCtrl {
     private CtrlToNI ctrlToNI;
     private CtrlToUI ctrlToUI;
     private CtrlToDatabase ctrlToDatabase;
-
-    public void setCtrlToNI(CtrlToNI ctrlToNI) {
+    
+    public void setDependencies(CtrlToNI ctrlToNI, CtrlToDatabase ctrlToDatabase, CtrlToUI ctrlToUI) {
         this.ctrlToNI = ctrlToNI;
-    }
-
-    public void setCtrlToUI(CtrlToUI ctrlToUI) {
-        this.ctrlToUI = ctrlToUI;
-    }
-
-    public void setCtrlToDatabase(CtrlToDatabase ctrlToDatabase) {
         this.ctrlToDatabase = ctrlToDatabase;
+        this.ctrlToUI = ctrlToUI;
     }
 
     @Override
@@ -66,25 +60,22 @@ public class ChatController implements NIToCtrl, UIToCtrl {
     @Override
     public void receiveHello(InetAddress ip, String nickname, boolean reqReply) {
         if (ctrlToDatabase.getCurrentUser() != null) {
-            System.out.println("Hello received from " + nickname + " and reqReply = " + reqReply);
             if (reqReply) {
                 ctrlToNI.sendHelloTo(ip, ctrlToDatabase.getCurrentUser().getNickname(), false);
             }
-            ctrlToDatabase.addUser(ip, nickname);
-            ctrlToUI.refreshUsersList(ctrlToDatabase.getUsers());
+            if (ctrlToDatabase.canAddUser(ip, nickname)) {
+                ctrlToUI.addUser(ctrlToDatabase.addUser(ip, nickname));
+            }
         }
     }
 
     @Override
     public void receiveBye(InetAddress ip) {
-        System.out.println("Bye received from " + ip);
-        ctrlToDatabase.deleteUser(ip);
-        ctrlToUI.refreshUsersList(ctrlToDatabase.getUsers());
+        ctrlToUI.removeUser(ctrlToDatabase.deleteUser(ip));
     }
 
     @Override
     public void receiveMessage(InetAddress ip, String message) {
-        System.out.println("Message received from " + ip + " : " + message);
         ctrlToUI.displayMessage(message, ctrlToDatabase.getUserWithIP(ip));
     }
 

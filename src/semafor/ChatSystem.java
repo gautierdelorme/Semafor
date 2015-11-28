@@ -40,24 +40,19 @@ public class ChatSystem {
         * /!\ TO TEST IN LOCAL RETURN TRUE IN UDPRECEIVER FILTER
         * /!\ ACTUALLY THE LOCAL MODE IS ON !!
         */
+        
         ChatController controller = new ChatController();
         Database database = new Database();
+        ChatNI ntwInterface = ChatNI.buildChatNI(controller);
+        GUI gui = GUI.buildGUI(controller);
         
-        ChatNI ntwInterface = ChatNI.buildChatNI();
-        ntwInterface.setNiToCtrl(controller);
-        
-        GUI gui = GUI.buildGUI();
-        gui.setUiToCtrl(controller);
-        
-        controller.setCtrlToNI(ntwInterface);
-        controller.setCtrlToDatabase(database);
-        controller.setCtrlToUI(gui);
-        
+        controller.setDependencies(ntwInterface, database, gui);
+                
         //Followed lines are only here to test the userlist refresh (works fine!)
         
         gui.connect("Gautier");
         
-        /*try {
+        try {
             controller.receiveHello(InetAddress.getByName("127.0.0.2"), "Amandine", false);
             controller.receiveHello(InetAddress.getByName("127.0.0.3"), "Laure", false);
             controller.receiveHello(InetAddress.getByName("127.0.0.4"), "Pierre", false);
@@ -65,14 +60,10 @@ public class ChatSystem {
             controller.receiveHello(InetAddress.getByName("127.0.0.6"), "Bastien", false);
             controller.receiveHello(InetAddress.getByName("127.0.0.6"), "Arthur", false);
             controller.receiveMessage(InetAddress.getByName("127.0.0.3"), "test");
-            //controller.receiveBye(InetAddress.getByName("127.0.0.1"));
+            controller.receiveBye(InetAddress.getByName("127.0.0.6"));
         } catch (UnknownHostException ex) {
             System.out.println("er");
         }
-        List<User> tests = new ArrayList<>();
-        tests.add(controller.getCurrentUser());
-        controller.performSendFile(new File("testcopy.txt"), tests);
-                */
     }
     
 }

@@ -15,7 +15,7 @@ import java.net.UnknownHostException;
  *
  * @author arthurpapailhau
  */
-public class Database implements CtrlToDatabase{
+public class Database implements CtrlToDatabase {
     
     private final UsersList userList;
     private User currentUser;
@@ -28,15 +28,15 @@ public class Database implements CtrlToDatabase{
     public User addUser(InetAddress ip, String nickname) {
         return userList.addUser(ip, nickname);
     }
-
+    
     @Override
-    public void deleteUser(InetAddress ip) {
-        userList.deleteUser(ip);
+    public boolean canAddUser(InetAddress ip, String nickname) {
+        return userList.getUserWithIP(ip) == null;
     }
 
     @Override
-    public User[] getUsers() {
-        return userList.getUsers();
+    public User deleteUser(InetAddress ip) {
+        return userList.deleteUser(ip);
     }
 
     @Override

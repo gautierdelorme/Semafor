@@ -19,7 +19,7 @@ public interface CtrlToDatabase {
     public void setCurrentUser(String nickname);
     public void removeCurrentUser();
     public User addUser(InetAddress ip, String nickname);
-    public void deleteUser(InetAddress ip);
+    public User deleteUser(InetAddress ip);
     public User getUserWithIP(InetAddress ip);
-    public User[] getUsers();
+    public boolean canAddUser(InetAddress ip, String nickname);
 }

@@ -148,9 +148,14 @@ public class ChatView extends JPanel implements ActionListener, ListSelectionLis
         }
     }
     
-    protected void refreshUsersList(User[] users) {
-        usersListModel.removeAllElements();
-        Stream.of(users).forEach(user -> usersListModel.addElement(user));
+    public void addUser(User user) {
+        System.out.println(user.getNickname()+" from "+user.getIpAddress()+" joined the room");
+        usersListModel.addElement(user);
+    }
+
+    public void removeUser(User user) {
+        System.out.println(user.getNickname()+" from "+user.getIpAddress()+" left the room");
+        usersListModel.removeElement(user);
     }
     
     protected void displayMessage(String message, User user) {

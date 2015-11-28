@@ -30,8 +30,8 @@ public class UsersList {
         return user;
     }
 
-    protected void deleteUser(InetAddress ip) {
-        directory.remove(ip);
+    protected User deleteUser(InetAddress ip) {
+        return directory.remove(ip);
     }
 
     protected User[] getUsers(){

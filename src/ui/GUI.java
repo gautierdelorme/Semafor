@@ -11,8 +11,9 @@ package ui;
 import java.io.File;
 import java.util.List;
 import javax.swing.JFrame;
-import userview.*;
 import model.User;
+import userview.*;
+
 /**
  *
  * @author gautier
@@ -23,8 +24,9 @@ public class GUI extends JFrame implements CtrlToUI, FromUser {
     private LoginView loginView;
     private ChatView chatView;
     
-    public static GUI buildGUI() {
+    public static GUI buildGUI(UIToCtrl uiToCtrl) {
         GUI gui = new GUI();
+        gui.uiToCtrl = uiToCtrl;
         gui.initComponents();
         return gui;
     }
@@ -41,11 +43,7 @@ public class GUI extends JFrame implements CtrlToUI, FromUser {
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-
-    public void setUiToCtrl(UIToCtrl uiToCtrl) {
-        this.uiToCtrl = uiToCtrl;
-    }
-
+    
     @Override
     public void connect(String nickname) {
         uiToCtrl.performConnect(nickname);
@@ -71,11 +69,6 @@ public class GUI extends JFrame implements CtrlToUI, FromUser {
     public void sendMessage(String message, List<User> users) {
         uiToCtrl.performSendMessage(message, users);
     }
-    
-    @Override
-    public void refreshUsersList(User[] users) {
-        chatView.refreshUsersList(users);
-    }
 
     @Override
     public void displayMessage(String message, User user) {
@@ -90,5 +83,15 @@ public class GUI extends JFrame implements CtrlToUI, FromUser {
     @Override
     public User getCurrentUser() {
         return uiToCtrl.getCurrentUser();
+    }
+
+    @Override
+    public void addUser(User user) {
+        this.chatView.addUser(user);
+    }
+
+    @Override
+    public void removeUser(User user) {
+        this.chatView.removeUser(user);
     }
 }

@@ -25,8 +25,9 @@ public class ChatNI implements CtrlToNI, FromToRmtApp {
     private HashMap<Integer, File> filesToSend;
     private HashMap<InetAddress, File> filesToReceive;
     
-    public static ChatNI buildChatNI() {
+    public static ChatNI buildChatNI(NIToCtrl niToCtrl) {
         ChatNI chatNI = new ChatNI();
+        chatNI.niToCtrl = niToCtrl;
         chatNI.filesToSend = new HashMap<>();
         chatNI.filesToReceive = new HashMap<>();
         chatNI.udpReceiver = new UDPReceiver(chatNI);
@@ -38,10 +39,6 @@ public class ChatNI implements CtrlToNI, FromToRmtApp {
     }
 
     private ChatNI() {}
-
-    public void setNiToCtrl(NIToCtrl niToCtrl) {
-        this.niToCtrl = niToCtrl;
-    }
     
     @Override
     public void sendHello(String nickname, boolean reqReply) {

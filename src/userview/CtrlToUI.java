@@ -16,7 +16,8 @@ import model.User;
  * @author arthurpapailhau
  */
 public interface CtrlToUI {
-    public void refreshUsersList(User[] users);
     public void displayMessage(String message, User user);
     public void displayFile(File file, User user);
+    public void addUser(User user);
+    public void removeUser(User user);
 }
