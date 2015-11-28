@@ -38,7 +38,7 @@ public class ChatSystem {
         * - Handle when pseudo already exist
         *
         * /!\ TO TEST IN LOCAL RETURN TRUE IN UDPRECEIVER FILTER
-        * /!\ ACTUALLY THE LOCAL MODE IS OFF !!
+        * /!\ ACTUALLY THE LOCAL MODE IS ON !!
         */
         ChatController controller = new ChatController();
         Database database = new Database();
@@ -55,9 +55,9 @@ public class ChatSystem {
         
         //Followed lines are only here to test the userlist refresh (works fine!)
         
-        /*gui.connect("Gautier");
+        gui.connect("Gautier");
         
-        try {
+        /*try {
             controller.receiveHello(InetAddress.getByName("127.0.0.2"), "Amandine", false);
             controller.receiveHello(InetAddress.getByName("127.0.0.3"), "Laure", false);
             controller.receiveHello(InetAddress.getByName("127.0.0.4"), "Pierre", false);

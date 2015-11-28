@@ -27,7 +27,7 @@ public class FileRequestPacket extends UDPPacket {
     public FileRequestPacket(JSONObject json) {
         super(json);
         this.name = json.getString("name");
-        this.timestamp = (int)System.currentTimeMillis();
+        this.timestamp = json.getInt("timestamp");
     }
     
     public String getName(){

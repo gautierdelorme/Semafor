@@ -22,12 +22,13 @@ public class ChatNI implements CtrlToNI, FromToRmtApp {
     private UDPSender udpSender;
     private TCPServer tcpServer;
     private NIToCtrl niToCtrl;
-    
-    private HashMap<Integer, File> bufferFiles;
+    private HashMap<Integer, File> filesToSend;
+    private HashMap<InetAddress, File> filesToReceive;
     
     public static ChatNI buildChatNI() {
         ChatNI chatNI = new ChatNI();
-        chatNI.bufferFiles = new HashMap<>();
+        chatNI.filesToSend = new HashMap<>();
+        chatNI.filesToReceive = new HashMap<>();
         chatNI.udpReceiver = new UDPReceiver(chatNI);
         chatNI.udpSender = new UDPSender(chatNI.udpReceiver.getSocket());
         chatNI.tcpServer = new TCPServer(chatNI);
@@ -69,12 +70,11 @@ public class ChatNI implements CtrlToNI, FromToRmtApp {
     @Override
     public void sendFile(File file, InetAddress ip) {
         sendFileRequest(file, ip);
-        //(new TCPSender(ip, file)).start();
     }
     
     protected void sendFileRequest(File file, InetAddress ip) {
         FileRequestPacket fileRequestPacket = new FileRequestPacket(file.getName());
-        bufferFiles.put(fileRequestPacket.getTimestamp(), file);
+        filesToSend.put(fileRequestPacket.getTimestamp(), file);
         this.udpSender.sendTo(ip, fileRequestPacket.toString());
     }
     
@@ -85,15 +85,15 @@ public class ChatNI implements CtrlToNI, FromToRmtApp {
     
     protected void fileRequest(InetAddress ip, String name, int timestamp) {
         System.out.println("Do you want: "+name+" ?");
+        filesToReceive.put(ip, new File(name));
         sendFileRequestResponse(true, timestamp, ip);
     }
     
-    protected void fileRequestResponse(InetAddress ip, boolean ok) {
-        // (new TCPSender(ip, file)).start();
+    protected void fileRequestResponse(InetAddress ip, boolean ok, int timestamp) {
         if (ok){
-            System.out.println("Send file");
+            (new TCPSender(ip, filesToSend.get(timestamp))).start();
         } else {
-            System.out.println("I don't send your fucking file!");            
+            System.out.println("The user does not want the file");            
         }
     }
     
@@ -116,7 +116,10 @@ public class ChatNI implements CtrlToNI, FromToRmtApp {
     public void file(InetAddress ip, File file) {
         niToCtrl.receiveFile(ip, file);
     }
-    
+
+    protected File getFileToReceived(InetAddress ip) {
+        return filesToReceive.get(ip);
+    }
     
     public void close() {
         this.tcpServer.close();
