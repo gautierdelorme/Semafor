@@ -19,6 +19,7 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import model.User;
 /**
  *
@@ -136,6 +137,7 @@ public class ChatView extends JPanel implements ActionListener, ListSelectionLis
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File file = fc.getSelectedFile();
                 if (selectedUsers.size() > 0) {
+                    sendFile(file);
                     fromUser.sendFile(file, selectedUsers);
                 }
             } else {
@@ -160,7 +162,16 @@ public class ChatView extends JPanel implements ActionListener, ListSelectionLis
     
     protected void displayMessage(String message, User user) {
         String[] rowData = {"<html><b>"+user.getNickname()+" : </b>"+message+"</html>"};
+        chatBoxModel.addRow(rowData);        
+    }
+    
+    protected void sendFile(File file) {
+        String message = "Do you accept "+file.getName()+" ?";
+        String usernames = selectedUsers.get(0).getNickname();
+        usernames = selectedUsers.stream().skip(1).map((selectedUser) -> ", "+selectedUser.getNickname()).reduce(usernames, String::concat);
+        String[] rowData = {"<html><b>"+fromUser.getCurrentUser().getNickname()+" -> "+usernames+" : </b>"+message+"</html>"};
         chatBoxModel.addRow(rowData);
+        fromUser.sendMessage(message, selectedUsers);
     }
     
     protected void sendMessage() {
