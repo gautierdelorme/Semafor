@@ -81,7 +81,6 @@ public class ChatNI implements CtrlToNI, FromToRmtApp {
     }
     
     protected void fileRequest(InetAddress ip, String name, int timestamp) {
-        //System.out.println("Do you want: "+name+" ?");
         filesToReceive.put(ip, new File(name));
         sendFileRequestResponse(true, timestamp, ip);
     }

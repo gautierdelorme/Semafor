@@ -77,7 +77,8 @@ public class GUI extends JFrame implements CtrlToUI, FromUser {
 
     @Override
     public void displayFile(File file, User user) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        String message = file.getName()+" received.";
+        displayMessage(message, user);
     }
 
     @Override

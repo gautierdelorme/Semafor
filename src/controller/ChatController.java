@@ -81,7 +81,8 @@ public class ChatController implements NIToCtrl, UIToCtrl {
 
     @Override
     public void receiveFile(InetAddress ip, File file) {
-        System.out.println("File received !");
+        ctrlToUI.displayFile(file, ctrlToDatabase.getUserWithIP(ip));
+        //System.out.println("File received !");
     }
 
     @Override
