@@ -63,7 +63,6 @@ public class UDPReceiver extends Thread {
         } catch (UnknownHostException e) {
             System.out.println("Could not find the localAddress : " + e);
         }
-        System.out.println(adress+" can passed : "+canPassed);
         return canPassed;
     }
 
@@ -74,21 +73,26 @@ public class UDPReceiver extends Thread {
             UDPPacket message = new UDPPacket(json);
             switch (message.getType()) {
                 case HELLO:
+                    System.out.println("Receive HELLO from "+packet.getAddress());
                     HelloPacket helloMessage = new HelloPacket(json);
                     this.chatNI.hello(packet.getAddress(), helloMessage.getNickname(), helloMessage.isReqReply());
                     break;
                 case BYE:
+                    System.out.println("Receive BYE from "+packet.getAddress());
                     this.chatNI.bye(packet.getAddress());
                     break;
                 case MESSAGE:
+                    System.out.println("Receive MESSAGE from "+packet.getAddress());
                     MessagePacket messageMessage = new MessagePacket(json);
                     this.chatNI.message(packet.getAddress(), messageMessage.getMessage());
                     break;
                 case FILE_REQUEST:
+                    System.out.println("Receive FILE_REQUEST from "+packet.getAddress());
                     FileRequestPacket fileRequestPacket = new FileRequestPacket(json);
                     this.chatNI.fileRequest(packet.getAddress(), fileRequestPacket.getName(), fileRequestPacket.getTimestamp());
                     break;
                 case FILE_REQUEST_RESPONSE:
+                    System.out.println("Receive FILE_REQUEST_RESPONSE from "+packet.getAddress());
                     FileRequestResponsePacket fileRequestResponsePacket = new FileRequestResponsePacket(json);
                     this.chatNI.fileRequestResponse(packet.getAddress(), fileRequestResponsePacket.getOk(), fileRequestResponsePacket.getTimestamp());
                     break;
