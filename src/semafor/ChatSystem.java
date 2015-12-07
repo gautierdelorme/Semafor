@@ -50,8 +50,7 @@ public class ChatSystem {
                 
         //Followed lines are only here to test the userlist refresh (works fine!)
         
-        gui.connect("Gautier");
-        
+        gui.connect("Gautier"); 
         try {
             controller.receiveHello(InetAddress.getByName("127.0.0.2"), "Amandine", false);
             controller.receiveHello(InetAddress.getByName("127.0.0.3"), "Laure", false);

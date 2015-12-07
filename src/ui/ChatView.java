@@ -151,13 +151,15 @@ public class ChatView extends JPanel implements ActionListener, ListSelectionLis
     }
     
     public void addUser(User user) {
-        System.out.println(user.getNickname()+" from "+user.getIpAddress()+" joined the room");
         usersListModel.addElement(user);
+        String[] rowData = {"<html><em>"+user.getNickname()+"  joined the room.</em></html>"};
+        chatBoxModel.addRow(rowData); 
     }
 
     public void removeUser(User user) {
-        System.out.println(user.getNickname()+" from "+user.getIpAddress()+" left the room");
         usersListModel.removeElement(user);
+        String[] rowData = {"<html><em>"+user.getNickname()+" left the room.</em></html>"};
+        chatBoxModel.addRow(rowData);
     }
     
     protected void displayMessage(String message, User user) {
