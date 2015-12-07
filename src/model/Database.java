@@ -17,10 +17,14 @@ import java.net.UnknownHostException;
  */
 public class Database implements CtrlToDatabase {
     
-    private final UsersList userList;
+    private UsersList userList;
     private User currentUser;
     
     public Database(){
+        this.userList = new UsersList();
+    }
+    
+    public void removeUserList() {
         this.userList = new UsersList();
     }
     

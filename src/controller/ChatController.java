@@ -40,6 +40,7 @@ public class ChatController implements NIToCtrl, UIToCtrl {
     @Override
     public void performDisconnect() {
         ctrlToDatabase.removeCurrentUser();
+        ctrlToDatabase.removeUserList();
         ctrlToNI.sendBye();
     }
 
@@ -74,7 +75,8 @@ public class ChatController implements NIToCtrl, UIToCtrl {
 
     @Override
     public void receiveBye(InetAddress ip) {
-        ctrlToUI.removeUser(ctrlToDatabase.deleteUser(ip));
+        if (ctrlToDatabase.getUserWithIP(ip) != null)
+            ctrlToUI.removeUser(ctrlToDatabase.deleteUser(ip));
     }
 
     @Override
