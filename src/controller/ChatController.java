@@ -64,9 +64,7 @@ public class ChatController implements NIToCtrl, UIToCtrl {
             if (reqReply) {
                 ctrlToNI.sendHelloTo(ip, ctrlToDatabase.getCurrentUser().getNickname(), false);
             }
-            if (ctrlToDatabase.canAddUser(ip, nickname)) {
-                ctrlToUI.addUser(ctrlToDatabase.addUser(ip, nickname));
-            }
+            ctrlToUI.addUser(ctrlToDatabase.addUser(ip, nickname));
         }
     }
 

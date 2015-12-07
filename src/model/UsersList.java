@@ -25,9 +25,9 @@ public class UsersList {
     }
 
     protected User addUser(InetAddress ip, String nickname) {
-        User user = User.createUser(nickname, ip);
-        directory.put(ip, user);
-        return user;
+        User u = User.createUser(nickname, ip);
+        directory.put(ip, u);
+        return u;
     }
 
     protected User deleteUser(InetAddress ip) {

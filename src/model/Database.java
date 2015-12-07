@@ -24,6 +24,7 @@ public class Database implements CtrlToDatabase {
         this.userList = new UsersList();
     }
     
+    @Override
     public void removeUserList() {
         this.userList = new UsersList();
     }
@@ -33,11 +34,6 @@ public class Database implements CtrlToDatabase {
         return userList.addUser(ip, nickname);
     }
     
-    @Override
-    public boolean canAddUser(InetAddress ip, String nickname) {
-        return userList.getUserWithIP(ip) == null;
-    }
-
     @Override
     public User deleteUser(InetAddress ip) {
         return userList.deleteUser(ip);

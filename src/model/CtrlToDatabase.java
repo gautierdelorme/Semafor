@@ -22,5 +22,4 @@ public interface CtrlToDatabase {
     public User addUser(InetAddress ip, String nickname);
     public User deleteUser(InetAddress ip);
     public User getUserWithIP(InetAddress ip);
-    public boolean canAddUser(InetAddress ip, String nickname);
 }
