@@ -8,6 +8,9 @@
  */
 package ui;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.File;
 import java.util.List;
 import javax.swing.JFrame;
@@ -18,12 +21,12 @@ import userview.*;
  *
  * @author gautier
  */
-public class GUI extends JFrame implements CtrlToUI, FromUser {
-    
+public class GUI extends JFrame implements CtrlToUI, FromUser, WindowListener {
+
     private UIToCtrl uiToCtrl;
     private LoginView loginView;
     private ChatView chatView;
-    
+
     public static GUI buildGUI(UIToCtrl uiToCtrl) {
         GUI gui = new GUI();
         gui.uiToCtrl = uiToCtrl;
@@ -31,8 +34,9 @@ public class GUI extends JFrame implements CtrlToUI, FromUser {
         return gui;
     }
 
-    private GUI() {}
-    
+    private GUI() {
+    }
+
     private void initComponents() {
         this.setTitle("Semafor");
         this.loginView = LoginView.buildLoginView(this);
@@ -42,10 +46,13 @@ public class GUI extends JFrame implements CtrlToUI, FromUser {
         this.setResizable(false);
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.addWindowListener(this);
     }
-    
+
     @Override
     public void connect(String nickname) {
+        this.loginView = LoginView.buildLoginView(this);
+        this.chatView = ChatView.buildChatView(this);
         uiToCtrl.performConnect(nickname);
         this.getContentPane().removeAll();
         this.getContentPane().add(chatView);
@@ -77,7 +84,7 @@ public class GUI extends JFrame implements CtrlToUI, FromUser {
 
     @Override
     public void displayFile(File file, User user) {
-        String message = file.getName()+" received.";
+        String message = file.getName() + " received.";
         displayMessage(message, user);
     }
 
@@ -95,4 +102,34 @@ public class GUI extends JFrame implements CtrlToUI, FromUser {
     public void removeUser(User user) {
         this.chatView.removeUser(user);
     }
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        this.disconnect();
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+    }
+    
 }

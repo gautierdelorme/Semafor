@@ -31,6 +31,9 @@ public class UsersList {
     }
 
     protected User deleteUser(InetAddress ip) {
+        for(User u : directory.values()) {
+            System.out.println("User "+u.getNickname()+" ("+u.getIpAddress()+")");
+        }
         return directory.remove(ip);
     }
 

@@ -61,7 +61,10 @@ public class ChatController implements NIToCtrl, UIToCtrl {
     public void receiveHello(InetAddress ip, String nickname, boolean reqReply) {
         if (ctrlToDatabase.getCurrentUser() != null) {
             if (reqReply) {
+                System.out.println("REQREPLY : "+nickname);
                 ctrlToNI.sendHelloTo(ip, ctrlToDatabase.getCurrentUser().getNickname(), false);
+            } else {
+                System.out.println("NOREQREPLY : "+nickname);
             }
             if (ctrlToDatabase.canAddUser(ip, nickname)) {
                 ctrlToUI.addUser(ctrlToDatabase.addUser(ip, nickname));
@@ -82,7 +85,6 @@ public class ChatController implements NIToCtrl, UIToCtrl {
     @Override
     public void receiveFile(InetAddress ip, File file) {
         ctrlToUI.displayFile(file, ctrlToDatabase.getUserWithIP(ip));
-        //System.out.println("File received !");
     }
 
     @Override

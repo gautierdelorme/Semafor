@@ -45,7 +45,6 @@ public class ChatSystem {
         Database database = new Database();
         ChatNI ntwInterface = ChatNI.buildChatNI(controller);
         GUI gui = GUI.buildGUI(controller);
-        
         controller.setDependencies(ntwInterface, database, gui);
                 
         //Followed lines are only here to test the userlist refresh (works fine!)
