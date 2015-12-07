@@ -26,10 +26,12 @@ public class UDPSender {
     }
     
     public void sendTo(InetAddress ip, String message) {
+        System.out.println("SEND MESSAGE UDP");
         sendMessage(ip, message);
     }
     
     public void sendToAll(String message) {
+        System.out.println("SEND BROADCAST UDP");
         try {
             sendMessage(InetAddress.getByName(BROADCAST_ADDRESS), message);
         } catch (UnknownHostException e) {
