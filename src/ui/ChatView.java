@@ -66,6 +66,10 @@ public class ChatView extends JPanel implements ActionListener, MouseListener {
         inputBox.setFont(inputBox.getFont().deriveFont(16.0f));
         inputBox.setBackground(new Color(0xecf0f1));
         inputBox.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        inputBox.setBorder(BorderFactory.createCompoundBorder(
+                inputBox.getBorder(),
+                BorderFactory.createEmptyBorder(0, 10, 0, 0)
+        ));
 
         linkButton = new CSButton(FontAwesome.Icon.PAPERCLIP.s());
         linkButton.setFont(FontAwesome.fontAwesome.deriveFont(20.0f));
@@ -111,10 +115,6 @@ public class ChatView extends JPanel implements ActionListener, MouseListener {
         gbc.gridx = 1;
         gbc.gridheight = 1;
         gbc.gridwidth = 2;
-        /*scrollView = new JScrollPane(chatBox);
-         removeBorder(scrollView);
-         scrollView.setPreferredSize(new Dimension(0, 400));*/
-
         this.add(chatBox, gbc);
 
         gbc.gridy = 2;
