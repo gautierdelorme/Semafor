@@ -42,8 +42,8 @@ public class ChatView extends JPanel implements ActionListener, MouseListener {
         chatView.inputBox.addActionListener(chatView);
         chatView.linkButton.addActionListener(chatView);
         chatView.disconnectButton.addActionListener(chatView);
-        //chatView.usersList.addListSelectionListener(chatView);
         chatView.usersList.addMouseListener(chatView);
+        chatView.chatBox.setChatView(chatView);
         return chatView;
     }
 
@@ -145,12 +145,7 @@ public class ChatView extends JPanel implements ActionListener, MouseListener {
                 System.out.println("Open command cancelled by user.");
             }
         } else if (e.getSource() == inputBox) {
-            User u = chatBox.getUserFromSelectedTab();
-            if (u != null) {
-                sendMessageTo(u);
-            } else {
-                sendMessageToAll();
-            }
+            sendMessage(chatBox.getUserFromSelectedTab());
         }
     }
 
@@ -167,8 +162,7 @@ public class ChatView extends JPanel implements ActionListener, MouseListener {
 
     public void removeUser(User user) {
         usersListModel.removeElement(user);
-        String rowData = "<html><em>" + user.getNickname() + " left the room.</em></html>";
-        //chatBoxModel.addElement(rowData);
+        chatBox.removeUser(user);
     }
 
     protected void displayMessage(String message, User user) {
@@ -183,13 +177,12 @@ public class ChatView extends JPanel implements ActionListener, MouseListener {
          fromUser.sendMessage(message, selectedUsers);*/
     }
 
-    protected void sendMessageTo(User user) {
-        fromUser.sendMessage(inputBox.getText(), Arrays.asList(user));
-        inputBox.setText("");
-    }
-
-    protected void sendMessageToAll() {
-        fromUser.sendMessage(inputBox.getText(), Collections.list(usersListModel.elements()));
+    protected void sendMessage(User user) {
+        if (user == null)
+            fromUser.sendMessage(inputBox.getText(), Collections.list(usersListModel.elements()));
+        else
+            fromUser.sendMessage(inputBox.getText(), Arrays.asList(user));
+        chatBox.displayResponse(inputBox.getText(), user);
         inputBox.setText("");
     }
 
@@ -202,6 +195,10 @@ public class ChatView extends JPanel implements ActionListener, MouseListener {
 
     private void addTab(int i) {
         chatBox.addTab(usersListModel.get(i));
+    }
+    
+    protected User getCurrentUser() {
+        return fromUser.getCurrentUser();
     }
 
     @Override

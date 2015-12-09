@@ -40,6 +40,16 @@ public class TabChatBox extends JPanel {
         listMessagesModel.addElement(rowData); 
     }
     
+    protected void helloMessage(User u) {
+        String rowData = "<html><em>" + u.getNickname() + "  joined the room.</em></html>";
+        listMessagesModel.addElement(rowData);
+    }
+    
+    protected void byeMessage(User u) {
+        String rowData = "<html><em>" + u.getNickname() + " left the room.</em></html>";
+        listMessagesModel.addElement(rowData);
+    }
+    
     private void removeBorder(JScrollPane p) {
         p.getViewport().setBorder(null);
         p.setViewportBorder(null);
