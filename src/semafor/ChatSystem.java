@@ -34,8 +34,7 @@ public class ChatSystem {
         /*
         * TO DO :
         * - Handle when JSON dont have good formatting
-        * - Handle file (cf commun file in POO directory on GDrive)
-        * - Handle when pseudo already exist
+        * - SUPER IMPORTANT => Handle when pseudo already exist
         *
         * /!\ TO TEST IN LOCAL RETURN TRUE IN UDPRECEIVER FILTER
         * /!\ ACTUALLY THE LOCAL MODE IS OFF !!
@@ -49,7 +48,7 @@ public class ChatSystem {
                 
         //Followed lines are only here to test the userlist refresh (works fine!)
         
-        /*gui.connect("Gautier"); 
+        gui.connect("Gautier"); 
         try {
             controller.receiveHello(InetAddress.getByName("127.0.0.2"), "Amandine", false);
             controller.receiveHello(InetAddress.getByName("127.0.0.3"), "Laure", false);
@@ -61,7 +60,7 @@ public class ChatSystem {
             controller.receiveBye(InetAddress.getByName("127.0.0.6"));
         } catch (UnknownHostException ex) {
             System.out.println("er");
-        }*/
+        }
     }
     
 }
