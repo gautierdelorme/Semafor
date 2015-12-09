@@ -17,10 +17,13 @@ import model.User;
  * @author gautier
  */
 public class TabChatBox extends JPanel {
+    
+    private final User user;
     private final JList listMessages;
     private final DefaultListModel<String> listMessagesModel;
 
-    public TabChatBox() {
+    public TabChatBox(User user) {
+        this.user = user;
         listMessagesModel = new DefaultListModel<>();
         listMessages = new JList(listMessagesModel);
         listMessages.setFont(listMessages.getFont().deriveFont(12.0f));
@@ -42,5 +45,9 @@ public class TabChatBox extends JPanel {
         p.setViewportBorder(null);
         p.setBorder(null);
         p.setViewportBorder(null);
+    }
+    
+    public User getUser() {
+        return this.user;
     }
 }

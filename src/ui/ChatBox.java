@@ -8,6 +8,7 @@
  */
 package ui;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.*;
 import model.User;
@@ -18,20 +19,36 @@ import model.User;
  */
 public class ChatBox extends JTabbedPane {
     
-    private final HashMap<String, TabChatBox> tabs;
+    private final HashMap<String, TabChatBox> tabsMap;
+    private final ArrayList<TabChatBox> tabs;
+    
+    private static String generalTabName = "General";
     
     public ChatBox() {
-        tabs = new HashMap<>();
-        tabs.put("General", new TabChatBox());
-        this.addTab("General", tabs.get("General"));
+        tabsMap = new HashMap<>();
+        tabs = new ArrayList<>();
+        TabChatBox generalTabBox = new TabChatBox(null);
+        tabsMap.put(generalTabName, generalTabBox);
+        tabs.add(generalTabBox);
+        this.addTab(generalTabName, generalTabBox);
+    }
+    
+    public void addUser(User user) {
+        tabsMap.get(generalTabName).displayMessage("joined the room", user);
     }
     
     protected void displayMessage(String message, User user) {
-        tabs.get("General").displayMessage(message, user);
+        tabsMap.get(user.getNickname()).displayMessage(message, user);
     }
     
-    protected void addTab(String nickname) {
-        tabs.put(nickname, new TabChatBox());
-        this.addTab(nickname, tabs.get(nickname));
+    protected void addTab(User user) {
+        TabChatBox tab = new TabChatBox(user);
+        tabsMap.put(user.getNickname(), tab);
+        tabs.add(tab);
+        this.addTab(user.getNickname(), tabsMap.get(user.getNickname()));
+    }
+    
+    protected User getUserFromSelectedTab() {
+        return tabs.get(this.getSelectedIndex()).getUser();
     }
 }

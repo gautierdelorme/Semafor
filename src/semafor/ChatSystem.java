@@ -56,8 +56,8 @@ public class ChatSystem {
             controller.receiveHello(InetAddress.getByName("127.0.0.5"), "Henri", false);
             controller.receiveHello(InetAddress.getByName("127.0.0.6"), "Bastien", false);
             controller.receiveHello(InetAddress.getByName("127.0.0.6"), "Arthur", false);
-            controller.receiveMessage(InetAddress.getByName("127.0.0.3"), "test");
-            controller.receiveBye(InetAddress.getByName("127.0.0.6"));
+            //controller.receiveMessage(InetAddress.getByName("127.0.0.3"), "test");
+            //controller.receiveBye(InetAddress.getByName("127.0.0.6"));
         } catch (UnknownHostException ex) {
             System.out.println("er");
         }

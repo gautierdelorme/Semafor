@@ -11,64 +11,56 @@ package ui;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import model.User;
 
 /**
  *
  * @author gautier
  */
-public class ChatView extends JPanel implements ActionListener, ListSelectionListener, MouseListener {
+public class ChatView extends JPanel implements ActionListener, MouseListener {
 
     private final FromUser fromUser;
     private final JList usersList;
     private final DefaultListModel<User> usersListModel;
-    //private final JList chatBox;
-    //private final DefaultListModel<String> chatBoxModel;
     private final ChatBox chatBox;
     private final JTextField inputBox;
     private final CSButton linkButton;
     private final CSButton disconnectButton;
     private final JLabel titleLabel;
     private final JFileChooser fc;
-    private List<User> selectedUsers;
 
     protected static ChatView buildChatView(FromUser fromUser) {
         ChatView chatView = new ChatView(fromUser);
         chatView.inputBox.addActionListener(chatView);
         chatView.linkButton.addActionListener(chatView);
         chatView.disconnectButton.addActionListener(chatView);
-        chatView.usersList.addListSelectionListener(chatView);
+        //chatView.usersList.addListSelectionListener(chatView);
+        chatView.usersList.addMouseListener(chatView);
         return chatView;
     }
 
     private ChatView(FromUser fromUser) {
         this.fromUser = fromUser;
-        this.selectedUsers = new ArrayList<>();
 
         fc = new JFileChooser();
         usersListModel = new DefaultListModel<>();
-        //chatBoxModel = new DefaultListModel<>();
 
         usersList = new JList(usersListModel);
         usersList.setBackground(new Color(0x3498db));
         usersList.setPreferredSize(new Dimension(100, 0));
-        usersList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);  
-        usersList.addMouseListener(this);
+        usersList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
         DefaultListCellRenderer renderer = (DefaultListCellRenderer) usersList.getCellRenderer();
         renderer.setHorizontalAlignment(SwingConstants.CENTER);
 
-        //chatBox = new JList(chatBoxModel);
-        //chatBox.setFont(chatBox.getFont().deriveFont(12.0f));
         chatBox = new ChatBox();
         chatBox.setPreferredSize(new Dimension(0, 400));
 
@@ -145,16 +137,19 @@ public class ChatView extends JPanel implements ActionListener, ListSelectionLis
             int returnVal = fc.showOpenDialog(this);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File file = fc.getSelectedFile();
-                if (selectedUsers.size() > 0) {
-                    sendFile(file);
-                    fromUser.sendFile(file, selectedUsers);
-                }
+                /*if (selectedUsers.size() > 0) {
+                 sendFile(file);
+                 fromUser.sendFile(file, selectedUsers);
+                 }*/
             } else {
                 System.out.println("Open command cancelled by user.");
             }
         } else if (e.getSource() == inputBox) {
-            if (selectedUsers.size() > 0) {
-                sendMessage();
+            User u = chatBox.getUserFromSelectedTab();
+            if (u != null) {
+                sendMessageTo(u);
+            } else {
+                sendMessageToAll();
             }
         }
     }
@@ -167,9 +162,7 @@ public class ChatView extends JPanel implements ActionListener, ListSelectionLis
             }
         }
         usersListModel.addElement(user);
-        String rowData = "<html><em>" + user.getNickname() + "  joined the room.</em></html>";
-        chatBox.displayMessage("joined the room", user);
-        //chatBoxModel.addElement(rowData); 
+        chatBox.addUser(user);
     }
 
     public void removeUser(User user) {
@@ -179,34 +172,25 @@ public class ChatView extends JPanel implements ActionListener, ListSelectionLis
     }
 
     protected void displayMessage(String message, User user) {
-        String rowData = "<html><b>" + user.getNickname() + " : </b>" + message + "</html>";
         chatBox.displayMessage(message, user);
-        //chatBoxModel.addElement(rowData);        
     }
 
     protected void sendFile(File file) {
-        String message = "Do you accept " + file.getName() + " ?";
-        String usernames = selectedUsers.get(0).getNickname();
-        usernames = selectedUsers.stream().skip(1).map((selectedUser) -> ", " + selectedUser.getNickname()).reduce(usernames, String::concat);
-        String rowData = "<html><b>" + fromUser.getCurrentUser().getNickname() + " -> " + usernames + " : </b>" + message + "</html>";
-        //chatBoxModel.addElement(rowData);
-        fromUser.sendMessage(message, selectedUsers);
+        /*String message = "Do you accept " + file.getName() + " ?";
+         String usernames = selectedUsers.get(0).getNickname();
+         usernames = selectedUsers.stream().skip(1).map((selectedUser) -> ", " + selectedUser.getNickname()).reduce(usernames, String::concat);
+         String rowData = "<html><b>" + fromUser.getCurrentUser().getNickname() + " -> " + usernames + " : </b>" + message + "</html>";
+         fromUser.sendMessage(message, selectedUsers);*/
     }
 
-    protected void sendMessage() {
-        fromUser.sendMessage(inputBox.getText(), selectedUsers);
-        String usernames = selectedUsers.get(0).getNickname();
-        usernames = selectedUsers.stream().skip(1).map((selectedUser) -> ", " + selectedUser.getNickname()).reduce(usernames, String::concat);
-        String rowData = "<html><b>" + fromUser.getCurrentUser().getNickname() + " -> " + usernames + " : </b>" + inputBox.getText() + "</html>";
-        //chatBoxModel.addElement(rowData);
+    protected void sendMessageTo(User user) {
+        fromUser.sendMessage(inputBox.getText(), Arrays.asList(user));
         inputBox.setText("");
     }
 
-    @Override
-    public void valueChanged(ListSelectionEvent e) {
-        if (!e.getValueIsAdjusting()) {
-            selectedUsers = usersList.getSelectedValuesList();
-        }
+    protected void sendMessageToAll() {
+        fromUser.sendMessage(inputBox.getText(), Collections.list(usersListModel.elements()));
+        inputBox.setText("");
     }
 
     private void removeBorder(JScrollPane p) {
@@ -215,18 +199,18 @@ public class ChatView extends JPanel implements ActionListener, ListSelectionLis
         p.setBorder(null);
         p.setViewportBorder(null);
     }
-    
+
     private void addTab(int i) {
-        chatBox.addTab(usersListModel.get(i).getNickname());
+        chatBox.addTab(usersListModel.get(i));
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
         JList list = (JList) e.getSource();
-                if (e.getClickCount() == 2) {
-                    int index = list.locationToIndex(e.getPoint());
-                    addTab(index);
-                }
+        if (e.getClickCount() == 2) {
+            int index = list.locationToIndex(e.getPoint());
+            addTab(index);
+        }
     }
 
     @Override
