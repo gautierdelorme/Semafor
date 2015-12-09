@@ -14,10 +14,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 import javax.swing.*;
 import model.User;
 
@@ -137,10 +135,7 @@ public class ChatView extends JPanel implements ActionListener, MouseListener {
             int returnVal = fc.showOpenDialog(this);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File file = fc.getSelectedFile();
-                /*if (selectedUsers.size() > 0) {
-                 sendFile(file);
-                 fromUser.sendFile(file, selectedUsers);
-                 }*/
+                sendFile(file, chatBox.getUserFromSelectedTab());
             } else {
                 System.out.println("Open command cancelled by user.");
             }
@@ -169,12 +164,17 @@ public class ChatView extends JPanel implements ActionListener, MouseListener {
         chatBox.displayMessage(message, user);
     }
 
-    protected void sendFile(File file) {
-        /*String message = "Do you accept " + file.getName() + " ?";
-         String usernames = selectedUsers.get(0).getNickname();
-         usernames = selectedUsers.stream().skip(1).map((selectedUser) -> ", " + selectedUser.getNickname()).reduce(usernames, String::concat);
-         String rowData = "<html><b>" + fromUser.getCurrentUser().getNickname() + " -> " + usernames + " : </b>" + message + "</html>";
-         fromUser.sendMessage(message, selectedUsers);*/
+    protected void sendFile(File file, User user) {
+        String message = "Do you accept " + file.getName() + " ?";
+        String messageResponse = "Asking for send " + file.getName() + "...";
+        if (user == null) {
+            fromUser.sendMessage(message, Collections.list(usersListModel.elements()));
+            fromUser.sendFile(file, Collections.list(usersListModel.elements()));
+        } else {
+            fromUser.sendMessage(message, Arrays.asList(user));
+            fromUser.sendFile(file, Arrays.asList(user));
+        }
+        chatBox.displayResponse(messageResponse, user);
     }
 
     protected void sendMessage(User user) {
