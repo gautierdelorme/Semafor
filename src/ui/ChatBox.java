@@ -8,6 +8,7 @@
  */
 package ui;
 
+import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,6 +33,7 @@ public class ChatBox extends JTabbedPane {
         tabsMap = new HashMap<>();
         tabs = new ArrayList<>();
         this.addTab(generalTabName, generalTab);
+        this.setBackground(new Color(0xecf0f1));
     }
 
     public void setChatView(ChatView chatView) {

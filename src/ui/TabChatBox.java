@@ -45,10 +45,14 @@ public abstract class TabChatBox extends JPanel implements ActionListener {
 
         listMessages = new JTable(listMessagesModel);
         listMessages.setFont(listMessages.getFont().deriveFont(12.0f));
-
+        listMessages.setBackground(new Color(0xecf0f1));
+        listMessages.setGridColor(listMessages.getBackground());
+        listMessages.setTableHeader(null);
+        
         setWidthAsPercentages(listMessages, 0.9, 0.1);
 
         JScrollPane scrollView = new JScrollPane(listMessages);
+        scrollView.getViewport().setBackground(listMessages.getBackground());
         removeBorder(scrollView);
 
         this.add(scrollView);
@@ -66,8 +70,8 @@ public abstract class TabChatBox extends JPanel implements ActionListener {
 
     private void removeBorder(JScrollPane p) {
         p.getViewport().setBorder(null);
-        p.setViewportBorder(null);
-        p.setBorder(null);
+        p.setViewportBorder(BorderFactory.createEmptyBorder());
+        p.setBorder(BorderFactory.createEmptyBorder());
         p.setViewportBorder(null);
     }
 
