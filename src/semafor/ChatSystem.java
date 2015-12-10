@@ -34,7 +34,7 @@ public class ChatSystem {
         /*
         * TO DO :
         * - Handle when JSON dont have good formatting
-        *
+        * - Implement the One-To-Many mode (Only two modes for now : One-To-One and One-To-All)
         *
         * /!\ TO TEST IN LOCAL RETURN TRUE IN UDPRECEIVER FILTER
         * /!\ ACTUALLY THE LOCAL MODE IS OFF !!
