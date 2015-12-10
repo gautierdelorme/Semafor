@@ -33,10 +33,6 @@ public class UsersList {
     protected User deleteUser(InetAddress ip) {
         return directory.remove(ip);
     }
-
-    protected User[] getUsers(){
-        return directory.values().stream().toArray(User[]::new);
-    }
     
     public User getUserWithIP(InetAddress ip) {
         return directory.get(ip);

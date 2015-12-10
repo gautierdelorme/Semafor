@@ -26,7 +26,7 @@ import model.User;
 public class ChatView extends JPanel implements ActionListener, MouseListener {
 
     private final FromUser fromUser;
-    private final JList usersList;
+    private final JList<User> usersList;
     private final DefaultListModel<User> usersListModel;
     private final ChatBox chatBox;
     private final JTextField inputBox;
@@ -51,7 +51,7 @@ public class ChatView extends JPanel implements ActionListener, MouseListener {
         fc = new JFileChooser();
         usersListModel = new DefaultListModel<>();
 
-        usersList = new JList(usersListModel);
+        usersList = new JList<>(usersListModel);
         usersList.setBackground(new Color(0x3498db));
         usersList.setPreferredSize(new Dimension(100, 0));
         usersList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
