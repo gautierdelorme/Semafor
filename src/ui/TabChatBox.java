@@ -97,6 +97,5 @@ public abstract class TabChatBox extends JPanel implements ActionListener {
         int modelRow = Integer.valueOf(e.getActionCommand());
         this.chatBox.sendFileRequestResponse(true, files.get(modelRow));
         files.remove(modelRow);
-        table.getSelectionModel().clearSelection();
     }
 }
