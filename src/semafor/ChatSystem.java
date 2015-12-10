@@ -34,7 +34,7 @@ public class ChatSystem {
         /*
         * TO DO :
         * - Handle when JSON dont have good formatting
-        * - SUPER IMPORTANT => Handle when pseudo already exist
+        *
         *
         * /!\ TO TEST IN LOCAL RETURN TRUE IN UDPRECEIVER FILTER
         * /!\ ACTUALLY THE LOCAL MODE IS OFF !!
