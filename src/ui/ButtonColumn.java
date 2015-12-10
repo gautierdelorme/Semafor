@@ -32,7 +32,7 @@ public class ButtonColumn extends AbstractCellEditor
 	implements TableCellRenderer, TableCellEditor, ActionListener, MouseListener
 {
 	private JTable table;
-	private Action action;
+	private ActionListener action;
 	private int mnemonic;
 	private Border originalBorder;
 	private Border focusBorder;
@@ -51,7 +51,7 @@ public class ButtonColumn extends AbstractCellEditor
 	 *  @param action the Action to be invoked when the button is invoked
 	 *  @param column the column to which the button renderer/editor is added
 	 */
-	public ButtonColumn(JTable table, Action action, int column)
+	public ButtonColumn(JTable table, ActionListener action, int column)
 	{
 		this.table = table;
 		this.action = action;

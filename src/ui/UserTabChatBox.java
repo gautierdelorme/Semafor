@@ -17,8 +17,8 @@ import model.User;
 public class UserTabChatBox extends TabChatBox {
     private final User user;
     
-    public UserTabChatBox(User user) {
-        initComponents();
+    public UserTabChatBox(User user, ChatBox chatBox) {
+        super(chatBox);
         this.user = user;
     }
     

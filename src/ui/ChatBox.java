@@ -28,7 +28,7 @@ public class ChatBox extends JTabbedPane {
     private final static String generalTabName = "General";
 
     public ChatBox() {
-        generalTab = new GeneralTabChatBox();
+        generalTab = new GeneralTabChatBox(this);
         tabsMap = new HashMap<>();
         tabs = new ArrayList<>();
         this.addTab(generalTabName, generalTab);
@@ -74,9 +74,13 @@ public class ChatBox extends JTabbedPane {
         }
         tab.displayFileRequest(file, user);
     }
+    
+    protected void sendFileRequestResponse(boolean ok, File file) {
+        chatView.sendFileRequestResponse(ok, file);
+    }
 
     protected TabChatBox addTab(User user) {
-        UserTabChatBox tab = new UserTabChatBox(user);
+        UserTabChatBox tab = new UserTabChatBox(user, this);
         tabsMap.put(user, tab);
         tabs.add(tab);
         this.addTab(user.getNickname(), tabsMap.get(user));

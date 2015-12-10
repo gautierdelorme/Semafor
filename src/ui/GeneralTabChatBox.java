@@ -17,8 +17,8 @@ import model.User;
  */
 public class GeneralTabChatBox extends TabChatBox {
     
-    public GeneralTabChatBox() {
-        initComponents();
+    public GeneralTabChatBox(ChatBox chatBox) {
+        super(chatBox);
     }
     
     protected void helloMessage(User u) {

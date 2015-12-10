@@ -20,6 +20,7 @@ public interface FromUser {
     public void connect(String nickname);
     public void disconnect();
     public void sendFile(File file, List<User> users);
+    public void sendFileRequestResponse(boolean ok, File file);
     public void sendMessage(String message, List<User> users);
     public User getCurrentUser();
 }

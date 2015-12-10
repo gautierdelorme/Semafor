@@ -11,7 +11,9 @@ package ui;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.HashMap;
 import javax.swing.table.*;
 import model.User;
 
@@ -19,12 +21,22 @@ import model.User;
  *
  * @author gautier
  */
-public abstract class TabChatBox extends JPanel {
+public abstract class TabChatBox extends JPanel implements ActionListener {
+
+    private ChatBox chatBox;
 
     private JTable listMessages;
     private DefaultTableModel listMessagesModel;
 
-    protected void initComponents() {
+    private HashMap<Integer, File> files;
+
+    protected TabChatBox(ChatBox chatBox) {
+        this.chatBox = chatBox;
+        files = new HashMap<>();
+        initComponents();
+    }
+
+    private void initComponents() {
         this.setLayout(new BorderLayout());
 
         listMessagesModel = new DefaultTableModel();
@@ -49,7 +61,7 @@ public abstract class TabChatBox extends JPanel {
 
     protected void displayFileRequest(File file, User user) {
         String rowData[] = {"<html><b>" + user.getNickname() + " : </b> Do you accept <em>" + file.getName() + "</em> ?", "Accept"};
-        addElementToJList(rowData);
+        files.put(addElementToJList(rowData), file);
     }
 
     private void removeBorder(JScrollPane p) {
@@ -64,17 +76,10 @@ public abstract class TabChatBox extends JPanel {
         listMessagesModel.addRow(ss);
     }
 
-    protected void addElementToJList(String[] s) {
+    protected Integer addElementToJList(String[] s) {
         listMessagesModel.addRow(s);
-        Action delete = new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JTable table = (JTable) e.getSource();
-                int modelRow = Integer.valueOf(e.getActionCommand());
-                ((DefaultTableModel) table.getModel()).removeRow(modelRow);
-            }
-        };
-        ButtonColumn buttonColumn = new ButtonColumn(listMessages, delete, 1);
+        ButtonColumn buttonColumn = new ButtonColumn(listMessages, this, 1);
+        return listMessagesModel.getRowCount() - 1;
     }
 
     private static void setWidthAsPercentages(JTable table, double... percentages) {
@@ -84,5 +89,14 @@ public abstract class TabChatBox extends JPanel {
             TableColumn column = model.getColumn(columnIndex);
             column.setPreferredWidth((int) (percentages[columnIndex] * factor));
         }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        JTable table = (JTable) e.getSource();
+        int modelRow = Integer.valueOf(e.getActionCommand());
+        this.chatBox.sendFileRequestResponse(true, files.get(modelRow));
+        files.remove(modelRow);
+        table.getSelectionModel().clearSelection();
     }
 }

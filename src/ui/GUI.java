@@ -74,6 +74,11 @@ public class GUI extends JFrame implements CtrlToUI, FromUser, WindowListener, R
     public void sendMessage(String message, List<User> users) {
         uiToCtrl.performSendMessage(message, users);
     }
+    
+    @Override
+    public void sendFileRequestResponse(boolean ok, File file) {
+        uiToCtrl.performSendFileRequestResponse(ok, file);
+    }
 
     @Override
     public void displayMessage(String message, User user) {

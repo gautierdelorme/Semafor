@@ -187,6 +187,10 @@ public class ChatView extends JPanel implements ActionListener, MouseListener {
         chatBox.displayResponse(inputBox.getText(), user);
         inputBox.setText("");
     }
+    
+    public void sendFileRequestResponse(boolean ok, File file) {
+        fromUser.sendFileRequestResponse(ok, file);
+    }
 
     private void removeBorder(JScrollPane p) {
         p.getViewport().setBorder(null);
