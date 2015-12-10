@@ -13,6 +13,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import javax.swing.table.*;
 import model.User;
@@ -65,13 +67,33 @@ public abstract class TabChatBox extends JPanel implements ActionListener {
     }
 
     protected void displayMessage(String message, User user) {
-        String rowData = "<html><b>" + user.getNickname() + " : </b>" + message + "</html>";
+        String date = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
+        String rowData = "<html><em>"+date+"</em> - <b>" + user.getNickname() + " : </b>" + message + "</html>";
+        addElementToJList(rowData);
+    }
+    
+    protected void displayFile(File file, User user) {
+        String date = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
+        String rowData = "<html><em>"+date+"</em> - <b><em>" + file.getName() + "</em> downloaded !</b>";
         addElementToJList(rowData);
     }
 
     protected void displayFileRequest(File file, User user) {
-        String rowData[] = {"<html><b>" + user.getNickname() + " : </b> Do you accept <em>" + file.getName() + "</em> ?", "Accept"};
+        String date = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
+        String rowData[] = {"<html><em>"+date+"</em> - <b>" + user.getNickname() + " sent you <em>" + file.getName() + "</em></b>", "Download"};
         files.put(addElementToJList(rowData), file);
+    }
+    
+    protected void displayFileResponse(File file, User user) {
+        String date = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
+        String rowData = "<html><em>"+date+"</em> - <b>" + user.getNickname() + " started to download <em>" + file.getName() + "</em></b>";
+        addElementToJList(rowData);
+    }
+    
+    protected void displaySendFile(File file, User user) {
+        String date = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
+        String rowData = "<html><em>"+date+"</em> - <b>"+user.getNickname()+" sent <em>" + file.getName() + "</em></b>";
+        addElementToJList(rowData);
     }
 
     private void removeBorder(JScrollPane p) {

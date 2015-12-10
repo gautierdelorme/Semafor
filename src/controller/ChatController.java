@@ -93,9 +93,14 @@ public class ChatController implements NIToCtrl, UIToCtrl {
     public void receiveFileRequest(InetAddress ip, File file) {
         ctrlToUI.displayFileRequest(file, ctrlToDatabase.getUserWithIP(ip));
     }
+    
+    @Override
+    public void receiveFileResponse(InetAddress ip, File file) {
+        ctrlToUI.displayFileResponse(file, ctrlToDatabase.getUserWithIP(ip));
+    }
 
     @Override
     public User getCurrentUser() {
         return ctrlToDatabase.getCurrentUser();
-    }        
+    }            
 }

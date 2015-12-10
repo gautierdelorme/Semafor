@@ -180,6 +180,7 @@ public class ButtonColumn extends AbstractCellEditor
 		else
 		{
 			renderButton.setText( value.toString() );
+                        renderButton.setFont(renderButton.getFont().deriveFont(11.0f));
 			renderButton.setIcon( null );
                         renderButton.setOpaque(true);
                         renderButton.setContentAreaFilled(true);

@@ -8,6 +8,8 @@
  */
 package ui;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import model.User;
 
 /**
@@ -27,7 +29,8 @@ public class UserTabChatBox extends TabChatBox {
     }
     
     public void sayBye() {
-        String rowData = "<html><em>" + user.getNickname() + " left the room.</em></html>";
+        String date = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
+        String rowData = "<html><em>"+date+"</em> - <em>" + user.getNickname() + " left the room.</em></html>";
         addElementToJList(rowData);
     }
 }

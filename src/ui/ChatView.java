@@ -170,18 +170,26 @@ public class ChatView extends JPanel implements ActionListener, MouseListener {
         chatBox.displayMessage(message, user);
     }
     
+    protected void displayFile(File file, User user) {
+        chatBox.displayFile(file, user);
+    }
+    
     protected void displayFileRequest(File file, User user) {
         chatBox.displayFileRequest(file, user);
     }
+    
+    protected void displayFileResponse(File file, User user) {
+        chatBox.displayFileResponse(file, user);
+    }
 
     protected void sendFile(File file, User user) {
-        String message = "Asking for send " + file.getName() + "...";
+        String message = "Asking for send " + file.getName();
         if (user == null) {
             fromUser.sendFile(file, Collections.list(usersListModel.elements()));
         } else {
             fromUser.sendFile(file, Arrays.asList(user));
         }
-        chatBox.displayResponse(message, user);
+        chatBox.displaySendFile(file, user);
     }
 
     protected void sendMessage(User user) {

@@ -99,7 +99,9 @@ public class ChatNI implements CtrlToNI, FromToRmtApp {
     @Override
     public void fileRequestResponse(InetAddress ip, boolean ok, int timestamp) {
         if (ok) {
-            (new TCPSender(ip, filesToSend.get(timestamp))).start();
+            File file = filesToSend.get(timestamp);
+            niToCtrl.receiveFileResponse(ip, file);
+            (new TCPSender(ip, file)).start();
         } else {
             System.out.println("The user does not want the file");
         }

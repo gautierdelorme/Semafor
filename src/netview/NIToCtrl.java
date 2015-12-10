@@ -21,4 +21,5 @@ public interface NIToCtrl {
     public void receiveMessage(InetAddress ip, String message);
     public void receiveFile(InetAddress ip, File file);
     public void receiveFileRequest(InetAddress ip, File file);
+    public void receiveFileResponse(InetAddress ip, File file);
 }

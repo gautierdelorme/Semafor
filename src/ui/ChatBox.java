@@ -59,6 +59,14 @@ public class ChatBox extends JTabbedPane {
         }
         tab.displayMessage(message, user);
     }
+    
+    protected void displayFile(File file, User user) {
+        TabChatBox tab = tabsMap.get(user);
+        if (tab == null) {
+            tab = addTab(user);
+        }
+        tab.displayFile(file, user);
+    }
 
     protected void displayResponse(String message, User user) {
         if (user == null) {
@@ -75,6 +83,23 @@ public class ChatBox extends JTabbedPane {
             tab = addTab(user);
         }
         tab.displayFileRequest(file, user);
+    }
+    
+    protected void displayFileResponse(File file, User user) {
+        TabChatBox tab = tabsMap.get(user);
+        if (tab == null) {
+            tab = addTab(user);
+        }
+        tab.displayFileResponse(file, user);
+    }
+    
+    protected void displaySendFile(File file, User user) {
+        if (user == null) {
+            generalTab.displaySendFile(file, chatView.getCurrentUser());
+        } else {
+            UserTabChatBox tab = tabsMap.get(user);
+            tab.displaySendFile(file, chatView.getCurrentUser());
+        }
     }
     
     protected void sendFileRequestResponse(boolean ok, File file) {
