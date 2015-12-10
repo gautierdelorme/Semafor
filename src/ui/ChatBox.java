@@ -8,6 +8,7 @@
  */
 package ui;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.*;
@@ -64,6 +65,14 @@ public class ChatBox extends JTabbedPane {
             UserTabChatBox tab = tabsMap.get(user);
             tab.displayMessage(message, chatView.getCurrentUser());
         }
+    }
+    
+    protected void displayFileRequest(File file, User user) {
+        TabChatBox tab = tabsMap.get(user);
+        if (tab == null) {
+            tab = addTab(user);
+        }
+        tab.displayFileRequest(file, user);
     }
 
     protected TabChatBox addTab(User user) {

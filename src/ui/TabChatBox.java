@@ -10,6 +10,9 @@ package ui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.io.File;
+import javax.swing.table.*;
 import model.User;
 
 /**
@@ -17,38 +20,69 @@ import model.User;
  * @author gautier
  */
 public abstract class TabChatBox extends JPanel {
-    
-    
-    private JList listMessages;
-    private DefaultListModel<String> listMessagesModel;
-    
+
+    private JTable listMessages;
+    private DefaultTableModel listMessagesModel;
+
     protected void initComponents() {
-        this.setOpaque(false);
-        
-        listMessagesModel = new DefaultListModel<>();
-        listMessages = new JList(listMessagesModel);
-        listMessages.setFont(listMessages.getFont().deriveFont(12.0f));
-        
         this.setLayout(new BorderLayout());
+
+        listMessagesModel = new DefaultTableModel();
+        listMessagesModel.addColumn("");
+        listMessagesModel.addColumn("");
+
+        listMessages = new JTable(listMessagesModel);
+        listMessages.setFont(listMessages.getFont().deriveFont(12.0f));
+
+        setWidthAsPercentages(listMessages, 0.9, 0.1);
+
         JScrollPane scrollView = new JScrollPane(listMessages);
         removeBorder(scrollView);
-        
+
         this.add(scrollView);
     }
-    
+
     protected void displayMessage(String message, User user) {
-        String rowData = "<html><b>"+user.getNickname()+" : </b>"+message+"</html>";
-        addElementToJList(rowData); 
+        String rowData = "<html><b>" + user.getNickname() + " : </b>" + message + "</html>";
+        addElementToJList(rowData);
     }
-        
+
+    protected void displayFileRequest(File file, User user) {
+        String rowData[] = {"<html><b>" + user.getNickname() + " : </b> Do you accept <em>" + file.getName() + "</em> ?", "Accept"};
+        addElementToJList(rowData);
+    }
+
     private void removeBorder(JScrollPane p) {
         p.getViewport().setBorder(null);
         p.setViewportBorder(null);
         p.setBorder(null);
         p.setViewportBorder(null);
     }
-    
+
     protected void addElementToJList(String s) {
-        listMessagesModel.addElement(s);
+        String[] ss = {s};
+        listMessagesModel.addRow(ss);
+    }
+
+    protected void addElementToJList(String[] s) {
+        listMessagesModel.addRow(s);
+        Action delete = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JTable table = (JTable) e.getSource();
+                int modelRow = Integer.valueOf(e.getActionCommand());
+                ((DefaultTableModel) table.getModel()).removeRow(modelRow);
+            }
+        };
+        ButtonColumn buttonColumn = new ButtonColumn(listMessages, delete, 1);
+    }
+
+    private static void setWidthAsPercentages(JTable table, double... percentages) {
+        final double factor = 10000;
+        TableColumnModel model = table.getColumnModel();
+        for (int columnIndex = 0; columnIndex < percentages.length; columnIndex++) {
+            TableColumn column = model.getColumn(columnIndex);
+            column.setPreferredWidth((int) (percentages[columnIndex] * factor));
+        }
     }
 }

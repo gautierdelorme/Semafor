@@ -88,9 +88,10 @@ public class GUI extends JFrame implements CtrlToUI, FromUser, WindowListener, R
     
     @Override
     public void displayFileRequest(File file, User user) {
-        String message = "Do you accept " + file.getName() + " ?";
+        /*String message = "Do you accept " + file.getName() + " ?";
         displayMessage(message, user);
-        uiToCtrl.performSendFileRequestResponse(true, file);
+        uiToCtrl.performSendFileRequestResponse(true, file);*/
+        chatView.displayFileRequest(file, user);
     }
 
     @Override

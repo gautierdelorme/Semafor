@@ -163,6 +163,10 @@ public class ChatView extends JPanel implements ActionListener, MouseListener {
     protected void displayMessage(String message, User user) {
         chatBox.displayMessage(message, user);
     }
+    
+    protected void displayFileRequest(File file, User user) {
+        chatBox.displayFileRequest(file, user);
+    }
 
     protected void sendFile(File file, User user) {
         String message = "Asking for send " + file.getName() + "...";
