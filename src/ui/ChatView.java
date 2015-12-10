@@ -62,7 +62,7 @@ public class ChatView extends JPanel implements ActionListener, MouseListener {
         chatBox = new ChatBox();
         chatBox.setPreferredSize(new Dimension(0, 400));
 
-        inputBox = new JTextField(30);
+        inputBox = CSTextField.buildCSTextField("Enter a message...",30);
         inputBox.setFont(inputBox.getFont().deriveFont(16.0f));
         inputBox.setBackground(new Color(0xecf0f1));
         inputBox.setBorder(javax.swing.BorderFactory.createEmptyBorder());

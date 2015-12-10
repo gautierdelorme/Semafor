@@ -39,12 +39,9 @@ public class LoginView extends JPanel implements ActionListener {
         iconLabel.setFont(FontAwesome.fontAwesome.deriveFont(128.0f));
         iconLabel.setForeground(new Color(0x3498db));
         
-        loginInput = new JTextField(10);
-        //loginInput = new CustomTextField(10);
+        loginInput = CSTextField.buildCSTextField("Enter a pseudo...", 10);
         loginInput.setFont(loginInput.getFont().deriveFont(32.0f));
-        loginInput.setHorizontalAlignment(SwingConstants.CENTER);
-        //loginInput.setPlaceholder("Pseudo");
-        
+        loginInput.setHorizontalAlignment(SwingConstants.CENTER);        
         
         connectButton = new CSButton("Connect");
         connectButton.setFont(loginInput.getFont().deriveFont(32.0f));
