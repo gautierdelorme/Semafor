@@ -16,14 +16,15 @@ import model.User;
  *
  * @author gautier
  */
-public class TabChatBox extends JPanel {
+public abstract class TabChatBox extends JPanel {
     
-    private final User user;
-    private final JList listMessages;
-    private final DefaultListModel<String> listMessagesModel;
-
-    public TabChatBox(User user) {
-        this.user = user;
+    
+    private JList listMessages;
+    private DefaultListModel<String> listMessagesModel;
+    
+    protected void initComponents() {
+        this.setOpaque(false);
+        
         listMessagesModel = new DefaultListModel<>();
         listMessages = new JList(listMessagesModel);
         listMessages.setFont(listMessages.getFont().deriveFont(12.0f));
@@ -37,19 +38,9 @@ public class TabChatBox extends JPanel {
     
     protected void displayMessage(String message, User user) {
         String rowData = "<html><b>"+user.getNickname()+" : </b>"+message+"</html>";
-        listMessagesModel.addElement(rowData); 
+        addElementToJList(rowData); 
     }
-    
-    protected void helloMessage(User u) {
-        String rowData = "<html><em>" + u.getNickname() + "  joined the room.</em></html>";
-        listMessagesModel.addElement(rowData);
-    }
-    
-    protected void byeMessage(User u) {
-        String rowData = "<html><em>" + u.getNickname() + " left the room.</em></html>";
-        listMessagesModel.addElement(rowData);
-    }
-    
+        
     private void removeBorder(JScrollPane p) {
         p.getViewport().setBorder(null);
         p.setViewportBorder(null);
@@ -57,7 +48,7 @@ public class TabChatBox extends JPanel {
         p.setViewportBorder(null);
     }
     
-    public User getUser() {
-        return this.user;
+    protected void addElementToJList(String s) {
+        listMessagesModel.addElement(s);
     }
 }
