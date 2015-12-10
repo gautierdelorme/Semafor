@@ -19,4 +19,6 @@ public interface FromToRmtApp {
     public void bye(InetAddress ip);
     public void message(InetAddress ip, String message);
     public void file(InetAddress ip, File file);
+    public void fileRequest(InetAddress ip, String name, int timestamp);
+    public void fileRequestResponse(InetAddress ip, boolean ok, int timestamp);
 }

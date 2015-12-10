@@ -11,6 +11,7 @@ package ni;
 import java.io.File;
 import java.net.InetAddress;
 import java.util.HashMap;
+import java.util.Map.Entry;
 import netview.*;
 
 /**
@@ -18,18 +19,23 @@ import netview.*;
  * @author gautier
  */
 public class ChatNI implements CtrlToNI, FromToRmtApp {
+
     private UDPReceiver udpReceiver;
     private UDPSender udpSender;
     private TCPServer tcpServer;
     private NIToCtrl niToCtrl;
     private HashMap<Integer, File> filesToSend;
-    private HashMap<InetAddress, File> filesToReceive;
-    
+    private HashMap<File, InetAddress> filesToReceivePerFile;
+    private HashMap<File, Integer> filesToReceiveOfTimestamp;
+
     public static ChatNI buildChatNI(NIToCtrl niToCtrl) {
         ChatNI chatNI = new ChatNI();
         chatNI.niToCtrl = niToCtrl;
         chatNI.filesToSend = new HashMap<>();
-        chatNI.filesToReceive = new HashMap<>();
+
+        chatNI.filesToReceivePerFile = new HashMap<>();
+        chatNI.filesToReceiveOfTimestamp = new HashMap<>();
+
         chatNI.udpReceiver = new UDPReceiver(chatNI);
         chatNI.udpSender = new UDPSender(chatNI.udpReceiver.getSocket());
         chatNI.tcpServer = new TCPServer(chatNI);
@@ -38,14 +44,15 @@ public class ChatNI implements CtrlToNI, FromToRmtApp {
         return chatNI;
     }
 
-    private ChatNI() {}
-    
+    private ChatNI() {
+    }
+
     @Override
     public void sendHello(String nickname, boolean reqReply) {
         UDPPacket helloMessage = new HelloPacket(reqReply, nickname);
         this.udpSender.sendToAll(helloMessage.toString());
     }
-    
+
     @Override
     public void sendHelloTo(InetAddress ip, String nickname, boolean reqReply) {
         UDPPacket helloMessage = new HelloPacket(reqReply, nickname);
@@ -63,36 +70,41 @@ public class ChatNI implements CtrlToNI, FromToRmtApp {
         UDPPacket messagePacket = new MessagePacket(message);
         this.udpSender.sendTo(ip, messagePacket.toString());
     }
-    
+
     @Override
     public void sendFile(File file, InetAddress ip) {
         sendFileRequest(file, ip);
     }
-    
+
+    @Override
+    public void sendFileRequestResponse(boolean ok, File file) {
+        UDPPacket fileRequestResponsePacket = new FileRequestResponsePacket(ok, filesToReceiveOfTimestamp.get(file));
+        this.udpSender.sendTo(filesToReceivePerFile.get(file), fileRequestResponsePacket.toString());
+    }
+
     protected void sendFileRequest(File file, InetAddress ip) {
         FileRequestPacket fileRequestPacket = new FileRequestPacket(file.getName());
         filesToSend.put(fileRequestPacket.getTimestamp(), file);
         this.udpSender.sendTo(ip, fileRequestPacket.toString());
     }
-    
-    protected void sendFileRequestResponse(boolean ok, int timestamp, InetAddress ip) {
-        UDPPacket fileRequestResponsePacket = new FileRequestResponsePacket(ok, timestamp);
-        this.udpSender.sendTo(ip, fileRequestResponsePacket.toString());
+
+    @Override
+    public void fileRequest(InetAddress ip, String name, int timestamp) {
+        File file = new File(name);
+        filesToReceivePerFile.put(file, ip);
+        filesToReceiveOfTimestamp.put(file, timestamp);
+        niToCtrl.receiveFileRequest(ip, file);
     }
-    
-    protected void fileRequest(InetAddress ip, String name, int timestamp) {
-        filesToReceive.put(ip, new File(name));
-        sendFileRequestResponse(true, timestamp, ip);
-    }
-    
-    protected void fileRequestResponse(InetAddress ip, boolean ok, int timestamp) {
-        if (ok){
+
+    @Override
+    public void fileRequestResponse(InetAddress ip, boolean ok, int timestamp) {
+        if (ok) {
             (new TCPSender(ip, filesToSend.get(timestamp))).start();
         } else {
-            System.out.println("The user does not want the file");            
+            System.out.println("The user does not want the file");
         }
     }
-    
+
     @Override
     public void hello(InetAddress ip, String nickname, boolean reqReply) {
         niToCtrl.receiveHello(ip, nickname, reqReply);
@@ -114,9 +126,16 @@ public class ChatNI implements CtrlToNI, FromToRmtApp {
     }
 
     protected File getFileToReceived(InetAddress ip) {
-        return filesToReceive.get(ip);
+        File file = null;
+        for (Entry<File, InetAddress> entry : filesToReceivePerFile.entrySet()) {
+            if (entry.getValue().equals(ip)) {
+                file = entry.getKey();
+            }
+        }
+        filesToReceivePerFile.remove(file);
+        return file;
     }
-    
+
     public void close() {
         this.tcpServer.close();
         this.udpReceiver.close();

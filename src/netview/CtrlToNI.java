@@ -21,4 +21,5 @@ public interface CtrlToNI {
     public void sendBye();
     public void sendMessage(String message, InetAddress ip);
     public void sendFile(File file, InetAddress ip);
+    public void sendFileRequestResponse(boolean ok, File file);
 }

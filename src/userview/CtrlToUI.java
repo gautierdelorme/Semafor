@@ -18,6 +18,7 @@ import model.User;
 public interface CtrlToUI {
     public void displayMessage(String message, User user);
     public void displayFile(File file, User user);
+    public void displayFileRequest(File file, User user);
     public void addUser(User user);
     public void removeUser(User user);
 }

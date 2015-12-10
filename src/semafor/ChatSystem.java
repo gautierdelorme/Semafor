@@ -17,6 +17,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import javax.swing.SwingUtilities;
 import model.*;
 import ni.*;
 import ui.GUI;
@@ -43,8 +44,9 @@ public class ChatSystem {
         ChatController controller = new ChatController();
         Database database = new Database();
         ChatNI ntwInterface = ChatNI.buildChatNI(controller);
-        GUI gui = GUI.buildGUI(controller);
+        GUI gui = new GUI(controller);
         controller.setDependencies(ntwInterface, database, gui);
+        SwingUtilities.invokeLater(gui);
                 
         //Followed lines are only here to test the userlist refresh (works fine!)
         

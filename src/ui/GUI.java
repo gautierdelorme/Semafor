@@ -20,20 +20,19 @@ import userview.*;
  *
  * @author gautier
  */
-public class GUI extends JFrame implements CtrlToUI, FromUser, WindowListener {
+public class GUI extends JFrame implements CtrlToUI, FromUser, WindowListener, Runnable {
 
-    private UIToCtrl uiToCtrl;
+    private final UIToCtrl uiToCtrl;
     private LoginView loginView;
     private ChatView chatView;
 
-    public static GUI buildGUI(UIToCtrl uiToCtrl) {
-        GUI gui = new GUI();
-        gui.uiToCtrl = uiToCtrl;
-        gui.initComponents();
-        return gui;
+    public GUI(UIToCtrl uiToCtrl) {
+        this.uiToCtrl = uiToCtrl;
     }
-
-    private GUI() {
+    
+    @Override
+    public void run() {
+        this.initComponents();
     }
 
     private void initComponents() {
@@ -86,6 +85,13 @@ public class GUI extends JFrame implements CtrlToUI, FromUser, WindowListener {
         String message = file.getName() + " received.";
         displayMessage(message, user);
     }
+    
+    @Override
+    public void displayFileRequest(File file, User user) {
+        String message = "Do you accept " + file.getName() + " ?";
+        displayMessage(message, user);
+        uiToCtrl.performSendFileRequestResponse(true, file);
+    }
 
     @Override
     public User getCurrentUser() {
@@ -129,6 +135,5 @@ public class GUI extends JFrame implements CtrlToUI, FromUser, WindowListener {
 
     @Override
     public void windowDeactivated(WindowEvent e) {
-    }
-    
+    }    
 }

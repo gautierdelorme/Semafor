@@ -21,5 +21,6 @@ public interface UIToCtrl {
     public void performDisconnect();
     public void performSendMessage(String message, List<User> users);
     public void performSendFile(File file, List<User> users);
+    public void performSendFileRequestResponse(boolean ok, File file);
     public User getCurrentUser();
 }

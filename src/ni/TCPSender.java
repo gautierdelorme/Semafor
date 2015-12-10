@@ -35,7 +35,7 @@ public class TCPSender extends Thread {
     @Override
     public void run() {
         try {
-            System.out.println("I start sending file");
+            System.out.println("[TCP] Start Sending "+file.getName()+" to "+this.socket.getInetAddress());
             DataOutputStream outputStream = new DataOutputStream(this.socket.getOutputStream());
             try (FileInputStream fileInputStream = new FileInputStream(file)) {
                 byte[] buffer = new byte[1];
@@ -44,7 +44,7 @@ public class TCPSender extends Thread {
                 }
             }
             outputStream.flush();
-            System.out.println("I stop sending file");
+            System.out.println("[TCP] Stop Sending "+file.getName()+" to "+this.socket.getInetAddress());
             this.socket.close();
         } catch (IOException e) {
             System.out.println("Exception when sending the tcp packet : " + e);

@@ -27,14 +27,17 @@ public class TCPReceiver extends Thread {
 
     @Override
     public void run() {
-            try (FileOutputStream fileOutputStream = new FileOutputStream(chatNI.getFileToReceived(socket.getInetAddress()).getName())) {
-                byte[] buffer = new byte[1];
-                while (this.socket.getInputStream().read(buffer) >= 0) {
-                    fileOutputStream.write(buffer);
-                }
-                this.chatNI.file(this.socket.getInetAddress(), chatNI.getFileToReceived(socket.getInetAddress()));
-                this.socket.close();
-            } catch (IOException e) {
+        File file = chatNI.getFileToReceived(socket.getInetAddress());
+        System.out.println("[TCP] Start Receiving "+file.getName()+" from "+this.socket.getInetAddress());
+        try (FileOutputStream fileOutputStream = new FileOutputStream(file.getName())) {
+            byte[] buffer = new byte[1];
+            while (this.socket.getInputStream().read(buffer) >= 0) {
+                fileOutputStream.write(buffer);
+            }
+            System.out.println("[TCP] Stop Receiving "+file.getName()+" from "+this.socket.getInetAddress());
+            this.chatNI.file(this.socket.getInetAddress(), file);
+            this.socket.close();
+        } catch (IOException e) {
             System.out.println("Exception when receiving the tcp packet : " + e);
         }
     }

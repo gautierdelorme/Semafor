@@ -57,7 +57,12 @@ public class ChatController implements NIToCtrl, UIToCtrl {
             ctrlToNI.sendMessage(message, user.getIpAddress());
         }
     }
-
+    
+    @Override
+    public void performSendFileRequestResponse(boolean ok, File file) {
+        ctrlToNI.sendFileRequestResponse(ok, file);
+    }
+    
     @Override
     public void receiveHello(InetAddress ip, String nickname, boolean reqReply) {
         if (ctrlToDatabase.getCurrentUser() != null) {
@@ -83,9 +88,14 @@ public class ChatController implements NIToCtrl, UIToCtrl {
     public void receiveFile(InetAddress ip, File file) {
         ctrlToUI.displayFile(file, ctrlToDatabase.getUserWithIP(ip));
     }
+    
+    @Override
+    public void receiveFileRequest(InetAddress ip, File file) {
+        ctrlToUI.displayFileRequest(file, ctrlToDatabase.getUserWithIP(ip));
+    }
 
     @Override
     public User getCurrentUser() {
         return ctrlToDatabase.getCurrentUser();
-    }
+    }        
 }
