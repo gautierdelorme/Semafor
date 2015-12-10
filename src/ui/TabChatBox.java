@@ -43,13 +43,19 @@ public abstract class TabChatBox extends JPanel implements ActionListener {
         listMessagesModel.addColumn("");
         listMessagesModel.addColumn("");
 
-        listMessages = new JTable(listMessagesModel);
+        listMessages = new JTable(listMessagesModel) {
+            @Override
+            public boolean isCellEditable(int row, int column) {                
+                return column==1;               
+            }
+        };
         listMessages.setFont(listMessages.getFont().deriveFont(12.0f));
         listMessages.setBackground(new Color(0xecf0f1));
         listMessages.setGridColor(listMessages.getBackground());
         listMessages.setTableHeader(null);
+        listMessages.setRowHeight(30);
         
-        setWidthAsPercentages(listMessages, 0.9, 0.1);
+        setWidthAsPercentages(listMessages, 0.85, 0.15);
 
         JScrollPane scrollView = new JScrollPane(listMessages);
         scrollView.getViewport().setBackground(listMessages.getBackground());

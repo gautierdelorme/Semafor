@@ -87,7 +87,12 @@ public class ChatView extends JPanel implements ActionListener, MouseListener {
         titleLabel.setBackground(new Color(0x3498db));
         titleLabel.setForeground(new Color(0xecf0f1));
         titleLabel.setOpaque(true);
-        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        titleLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        titleLabel.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        titleLabel.setBorder(BorderFactory.createCompoundBorder(
+                titleLabel.getBorder(),
+                BorderFactory.createEmptyBorder(0, 50, 0, 0)
+        ));
 
         this.setLayout(new GridBagLayout());
 
@@ -96,11 +101,12 @@ public class ChatView extends JPanel implements ActionListener, MouseListener {
 
         gbc.gridy = 0;
         gbc.gridx = 0;
+        gbc.gridwidth = 2;
         this.add(titleLabel, gbc);
 
         gbc.gridy = 0;
-        gbc.gridx = 1;
-        gbc.gridwidth = 2;
+        gbc.gridx = 2;
+        gbc.gridwidth = 1;
         this.add(disconnectButton, gbc);
 
         gbc.gridy = 1;
