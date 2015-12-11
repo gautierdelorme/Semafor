@@ -53,15 +53,13 @@ public class ChatView extends JPanel implements ActionListener, MouseListener {
 
         usersList = new JList<>(usersListModel);
         usersList.setBackground(new Color(0x3498db));
-        usersList.setPreferredSize(new Dimension(100, 0));
 
         DefaultListCellRenderer renderer = (DefaultListCellRenderer) usersList.getCellRenderer();
         renderer.setHorizontalAlignment(SwingConstants.CENTER);
 
         chatBox = new ChatBox();
-        chatBox.setPreferredSize(new Dimension(0, 400));
 
-        inputBox = CSTextField.buildCSTextField("Enter a message...",30);
+        inputBox = CSTextField.buildCSTextField("Enter a message...",50);
         inputBox.setFont(inputBox.getFont().deriveFont(16.0f));
         inputBox.setBackground(new Color(0xecf0f1));
         inputBox.setBorder(javax.swing.BorderFactory.createEmptyBorder());
@@ -90,7 +88,7 @@ public class ChatView extends JPanel implements ActionListener, MouseListener {
         titleLabel.setBorder(javax.swing.BorderFactory.createEmptyBorder());
         titleLabel.setBorder(BorderFactory.createCompoundBorder(
                 titleLabel.getBorder(),
-                BorderFactory.createEmptyBorder(0, 50, 0, 0)
+                BorderFactory.createEmptyBorder(0, 90, 0, 0)
         ));
 
         this.setLayout(new GridBagLayout());
@@ -113,6 +111,7 @@ public class ChatView extends JPanel implements ActionListener, MouseListener {
         gbc.gridwidth = 1;
         gbc.gridheight = 2;
         JScrollPane scrollView = new JScrollPane(usersList);
+        scrollView.setPreferredSize(new Dimension(200, 0));
         removeBorder(scrollView);
         this.add(scrollView, gbc);
 
