@@ -24,7 +24,7 @@ public class ChatController implements NIToCtrl, UIToCtrl {
     private CtrlToNI ctrlToNI;
     private CtrlToUI ctrlToUI;
     private CtrlToDatabase ctrlToDatabase;
-    
+
     public void setDependencies(CtrlToNI ctrlToNI, CtrlToDatabase ctrlToDatabase, CtrlToUI ctrlToUI) {
         this.ctrlToNI = ctrlToNI;
         this.ctrlToDatabase = ctrlToDatabase;
@@ -57,12 +57,12 @@ public class ChatController implements NIToCtrl, UIToCtrl {
             ctrlToNI.sendMessage(message, user.getIpAddress());
         }
     }
-    
+
     @Override
     public void performSendFileRequestResponse(boolean ok, File file) {
         ctrlToNI.sendFileRequestResponse(ok, file);
     }
-    
+
     @Override
     public void receiveHello(InetAddress ip, String nickname, boolean reqReply) {
         if (ctrlToDatabase.getCurrentUser() != null) {
@@ -75,32 +75,43 @@ public class ChatController implements NIToCtrl, UIToCtrl {
 
     @Override
     public void receiveBye(InetAddress ip) {
-        if (ctrlToDatabase.getUserWithIP(ip) != null)
-            ctrlToUI.removeUser(ctrlToDatabase.deleteUser(ip));
+        if (ctrlToDatabase.getCurrentUser() != null) {
+            if (ctrlToDatabase.getUserWithIP(ip) != null) {
+                ctrlToUI.removeUser(ctrlToDatabase.deleteUser(ip));
+            }
+        }
     }
 
     @Override
     public void receiveMessage(InetAddress ip, String message) {
-        ctrlToUI.displayMessage(message, ctrlToDatabase.getUserWithIP(ip));
+        if (ctrlToDatabase.getCurrentUser() != null) {
+            ctrlToUI.displayMessage(message, ctrlToDatabase.getUserWithIP(ip));
+        }
     }
 
     @Override
     public void receiveFile(InetAddress ip, File file) {
-        ctrlToUI.displayFile(file, ctrlToDatabase.getUserWithIP(ip));
+        if (ctrlToDatabase.getCurrentUser() != null) {
+            ctrlToUI.displayFile(file, ctrlToDatabase.getUserWithIP(ip));
+        }
     }
-    
+
     @Override
     public void receiveFileRequest(InetAddress ip, File file) {
-        ctrlToUI.displayFileRequest(file, ctrlToDatabase.getUserWithIP(ip));
+        if (ctrlToDatabase.getCurrentUser() != null) {
+            ctrlToUI.displayFileRequest(file, ctrlToDatabase.getUserWithIP(ip));
+        }
     }
-    
+
     @Override
     public void receiveFileResponse(InetAddress ip, File file) {
-        ctrlToUI.displayFileResponse(file, ctrlToDatabase.getUserWithIP(ip));
+        if (ctrlToDatabase.getCurrentUser() != null) {
+            ctrlToUI.displayFileResponse(file, ctrlToDatabase.getUserWithIP(ip));
+        }
     }
 
     @Override
     public User getCurrentUser() {
         return ctrlToDatabase.getCurrentUser();
-    }            
+    }
 }
