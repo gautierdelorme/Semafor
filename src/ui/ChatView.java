@@ -54,7 +54,6 @@ public class ChatView extends JPanel implements ActionListener, MouseListener {
         usersList = new JList<>(usersListModel);
         usersList.setBackground(new Color(0x3498db));
         usersList.setPreferredSize(new Dimension(100, 0));
-        usersList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
         DefaultListCellRenderer renderer = (DefaultListCellRenderer) usersList.getCellRenderer();
         renderer.setHorizontalAlignment(SwingConstants.CENTER);
@@ -214,7 +213,7 @@ public class ChatView extends JPanel implements ActionListener, MouseListener {
     }
 
     private void addTab(int i) {
-        chatBox.addTab(usersListModel.get(i));
+        chatBox.getTab(usersListModel.get(i));
     }
     
     protected User getCurrentUser() {

@@ -53,19 +53,11 @@ public class ChatBox extends JTabbedPane {
     }
 
     protected void displayMessage(String message, User user) {
-        TabChatBox tab = tabsMap.get(user);
-        if (tab == null) {
-            tab = addTab(user);
-        }
-        tab.displayMessage(message, user);
+        getTab(user).displayMessage(message, user);
     }
     
     protected void displayFile(File file, User user) {
-        TabChatBox tab = tabsMap.get(user);
-        if (tab == null) {
-            tab = addTab(user);
-        }
-        tab.displayFile(file, user);
+        getTab(user).displayFile(file, user);
     }
 
     protected void displayResponse(String message, User user) {
@@ -78,19 +70,11 @@ public class ChatBox extends JTabbedPane {
     }
     
     protected void displayFileRequest(File file, User user) {
-        TabChatBox tab = tabsMap.get(user);
-        if (tab == null) {
-            tab = addTab(user);
-        }
-        tab.displayFileRequest(file, user);
+        getTab(user).displayFileRequest(file, user);
     }
     
     protected void displayFileResponse(File file, User user) {
-        TabChatBox tab = tabsMap.get(user);
-        if (tab == null) {
-            tab = addTab(user);
-        }
-        tab.displayFileResponse(file, user);
+        getTab(user).displayFileResponse(file, user);
     }
     
     protected void displaySendFile(File file, User user) {
@@ -106,14 +90,17 @@ public class ChatBox extends JTabbedPane {
         chatView.sendFileRequestResponse(ok, file);
     }
 
-    protected TabChatBox addTab(User user) {
-        UserTabChatBox tab = new UserTabChatBox(user, this);
-        tabsMap.put(user, tab);
-        tabs.add(tab);
-        this.addTab(user.getNickname(), tabsMap.get(user));
-        this.setSelectedIndex(tabs.size());
-        
-        TabHeader.buildTabHeader(this, tabs.size());
+    protected TabChatBox getTab(User user) {
+        UserTabChatBox tab = tabsMap.get(user);
+        if (tab == null) {
+            tab = new UserTabChatBox(user, this);
+            tabsMap.put(user, tab);
+            tabs.add(tab);
+            this.addTab(user.getNickname(), tabsMap.get(user));
+            this.setSelectedIndex(tabs.size());
+
+            TabHeader.buildTabHeader(this, tabs.size());
+        }
         return tab;
     }
 
