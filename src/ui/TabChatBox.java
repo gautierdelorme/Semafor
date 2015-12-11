@@ -13,9 +13,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.*;
 import model.User;
 
@@ -30,11 +33,13 @@ public abstract class TabChatBox extends JPanel implements ActionListener {
     private JTable listMessages;
     private DefaultTableModel listMessagesModel;
 
-    private HashMap<Integer, File> files;
+    private HashMap<Integer, File> filesToReceive;
+    private HashMap<Integer, File> filesToOpen;
 
     protected TabChatBox(ChatBox chatBox) {
         this.chatBox = chatBox;
-        files = new HashMap<>();
+        filesToReceive = new HashMap<>();
+        filesToOpen = new HashMap<>();
         initComponents();
     }
 
@@ -74,14 +79,14 @@ public abstract class TabChatBox extends JPanel implements ActionListener {
     
     protected void displayFile(File file, User user) {
         String date = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
-        String rowData = "<html><em>"+date+"</em> - <b><em>" + file.getName() + "</em> downloaded !</b>";
-        addElementToJList(rowData);
+        String[] rowData = {"<html><em>"+date+"</em> - <b><em>" + file.getName() + "</em> downloaded !</b>", "Open"};
+        filesToOpen.put(addElementToJList(rowData), file);
     }
 
     protected void displayFileRequest(File file, User user) {
         String date = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
         String rowData[] = {"<html><em>"+date+"</em> - <b>" + user.getNickname() + " sent you <em>" + file.getName() + "</em></b>", "Download"};
-        files.put(addElementToJList(rowData), file);
+        filesToReceive.put(addElementToJList(rowData), file);
     }
     
     protected void displayFileResponse(File file, User user) {
@@ -127,7 +132,15 @@ public abstract class TabChatBox extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JTable table = (JTable) e.getSource();
         int modelRow = Integer.valueOf(e.getActionCommand());
-        this.chatBox.sendFileRequestResponse(true, files.get(modelRow));
-        files.remove(modelRow);
+        if (filesToOpen.get(modelRow) != null) {
+            try {
+                Desktop.getDesktop().open(filesToOpen.get(modelRow));
+            } catch (IOException ex) {
+                System.out.println("Error when open file : "+ex);
+            }
+        } else {
+            this.chatBox.sendFileRequestResponse(true, filesToReceive.get(modelRow));
+            filesToReceive.remove(modelRow);
+        }
     }
 }
