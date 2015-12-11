@@ -15,7 +15,7 @@ import java.net.InetAddress;
  * @author gautier
  */
 public class User {
-    private final String nickname;
+    private String nickname;
     private final InetAddress ip;
     
     protected static User createUser(String nickname, InetAddress ip) {
@@ -29,6 +29,10 @@ public class User {
     
     public String getNickname() {
         return this.nickname;
+    }
+    
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public InetAddress getIpAddress() {
