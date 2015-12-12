@@ -16,7 +16,7 @@ import java.util.*;
  *
  * @author arthurpapailhau
  */
-public class UsersList {
+class UsersList {
     
     private final HashMap<InetAddress, User> directory;
     
@@ -39,7 +39,7 @@ public class UsersList {
         return directory.remove(ip);
     }
     
-    public User getUserWithIP(InetAddress ip) {
+    protected User getUserWithIP(InetAddress ip) {
         return directory.get(ip);
     }
 }

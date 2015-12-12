@@ -31,7 +31,7 @@ public class User {
         return this.nickname;
     }
     
-    public void setNickname(String nickname) {
+    protected void setNickname(String nickname) {
         this.nickname = nickname;
     }
 
