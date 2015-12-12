@@ -8,18 +8,10 @@
  */
 package semafor;
 
-import controller.*;
-import java.io.File;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import controller.ChatController;
 import javax.swing.SwingUtilities;
-import model.*;
-import ni.*;
+import model.Database;
+import ni.ChatNI;
 import ui.GUI;
 /**
  *
@@ -30,39 +22,13 @@ public class ChatSystem {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        
-        /*
-        * TO DO :
-        * - Handle when JSON dont have good formatting
-        * - Implement the One-To-Many mode (Only two modes for now : One-To-One and One-To-All)
-        *
-        * /!\ TO TEST IN LOCAL RETURN TRUE IN UDPRECEIVER FILTER
-        * /!\ ACTUALLY THE LOCAL MODE IS OFF !!
-        */
-        
+    public static void main(String[] args) {        
         ChatController controller = new ChatController();
         Database database = new Database();
         ChatNI ntwInterface = ChatNI.buildChatNI(controller);
         GUI gui = new GUI(controller);
         controller.setDependencies(ntwInterface, database, gui);
         SwingUtilities.invokeLater(gui);
-                
-        //Followed lines are only here to test the userlist refresh (works fine!)
-        
-        /*gui.connect("Gautier"); 
-        try {
-            controller.receiveHello(InetAddress.getByName("127.0.0.2"), "Amandine", false);
-            controller.receiveHello(InetAddress.getByName("127.0.0.3"), "Laure", false);
-            controller.receiveHello(InetAddress.getByName("127.0.0.4"), "Pierre", false);
-            controller.receiveHello(InetAddress.getByName("127.0.0.5"), "Henri", false);
-            controller.receiveHello(InetAddress.getByName("127.0.0.6"), "Bastien", false);
-            controller.receiveHello(InetAddress.getByName("127.0.0.6"), "Arthur", false);
-            controller.receiveMessage(InetAddress.getByName("127.0.0.6"), "test");
-            controller.receiveBye(InetAddress.getByName("127.0.0.6"));
-        } catch (UnknownHostException ex) {
-            System.out.println("er");
-        }*/
     }
     
 }
