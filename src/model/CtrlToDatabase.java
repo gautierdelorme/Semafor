@@ -17,20 +17,21 @@ import java.net.InetAddress;
 public interface CtrlToDatabase {
 
     /**
-     *
-     * @return the current user
+     * Return the current user
+     * 
+     * @return current user
      */
     public User getCurrentUser();
 
     /**
-     *
+     * Set the current user
+     * 
      * @param nickname nickname of the user
-     *  Set the current user with param nickname
      */
     public void setCurrentUser(String nickname);
 
     /**
-     * remove the current user
+     * Remove the current user
      */
     public void removeCurrentUser();
 
@@ -40,25 +41,25 @@ public interface CtrlToDatabase {
     public void removeUserList();
 
     /**
-     *
+     * Create a user if it doesn't exist, or update the nickname if it already exists
+     * 
      * @param ip ip address of the user
      * @param nickname nickname of the user
-     * @return 
-     *  Create a user if it doesn't exist, or update the nickname if it already exists
+     * @return the new user
      */
     public User addUser(InetAddress ip, String nickname);
 
     /**
-     *
+     * Delete the user form the database, and return it
+     * 
      * @param ip address of the user
-     * @return
-     *  Delete the user form the HashMap, and return it
-     *  The user is returned because it will disappear from the user list.
+     * @return the removed user
      */ 
     public User deleteUser(InetAddress ip);
 
     /**
-     *
+     * Get a user from an ip address
+     * 
      * @param ip ip address of the user
      * @return the user matching with the param ip address.
      */ 
