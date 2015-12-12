@@ -21,7 +21,7 @@ public class Database implements CtrlToDatabase {
     private User currentUser;
     
     /**
-     *
+     * Create a new Database
      */
     public Database(){
         this.userList = new UsersList();

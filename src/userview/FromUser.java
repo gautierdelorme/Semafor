@@ -14,7 +14,7 @@ import model.User;
 
 /**
  *
- * @author gautier & Arthur
+ * @author gautier
  */
 public interface FromUser {
     

@@ -27,6 +27,11 @@ public class GUI extends JFrame implements CtrlToUI, FromUser, WindowListener, R
     private LoginView loginView;
     private ChatView chatView;
 
+    /**
+     * Create a new Graphical User Interface
+     * 
+     * @param uiToCtrl interface between the controller and the UserInterface
+     */
     public GUI(UIToCtrl uiToCtrl) {
         this.uiToCtrl = uiToCtrl;
     }

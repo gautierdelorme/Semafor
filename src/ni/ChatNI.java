@@ -28,6 +28,12 @@ public class ChatNI implements CtrlToNI, FromRmtApp {
     private HashMap<File, InetAddress> filesToReceivePerFile;
     private HashMap<File, Integer> filesToReceiveOfTimestamp;
 
+    /**
+     * Build a new NetworkInterface
+     * 
+     * @param niToCtrl interface between the controller and the NetworkInterface
+     * @return new NetworkInterface
+     */
     public static ChatNI buildChatNI(NIToCtrl niToCtrl) {
         ChatNI chatNI = new ChatNI();
         chatNI.niToCtrl = niToCtrl;
@@ -139,6 +145,9 @@ public class ChatNI implements CtrlToNI, FromRmtApp {
         return file;
     }
 
+    /**
+     * Close the used thread
+     */
     public void close() {
         this.tcpServer.close();
         this.udpReceiver.close();
