@@ -6,7 +6,7 @@
  * Copyright 2015 Gautier Delorme and Arthur Papailhau.
  *
  */
-package ui;
+package userview;
 
 import java.io.File;
 import java.util.List;

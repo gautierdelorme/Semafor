@@ -8,6 +8,7 @@
  */
 package ui;
 
+import userview.FromUser;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;

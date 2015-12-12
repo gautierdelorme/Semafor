@@ -8,6 +8,7 @@
  */
 package ui;
 
+import userview.FromUser;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
