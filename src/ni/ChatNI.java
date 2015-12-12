@@ -18,7 +18,7 @@ import netview.*;
  *
  * @author gautier
  */
-public class ChatNI implements CtrlToNI, FromToRmtApp {
+public class ChatNI implements CtrlToNI, FromRmtApp {
 
     private UDPReceiver udpReceiver;
     private UDPSender udpSender;
@@ -127,7 +127,8 @@ public class ChatNI implements CtrlToNI, FromToRmtApp {
         niToCtrl.receiveFile(ip, file);
     }
 
-    protected File getFileToReceived(InetAddress ip) {
+    @Override
+    public File getFileToReceived(InetAddress ip) {
         File file = null;
         for (Entry<File, InetAddress> entry : filesToReceivePerFile.entrySet()) {
             if (entry.getValue().equals(ip)) {

@@ -7,7 +7,6 @@
  *
  */
 package netview;
-
 import java.io.File;
 import java.net.InetAddress;
 
@@ -15,7 +14,7 @@ import java.net.InetAddress;
  *
  * @author gautier
  */
-public interface NIToCtrl {
+public interface FromRmtApp {
 
     /**
      * Receive a Hello packet
@@ -24,14 +23,14 @@ public interface NIToCtrl {
      * @param nickname nickname of the sender
      * @param reqReply true if the sender wants a response
      */
-    public void receiveHello(InetAddress ip, String nickname, boolean reqReply);
+    public void hello(InetAddress ip, String nickname, boolean reqReply);
 
     /**
      * Receive a Bye packet
      * 
      * @param ip ip address of the sender
      */
-    public void receiveBye(InetAddress ip);
+    public void bye(InetAddress ip);
 
     /**
      * Receive a message
@@ -39,7 +38,7 @@ public interface NIToCtrl {
      * @param ip ip address of the sender
      * @param message message received
      */
-    public void receiveMessage(InetAddress ip, String message);
+    public void message(InetAddress ip, String message);
 
     /**
      * Receive a file
@@ -47,21 +46,31 @@ public interface NIToCtrl {
      * @param ip ip address of the sender
      * @param file file received
      */
-    public void receiveFile(InetAddress ip, File file);
+    public void file(InetAddress ip, File file);
 
     /**
      * Receive a file request
      * 
      * @param ip ip address of the sender
-     * @param file file from the file request received
+     * @param name name of the file to received
+     * @param timestamp unique id of the file
      */
-    public void receiveFileRequest(InetAddress ip, File file);
+    public void fileRequest(InetAddress ip, String name, int timestamp);
 
     /**
      *  Receive a file request response
      * 
      * @param ip ip address of the sender
-     * @param file file from the file request response received
+     * @param ok true if the sender accept the file
+     * @param timestamp unique id of the file
      */
-    public void receiveFileResponse(InetAddress ip, File file);
+    public void fileRequestResponse(InetAddress ip, boolean ok, int timestamp);
+    
+    /**
+     *  Get the file matching with the ip address
+     * 
+     * @param ip ip address of the sender
+     * @return the file matching with the ip address
+     */
+    public File getFileToReceived(InetAddress ip);
 }

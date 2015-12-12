@@ -10,6 +10,7 @@ package ni;
 
 import java.io.*;
 import java.net.*;
+import netview.FromRmtApp;
 import org.json.*;
 
 /**
@@ -19,7 +20,7 @@ import org.json.*;
 public class UDPReceiver extends Thread {
 
     private DatagramSocket socket;
-    private final ChatNI chatNI;
+    private final FromRmtApp chatNI;
     private InetAddress localAddress;
     private boolean canRun;
     public final static int RECEIVING_PORT = 8045;

@@ -10,6 +10,7 @@ package ni;
 
 import java.io.*;
 import java.net.*;
+import netview.FromRmtApp;
 
 /**
  *
@@ -18,9 +19,9 @@ import java.net.*;
 public class TCPReceiver extends Thread {
 
     private final Socket socket;
-    private final ChatNI chatNI;
+    private final FromRmtApp chatNI;
 
-    public TCPReceiver(Socket socket, ChatNI chatNI) {
+    public TCPReceiver(Socket socket, FromRmtApp chatNI) {
         this.socket = socket;
         this.chatNI = chatNI;
     }

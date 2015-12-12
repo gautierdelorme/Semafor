@@ -10,6 +10,7 @@ package ni;
 
 import java.io.*;
 import java.net.*;
+import netview.FromRmtApp;
 
 /**
  *
@@ -18,7 +19,7 @@ import java.net.*;
 public class TCPServer extends Thread {
 
     private ServerSocket serverSocket;
-    private final ChatNI chatNI;
+    private final FromRmtApp chatNI;
     private boolean canRun;
 
     public TCPServer(ChatNI chatNI) {
