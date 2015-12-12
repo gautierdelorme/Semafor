@@ -24,7 +24,7 @@ public interface CtrlToDatabase {
 
     /**
      *
-     * @param nickname
+     * @param nickname nickname of the user
      *  Set the current user with param nickname
      */
     public void setCurrentUser(String nickname);
@@ -35,14 +35,14 @@ public interface CtrlToDatabase {
     public void removeCurrentUser();
 
     /**
-     *
+     *  Create an empty userList
      */
     public void removeUserList();
 
     /**
      *
-     * @param ip
-     * @param nickname
+     * @param ip ip address of the user
+     * @param nickname nickname of the user
      * @return 
      *  Create a user if it doesn't exist, or update the nickname if it already exists
      */
@@ -50,7 +50,7 @@ public interface CtrlToDatabase {
 
     /**
      *
-     * @param ip
+     * @param ip address of the user
      * @return
      *  Delete the user form the HashMap, and return it
      *  The user is returned because it will disappear from the user list.
@@ -59,7 +59,7 @@ public interface CtrlToDatabase {
 
     /**
      *
-     * @param ip
+     * @param ip ip address of the user
      * @return the user matching with the param ip address.
      */ 
     public User getUserWithIP(InetAddress ip);
