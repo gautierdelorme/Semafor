@@ -25,6 +25,13 @@ public class ChatController implements NIToCtrl, UIToCtrl {
     private CtrlToUI ctrlToUI;
     private CtrlToDatabase ctrlToDatabase;
 
+    /**
+     * Set relationships with the NetworkInterface, UserInterface and the Model
+     * 
+     * @param ctrlToNI interface between the controller and the NetworkInterface
+     * @param ctrlToDatabase interface between the controller and the Model
+     * @param ctrlToUI interface between the controller and the UserInterface
+     */
     public void setDependencies(CtrlToNI ctrlToNI, CtrlToDatabase ctrlToDatabase, CtrlToUI ctrlToUI) {
         this.ctrlToNI = ctrlToNI;
         this.ctrlToDatabase = ctrlToDatabase;
