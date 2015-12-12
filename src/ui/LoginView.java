@@ -18,7 +18,7 @@ import javax.swing.*;
  *
  * @author gautier
  */
-public class LoginView extends JPanel implements ActionListener {
+class LoginView extends JPanel implements ActionListener {
     
     private final FromUser fromUser;
     private final JLabel iconLabel;

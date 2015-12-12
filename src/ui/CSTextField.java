@@ -15,11 +15,11 @@ import java.awt.event.*;
  *
  * @author gautier
  */
-public class CSTextField extends JTextField implements FocusListener, KeyListener {
+class CSTextField extends JTextField implements FocusListener, KeyListener {
     
     private final String placeholder;
     
-    public static CSTextField buildCSTextField(String placeholder, int columns) {
+    protected static CSTextField buildCSTextField(String placeholder, int columns) {
         CSTextField csTextField = new CSTextField(placeholder, columns);
         csTextField.addFocusListener(csTextField);
         csTextField.addKeyListener(csTextField);

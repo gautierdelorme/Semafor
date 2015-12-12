@@ -17,9 +17,9 @@ import model.User;
  *
  * @author gautier
  */
-public class GeneralTabChatBox extends TabChatBox {
+class GeneralTabChatBox extends TabChatBox {
     
-    public GeneralTabChatBox(ChatBox chatBox) {
+    protected GeneralTabChatBox(ChatBox chatBox) {
         super(chatBox);
     }
     

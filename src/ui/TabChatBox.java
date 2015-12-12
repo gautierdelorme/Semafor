@@ -17,8 +17,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.table.*;
 import model.User;
 
@@ -26,15 +24,15 @@ import model.User;
  *
  * @author gautier
  */
-public abstract class TabChatBox extends JPanel implements ActionListener {
+abstract class TabChatBox extends JPanel implements ActionListener {
 
-    private ChatBox chatBox;
+    private final ChatBox chatBox;
 
     private JTable listMessages;
     private DefaultTableModel listMessagesModel;
 
-    private HashMap<Integer, File> filesToReceive;
-    private HashMap<Integer, File> filesToOpen;
+    private final HashMap<Integer, File> filesToReceive;
+    private final HashMap<Integer, File> filesToOpen;
 
     protected TabChatBox(ChatBox chatBox) {
         this.chatBox = chatBox;

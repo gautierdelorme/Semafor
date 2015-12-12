@@ -24,7 +24,7 @@ import model.User;
  *
  * @author gautier
  */
-public class ChatView extends JPanel implements ActionListener, MouseListener {
+class ChatView extends JPanel implements ActionListener, MouseListener {
 
     private final FromUser fromUser;
     private final JList<User> usersList;
@@ -149,7 +149,7 @@ public class ChatView extends JPanel implements ActionListener, MouseListener {
         }
     }
 
-    public void addUser(User user) {
+    protected void addUser(User user) {
         for (int i = 0; i < usersListModel.getSize(); i++) {
             User u = usersListModel.getElementAt(i);
             if (u.getIpAddress().equals(user.getIpAddress())) {
@@ -160,7 +160,7 @@ public class ChatView extends JPanel implements ActionListener, MouseListener {
         chatBox.addUser(user);
     }
 
-    public void removeUser(User user) {
+    protected void removeUser(User user) {
         usersListModel.removeElement(user);
         chatBox.removeUser(user);
     }
@@ -201,7 +201,7 @@ public class ChatView extends JPanel implements ActionListener, MouseListener {
         inputBox.setText("");
     }
     
-    public void sendFileRequestResponse(boolean ok, File file) {
+    protected void sendFileRequestResponse(boolean ok, File file) {
         fromUser.sendFileRequestResponse(ok, file);
     }
 

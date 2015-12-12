@@ -20,12 +20,12 @@ import javax.swing.*;
  *
  * @author gautier
  */
-public class TabHeader extends JPanel implements ActionListener {
+class TabHeader extends JPanel implements ActionListener {
 
     private final ChatBox pane;
     private final JButton buttonClose;
 
-    public static TabHeader buildTabHeader(ChatBox pane, int index) {
+    protected static TabHeader buildTabHeader(ChatBox pane, int index) {
         TabHeader tabHeader = new TabHeader(pane, index);
         tabHeader.pane.setTabComponentAt(index, tabHeader);
         tabHeader.buttonClose.addActionListener(tabHeader);

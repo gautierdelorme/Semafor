@@ -15,9 +15,9 @@ import javax.swing.JButton;
  *
  * @author gautier
  */
-public class CSButton extends JButton {
+class CSButton extends JButton {
 
-    public CSButton(String text) {
+    protected CSButton(String text) {
         super(text);
         this.setForeground(Color.WHITE);
         this.setBackground(new Color(0x3498db));

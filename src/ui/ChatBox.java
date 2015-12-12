@@ -19,7 +19,7 @@ import model.User;
  *
  * @author gautier
  */
-public class ChatBox extends JTabbedPane {
+class ChatBox extends JTabbedPane {
 
     private ChatView chatView;
     private final GeneralTabChatBox generalTab;
@@ -28,7 +28,7 @@ public class ChatBox extends JTabbedPane {
 
     private final static String generalTabName = "General";
 
-    public ChatBox() {
+    protected ChatBox() {
         generalTab = new GeneralTabChatBox(this);
         tabsMap = new HashMap<>();
         tabs = new ArrayList<>();
@@ -36,15 +36,15 @@ public class ChatBox extends JTabbedPane {
         this.setBackground(new Color(0xecf0f1));
     }
 
-    public void setChatView(ChatView chatView) {
+    protected void setChatView(ChatView chatView) {
         this.chatView = chatView;
     }
 
-    public void addUser(User user) {
+    protected void addUser(User user) {
         generalTab.helloMessage(user);
     }
 
-    public void removeUser(User user) {
+    protected void removeUser(User user) {
         generalTab.byeMessage(user);
         UserTabChatBox tab = tabsMap.get(user);
         if (tab != null) {

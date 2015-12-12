@@ -17,11 +17,11 @@ import java.io.InputStream;
  *
  * @author gautier
  */
-public class FontAwesome {
+class FontAwesome {
 
-    public final static String TTF_PATH = "resources/fontawesome-webfont.ttf";
+    protected final static String TTF_PATH = "resources/fontawesome-webfont.ttf";
     
-    public static Font fontAwesome;
+    protected static Font fontAwesome;
     static {
         try {
             InputStream is = FontAwesome.class.getResourceAsStream(TTF_PATH);
@@ -31,7 +31,7 @@ public class FontAwesome {
         }
     }
 
-    public enum Icon {
+    protected enum Icon {
         FA_500PX('\uf26E'),
         ADJUST('\uf042'),
         ADN('\uf170'),
@@ -713,7 +713,7 @@ public class FontAwesome {
             this.character = character;
         }
 
-        public String s() {
+        protected String s() {
             return Character.toString(character);
         }
     }
