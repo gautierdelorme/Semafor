@@ -16,12 +16,12 @@ import netview.FromRmtApp;
  *
  * @author gautier
  */
-public class TCPReceiver extends Thread {
+class TCPReceiver extends Thread {
 
     private final Socket socket;
     private final FromRmtApp chatNI;
 
-    public TCPReceiver(Socket socket, FromRmtApp chatNI) {
+    protected TCPReceiver(Socket socket, FromRmtApp chatNI) {
         this.socket = socket;
         this.chatNI = chatNI;
     }

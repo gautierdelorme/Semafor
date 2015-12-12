@@ -14,25 +14,25 @@ import org.json.JSONObject;
  *
  * @author gautier
  */
-public class MessagePacket extends UDPPacket {
+class MessagePacket extends UDPPacket {
     private final String message;
 
-    public MessagePacket(String message) {
+    protected MessagePacket(String message) {
         super(typeMessage.MESSAGE);
         this.message = message;
     }
     
-    public MessagePacket(JSONObject json) {
+    protected MessagePacket(JSONObject json) {
         super(json);
         this.message = json.getString("message");
     }
 
-    public String getMessage() {
+    protected String getMessage() {
         return message;
     }
     
     @Override
-    public JSONObject toJSON() {
+    protected JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("message", message);
         return obj;

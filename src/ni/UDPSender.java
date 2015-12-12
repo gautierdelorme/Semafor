@@ -16,21 +16,21 @@ import java.nio.charset.Charset;
  *
  * @author gautier
  */
-public class UDPSender {
+class UDPSender {
 
     private final DatagramSocket socket;
     private final static String BROADCAST_ADDRESS = "255.255.255.255";
 
-    public UDPSender(DatagramSocket socket) {
+    protected UDPSender(DatagramSocket socket) {
         this.socket = socket;
     }
     
-    public void sendTo(InetAddress ip, String message) {
+    protected void sendTo(InetAddress ip, String message) {
         System.out.println("[UDP] Send packet to "+ip);
         sendMessage(ip, message);
     }
     
-    public void sendToAll(String message) {
+    protected void sendToAll(String message) {
         System.out.println("[UDP] Send packet BROADCAST");
         try {
             sendMessage(InetAddress.getByName(BROADCAST_ADDRESS), message);
@@ -39,7 +39,7 @@ public class UDPSender {
         }
     }
     
-    private void sendMessage(InetAddress ip, String message) {
+    protected void sendMessage(InetAddress ip, String message) {
         try {
             byte[] sendData = message.getBytes(Charset.forName("UTF-8"));
             DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, ip, UDPReceiver.RECEIVING_PORT);

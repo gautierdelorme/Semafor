@@ -16,13 +16,13 @@ import netview.FromRmtApp;
  *
  * @author gautier
  */
-public class TCPServer extends Thread {
+class TCPServer extends Thread {
 
     private ServerSocket serverSocket;
     private final FromRmtApp chatNI;
     private boolean canRun;
 
-    public TCPServer(ChatNI chatNI) {
+    protected TCPServer(ChatNI chatNI) {
         this.canRun = true;
         this.chatNI = chatNI;
         try {
@@ -44,7 +44,7 @@ public class TCPServer extends Thread {
         }
     }
 
-    public void close() {
+    protected void close() {
         this.canRun = false;
         try {
             this.serverSocket.close();

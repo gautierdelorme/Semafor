@@ -14,32 +14,32 @@ import org.json.JSONObject;
  *
  * @author gautier
  */
-public class FileRequestPacket extends UDPPacket {
+class FileRequestPacket extends UDPPacket {
     private final String name;
     private final int timestamp;
 
-    public FileRequestPacket(String name) {
+    protected FileRequestPacket(String name) {
         super(typeMessage.FILE_REQUEST);
         this.name = name;
         this.timestamp = (int)System.currentTimeMillis();
     }
     
-    public FileRequestPacket(JSONObject json) {
+    protected FileRequestPacket(JSONObject json) {
         super(json);
         this.name = json.getString("name");
         this.timestamp = json.getInt("timestamp");
     }
     
-    public String getName(){
+    protected String getName(){
         return this.name;
     }
 
-    public int getTimestamp() {
+    protected int getTimestamp() {
         return timestamp;
     }
     
     @Override
-    public JSONObject toJSON() {
+    protected JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("name", name);
         obj.put("timestamp", timestamp);

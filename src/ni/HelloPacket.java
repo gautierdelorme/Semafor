@@ -14,32 +14,32 @@ import org.json.JSONObject;
  *
  * @author gautier
  */
-public class HelloPacket extends UDPPacket{
+class HelloPacket extends UDPPacket{
     private final boolean reqReply;
     private final String nickname;
     
-    public HelloPacket(boolean reqReply, String nickname) {
+    protected HelloPacket(boolean reqReply, String nickname) {
         super(typeMessage.HELLO);
         this.reqReply = reqReply;
         this.nickname = nickname;
     }
     
-    public HelloPacket(JSONObject json) {
+    protected HelloPacket(JSONObject json) {
         super(json);
         this.nickname = json.getString("nickname");
         this.reqReply = json.getBoolean("reqReply");
     }
 
-    public String getNickname() {
+    protected String getNickname() {
         return nickname;
     }
 
-    public boolean isReqReply() {
+    protected boolean isReqReply() {
         return reqReply;
     }
     
     @Override
-    public JSONObject toJSON() {
+    protected JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("reqReply", reqReply);
         obj.put("nickname", nickname);

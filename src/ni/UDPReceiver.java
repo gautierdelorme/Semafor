@@ -17,15 +17,15 @@ import org.json.*;
  *
  * @author gautier
  */
-public class UDPReceiver extends Thread {
+class UDPReceiver extends Thread {
 
     private DatagramSocket socket;
     private final FromRmtApp chatNI;
     private InetAddress localAddress;
     private boolean canRun;
-    public final static int RECEIVING_PORT = 8045;
+    protected final static int RECEIVING_PORT = 8045;
 
-    public UDPReceiver(ChatNI chatNI) {
+    protected UDPReceiver(ChatNI chatNI) {
         this.canRun = true;
         this.chatNI = chatNI;
         socket = null;
@@ -39,7 +39,7 @@ public class UDPReceiver extends Thread {
         }
     }
 
-    public DatagramSocket getSocket() {
+    protected DatagramSocket getSocket() {
         return this.socket;
     }
 
@@ -103,7 +103,7 @@ public class UDPReceiver extends Thread {
         }
     }
 
-    public void close() {
+    protected void close() {
         this.canRun = false;
         this.socket.close();
     }

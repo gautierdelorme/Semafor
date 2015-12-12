@@ -15,12 +15,12 @@ import java.net.*;
  *
  * @author gautier
  */
-public class TCPSender extends Thread {
+class TCPSender extends Thread {
     
     private Socket socket;
     private File file;
     
-    public TCPSender(InetAddress ip, File file) {
+    protected TCPSender(InetAddress ip, File file) {
         this.file = file;
         this.socket = null;
         try {

@@ -14,24 +14,24 @@ import org.json.*;
  *
  * @author gautier
  */
-public class UDPPacket {
+class UDPPacket {
 
-    public enum typeMessage {HELLO, BYE, MESSAGE, FILE_REQUEST, FILE_REQUEST_RESPONSE};
+    protected enum typeMessage {HELLO, BYE, MESSAGE, FILE_REQUEST, FILE_REQUEST_RESPONSE};
     private final typeMessage type;
 
-    public UDPPacket(typeMessage type) {
+    protected UDPPacket(typeMessage type) {
         this.type = type;
     }
     
-    public UDPPacket(JSONObject json) {
+    protected UDPPacket(JSONObject json) {
         this.type = typeMessage.values()[json.getInt("type")];
     }
 
-    public typeMessage getType() {
+    protected typeMessage getType() {
         return type;
     }
 
-    public JSONObject toJSON() {
+    protected JSONObject toJSON() {
         JSONObject obj = new JSONObject();
         obj.put("type", type.ordinal());
         return obj;

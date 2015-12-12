@@ -12,9 +12,9 @@ package ni;
  *
  * @author gautier
  */
-public class ByePacket extends UDPPacket {
+class ByePacket extends UDPPacket {
 
-    public ByePacket() {
+    protected ByePacket() {
         super(typeMessage.BYE);
     }
     
