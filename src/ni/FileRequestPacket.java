@@ -11,7 +11,8 @@ package ni;
 import org.json.JSONObject;
 
 /**
- *
+ * UDP Packet representing a file request
+ * 
  * @author gautier
  */
 class FileRequestPacket extends UDPPacket {

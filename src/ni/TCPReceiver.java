@@ -13,6 +13,7 @@ import java.net.*;
 import netview.FromRmtApp;
 
 /**
+ * Handle files reception
  *
  * @author gautier
  */

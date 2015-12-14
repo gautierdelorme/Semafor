@@ -11,6 +11,7 @@ package ni;
 import org.json.JSONObject;
 
 /**
+ * UDP Packet representing a text message
  *
  * @author gautier
  */

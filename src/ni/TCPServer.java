@@ -13,6 +13,7 @@ import java.net.*;
 import netview.FromRmtApp;
 
 /**
+ * Run a TCP Server
  *
  * @author gautier
  */

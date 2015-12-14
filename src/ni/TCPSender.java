@@ -12,6 +12,7 @@ import java.io.*;
 import java.net.*;
 
 /**
+ * Send files
  *
  * @author gautier
  */

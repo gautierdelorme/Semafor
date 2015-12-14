@@ -13,6 +13,7 @@ import java.net.*;
 import java.nio.charset.Charset;
 
 /**
+ * Send UDP packet
  *
  * @author gautier
  */

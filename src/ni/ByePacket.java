@@ -9,7 +9,8 @@
 package ni;
 
 /**
- *
+ *  UDP Packet representing a bye message
+ * 
  * @author gautier
  */
 class ByePacket extends UDPPacket {

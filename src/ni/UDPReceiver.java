@@ -14,6 +14,7 @@ import netview.FromRmtApp;
 import org.json.*;
 
 /**
+ * Handle UDP packet reception
  *
  * @author gautier
  */
